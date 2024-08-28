@@ -10,6 +10,10 @@ imgUrl: '../../assets/bg-1.jpg'
 description: Long long ago, I bought an Acer laptop. When it broke, I replaced the HDD and installed Linux. Acer's UEFI implementation sucks, so to get it booting I had to do some hacking.
 layout: '../../layouts/BlogPost.astro'
 ---
+import { Image } from 'astro:assets';
+import sony from '../../assets/sony_vaio_hdd_caddy.jpg';
+import acer from '../../assets/acer_aspire_hdd_caddy.jpg';
+
 # Prologue
 A year and a half ago, I bought an Acer Aspire laptop (model number E5-573G-79HX), which recently experienced a hard shutdown and consequently experienced a hard disk failure, after which I replaced the HDD and installed ArchLinux.  Following the manual instructions from ARCH WIKI, I was able to partition and format disks, setup my fstab file, configure the wireless interface, add users, and bring up a desktop environment from scratch.
 
@@ -27,11 +31,11 @@ To pose a riddle, what spins at 5400 rpm and absolutely wrecked my plans two wee
 
 Luckily (unluckily?) I have broken laptops in the past, and had a 1 TB hard disk from a Sony Vaio on hand. It looked like it had a proprietary connector, but that was just a SATA adaptor that was held onto the drive with an adhesive metal tape. Peeling that tape off and removing the adaptor left a perfect replacement drive, which I was able to quickly swap out thanks to Acer's pretty simple HDD caddy. It's just flexible rubber caddy that fits a 2.5" HDD like a glove, making replacing the HDD take less than ten seconds once the laptop's case is opened up (which takes about 5 minutes if you're taking your time to avoid having a screw fly off into oblivion).
 
-![The Adapter and tape in question](../../assets/sony_vaio_hdd_caddy.jpg)
+<Image src={sony} alt="The Adapter and tape in question" class="b-3 b-black" style="filter: drop-shadow(7px 7px 0 rgb(0 0 0 / 1));"/>
 
 The adaptor I pulled off of my old laptop's HDD.
 
-![The Hard Drive assembly in the Acer](../../assets/acer_aspire_hdd_caddy.jpg)
+<Image src={acer} alt="The Hard Drive assembly in the Acer" class="b-3 b-black" style="filter: drop-shadow(7px 7px 0 rgb(0 0 0 / 1));"/>
 
 The HDD assembly in my Acer, more elegant than what I was expecting! (must be from a more civilized age)
 
