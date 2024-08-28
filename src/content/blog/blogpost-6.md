@@ -7,7 +7,7 @@ tags:
   - TypeScript
   - Astro
   - Web Development
-imgUrl: '../../assets/astro.jpeg'
+imgUrl: '../../assets/bg-6.jpg'
 layout: ../../layouts/BlogPost.astro
 ---
 
