@@ -1,8 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogList from '../blog/BlogList.astro';
 import { Card } from '@eliancodes/brutal-ui';
 import { Button } from '@eliancodes/brutal-ui';
+import PostGrid from './PostGrid.astro';
+import PostItem from './PostItem.astro';
+import BlogSummaryCard from '@components/blog/BlogSummaryCard.astro';
 
 interface Props {
   count?: number;
@@ -28,6 +30,14 @@ const posts = await getCollection('blog').then((posts) =>
         <Button href='/blog/'>to blog</Button>
       </div>
     </div>
-    <BlogList posts={posts} />
+    <PostGrid>
+      {
+        posts.map((post) => (
+          <PostItem>
+            <BlogSummaryCard post={post} />
+          </PostItem>
+        ))
+      }
+    </PostGrid>
   </Card>
 </section>

@@ -5,17 +5,17 @@ import PostGrid from "@components/generic/PostGrid.astro";
 import BlogSummaryCard from "@components/blog/BlogSummaryCard.astro";
 import PostItem from "@components/generic/PostItem.astro";
 
-const posts = await getCollection("blog").then((collection) =>
+const posts = await getCollection("projects").then((collection) =>
   collection.reverse()
 );
 ---
 
 <Layout
-  title="Blog"
+  title="Projects"
   description="Brutal Blog | On this page you can find a collection of blogposts"
-  pageTitle="Brutal Blog"
+  pageTitle="My Projects"
 >
-  <main class="bg-green p-6">
+  <main class="bg-purple p-6">
     <PostGrid>
       {
         posts.map((post) => (
