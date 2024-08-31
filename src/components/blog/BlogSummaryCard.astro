@@ -9,13 +9,7 @@ interface Props {
     slug: CollectionEntry<"blog">["slug"];
     data: Pick<
       CollectionEntry<"blog">["data"],
-      | "title"
-      | "imgUrl"
-      | "description"
-      | "tags"
-      | "draft"
-      | "imgAuthor"
-      | "imgLink"
+      "title" | "imgUrl" | "description" | "tags" | "draft" | "credit"
     >;
   };
   baseUrl: string;
@@ -28,8 +22,7 @@ const { baseUrl, post } = Astro.props;
   title={post.data.title}
   imgAlt={post.data.title}
   imgSrc={post.data.imgUrl}
-  imgAuthor={post.data.imgAuthor}
-  imgLink={post.data.imgLink}
+  credit={post.data.credit}
   description={post.data.description}
 >
   <div class="flex justify-end my-4">

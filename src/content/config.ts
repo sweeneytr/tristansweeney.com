@@ -1,5 +1,7 @@
 import { z, defineCollection } from 'astro:content';
 
+const credit = z.object({author: z.string(), url: z.string()});
+
 const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
@@ -9,8 +11,7 @@ const blog = defineCollection({
       description: z.string(),
       pubDate: z.string().transform((str) => new Date(str)),
       imgUrl: image(),
-      imgAuthor: z.string().optional(),
-      imgLink: z.string().optional(),
+      credit: credit.optional(),
       draft: z.boolean().optional().default(false),
     }),
 });
@@ -24,8 +25,7 @@ const projects = defineCollection({
       description: z.string(),
       pubDate: z.string().transform((str) => new Date(str)),
       imgUrl: image(),
-      imgAuthor: z.string().optional(),
-      imgLink: z.string().optional(),
+      credit: credit.optional(),
       draft: z.boolean().optional().default(false),
     }),
 });

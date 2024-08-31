@@ -1,17 +1,18 @@
 ---
 import { Card } from "@eliancodes/brutal-ui";
 import { Image } from "astro:assets";
+import ImageCredit from "./ImageCredit.astro";
+import type { ComponentProps } from "astro/types";
 
 interface Props {
   title: string;
   imgSrc: ImageMetadata;
   imgAlt: string;
-  imgAuthor?: string;
-  imgLink?: string;
   description: string;
+  credit?: ComponentProps<typeof ImageCredit>;
 }
 
-const { title, imgAlt, imgSrc, description, imgAuthor, imgLink } = Astro.props;
+const { title, imgAlt, imgSrc, description, credit } = Astro.props;
 ---
 
 <Card color="white">
@@ -26,15 +27,13 @@ const { title, imgAlt, imgSrc, description, imgAuthor, imgLink } = Astro.props;
         class="rounded h-full w-full object-cover"
       />
     </div>
-    <div class="flex flex-justify-end">
-      {
-        imgAuthor && (
-          <span class="hover:text-green hover:underline transition-all duration-150 ease-in-out">
-            photo by <a href={imgLink}>{imgAuthor}</a>
-          </span>
-        )
-      }
-    </div>
+    {
+      credit && (
+        <div class="flex flex-justify-end">
+          <ImageCredit {...credit} />
+        </div>
+      )
+    }
   </div>
 
   <p class="poppins">{description}</p>

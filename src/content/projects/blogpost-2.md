@@ -7,8 +7,9 @@ tags:
   - MobileDev
   - React Native
 imgUrl: '../../assets/sara-polo-lady-lake-thmb1-v07.jpg'
-imgAuthor: Sara Polo
-imgLink: https://sarapolo.artstation.com/
+credit:
+  author: Sara Polo
+  url: https://sarapolo.artstation.com/
 description: |
   I created a platform to expose custom iOS functionality to web apps, and had a
   lot of fun doing it. Now developers can use our mobile functionality before
