@@ -1,0 +1,38 @@
+---
+title: "Let's Encrypt HTTPS on DD-WRT"
+pubDate: "2018-6-5"
+author: "Tristan Sweeney"
+tags:
+  - Network
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  I run a DD-WRT router on a Netgear WNDR4500 router. It's been in my life since I can
+  remember, and came along with me to college. A while back I loaded the DD-WRT firmware
+  onto it, and it's been serving like a champ ever since.
+layout: "../../layouts/BlogPost.astro"
+---
+
+This is more tiny-bragging on my router/networking setup to prove I do this stuff for fun. You can check out how I setup Wake-On-LAN [here](/networking/2018/06/04/Wake-On-LAN.html). Being able to turn on my desktop remotely isn't too great if I can't twiddle the router's settings (such as port forwarding) on the fly!
+
+I run a DD-WRT router on a Netgear WNDR4500 router. It's been in my life since I can remember, and came along with me to college. A while back I loaded the DD-WRT firmware onto it, and it's been serving like a champ ever since. Seriously, when playing around with it I had to reboot it and was shocked that it'd been up for over 100 days without having to be reset, jostled, or anything like that. She's a beast.
+
+DD-WRT disables remote access to the web-gui by default, so that you have to be in the local network to change settings. This is sane because by default it uses HTTP and is unsecure over the internet, but under `Administration>Management` there's a checkbox to allow remote access to the web-gui. That box needs to be checked (To be truthful, I actually didn't properly set this in in advance and instead had to ssh into the router and set the nvram flag to allow remote access). After checking it, uncheck `Administration>Management>Web Access>HTTP` and check `Administration>Managment>Web Access>HTTPS`. Your browser will complain until you create a valid certificate, but that's okay.
+
+I followed the instructions at the [DD-WRT Wiki](https://wiki.dd-wrt.com/wiki/index.php/Installing_Entware) to install Entware on a USB flash drive that I attached to my router. It provides a package manager and a space to install utilities onto the router. I found that while following the directions that it was architecture dependent, so the cpuinfo file (viewable with `cat /proc/cpuinfo`) gave the needed hints to which Entware to install.
+
+After installing Entware, I followed the instructions on the [acme.sh wiki](https://github.com/Neilpang/acme.sh/wiki/How-to-run-on-DD-WRT-with-lighttpd) to install an HTTPS certificate, and with some deviations from what it perscribed, it worked! (it assumes a lighttpd server, not the builtin httpd server). I'll run through the enumerated steps on the wiki and describe what I did differently to make this work.
+
+1. Setup JFFS (Journaling Flash File System) but don't make an /opt directory, the Entware USB provides an /opt already. When installing with opkg, also `opkg install curl`.
+2. Do as the wiki describes.
+3. Do as the wiki describes.
+4. Ignore this step.
+5. Change path `/jffs/etc/lighttpd_ssl` to `/jffs/etc/` and create necessary directories. Then run `./acme.sh`. After this, through the web-gui go to `Administration>Commands`, add the below code, and click both 'Save Startup`. We're going to reboot the router so we don't need to worry about running them right now. These commands bind the generated certificate and key over the builtin certificate and key, causing the httpd server to use them instead of it's default certificate and key.
+
+```
+mount --bind /jffs/etc/host.crt  /etc/cert.pem
+mount --bind /jffs/etc/host.key  /etc/key.pem
+```
+
+6. Do as the wiki describes.
+
+That's it! Happy green locks everyone :)

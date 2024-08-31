@@ -7,8 +7,9 @@ interface Props {
 const { author, url } = Astro.props;
 ---
 
-<span
-  class="hover:text-green hover:underline transition-all duration-150 ease-in-out"
->
-  photo by <a href={url}>{author}</a>
+<span>
+  photo by <a
+    class="hover:text-green hover:underline transition-all duration-150 ease-in-out"
+    href={url}>{author}</a
+  >
 </span>

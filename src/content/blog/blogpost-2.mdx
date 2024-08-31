@@ -4,15 +4,19 @@ pubDate: "2017-11-30"
 author: "Tristan Sweeney"
 tags:
   - Hardware
-imgUrl: '../../assets/bg-2.jpg'
+imgUrl: "../../assets/bg-2.jpg"
 description: |
   Computers are the miracle of the modern age, and have transformed the way we
   work, think, and live. To most, computers are magical and 'just work', a
   sentiment derived from the boundless effort spent developing wonderful machines
   and software by computer engineers and scientists.
-layout: '../../layouts/BlogPost.astro'
+layout: "../../layouts/BlogPost.astro"
 ---
+
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+
 # Prologue
+
 Computers are the miracle of the modern age, and have transformed the way we
 work, think, and live. To most, computers are magical and 'just work', a
 sentiment derived from the boundless effort spent developing wonderful machines
@@ -38,7 +42,9 @@ interested in learning how the magic of how a CPU operates I'm certain you
 aren't a dummy. It's a reference to the famous X-for-dummies book series.
 
 # Binary Logic
+
 ## Why Binary?
+
 Computer engineers very early on decided to use a binary number system with two
 values, 0 and 1, as it made designing computer circuits orders of magnitudes
 easier than any other system.
@@ -48,6 +54,7 @@ values 0, 1, and 2 would be incredibly difficult given the mechanics of how
 circuits operate.
 
 ## Numbers in Binary
+
 Don't fret, numbers greater than 1 can be represented in a binary system! Just
 like how humans use the digits between 0 and 9 to represent values greater
 than 9, computers use the _bits_ 0 and 1 to represent values grater than 1.
@@ -62,15 +69,28 @@ written numbers are composed of powers of 2. So, it has the 1's place, 2's
 place, 4's place, 8's place, and so on. This is easier to understand visually:
 
 ![Binary to Decimal Maths](../../assets/computer_architecture_for_dummies/binary.png)
-<a href="https://sites.google.com/site/syhsdominguez/_/rsrc/1452718673850/creative-projects/binary-numbers/"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="unknown"
+    url="https://sites.google.com/site/syhsdominguez/_/rsrc/1452718673850/creative-projects/binary-numbers/"
+  />
+</div>
 
 While you don't need to be able to see 10010101 and intuitively know what human
 number it is, it's important to understand that binary is more than capable of
 representing a larger-than-one value.
 
 ## A note to Electrical Engineers
+
 ![Noise in Digital](../../assets/computer_architecture_for_dummies/analog.png)
-<a href="https://www.slideshare.net/AllankiRao/digital-communications-18001485"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="A.Sanysi Rao"
+    url="https://www.slideshare.net/AllankiRao/digital-communications-18001485"
+  />
+</div>
 
 Unlike analog electronics which operate on continuous values, computer circuits
 operate on discrete values. This is necessary to avoid data corruption from
@@ -82,10 +102,17 @@ the widest noise margin (gap between values) and is therefore the safest from
 electrical noise.
 
 # What's in the Box?
+
 ## Von-Neumann Architecture
 
 ![Von-Neumann Architecture](../../assets/computer_architecture_for_dummies/neumann.jpg)
-<a href="https://www.computerscience.gcse.guru/theory/von-neumann-architecture"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="Computer Science GCSE GURU"
+    url="https://www.computerscience.gcse.guru/theory/von-neumann-architecture"
+  />
+</div>
 
 The Von-Neumann Architecture is a model for how computers look at a high level,
 with the CPU containing a Control Unit and ALU (Arithmetic Logic Unit) that
@@ -107,7 +134,13 @@ planes physical controls as output.
 ## Assembly Code
 
 ![Simple Instruction Format](../../assets/computer_architecture_for_dummies/instruction.png)
-<a href="https://stackoverflow.com/questions/6929440/what-does-func-means-in-r-format-instruction-set"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="unknown"
+    url="https://stackoverflow.com/questions/6929440/what-does-func-means-in-r-format-instruction-set"
+  />
+</div>
 
 Instructions are stored in machine code, typically in 32-bit sections called
 _words_ (in 64-bit machines, words are 64 bits). As shown in the above graphic
@@ -115,8 +148,15 @@ the instruction is composed of several smaller bit-length values, which are
 used to encode what the instruction is for interpretation by the processor.
 
 ## The Processor
+
 ![The Control and Datapath](../../assets/computer_architecture_for_dummies/datapath.png)
-<a href="http://inst.eecs.berkeley.edu/~cs61cl/fa08/labs/lab20.html"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="unknown"
+    url="http://inst.eecs.berkeley.edu/~cs61cl/fa08/labs/lab20.html"
+  />
+</div>
 
 The control and data logic for a simple processor is laid out above. Control is
 blue, data is black.
@@ -130,21 +170,38 @@ Once an instruction is loaded, the control signals set the addresses the
 register block should read from, what operation the ALU should perform, and
 where the result should be written back to memory. The logic of how these are
 implemented is complicated beyond the scope of this post, but can be found
+
 <a href="http://minnie.tuhs.org/CompArch/Tutes/week02.html"> here</a>.
 
 # Memory
 
 ## SRAM
+
+<div class="flex-justify-center flex flex-col flex-items-center">
 ![Memory Cell](../../assets/computer_architecture_for_dummies/sram.png)
-<a href="https://commons.wikimedia.org/wiki/File:SRAM_Cell_Inverter_Loop.png"> credit </a>
+
+<div class="flex flex-justify-end flex-1">
+  <ImageCredit
+    author="Inductiveload"
+    url="https://commons.wikimedia.org/wiki/File:SRAM_Cell_Inverter_Loop.png"
+  />
+</div>
+</div>
 
 On chip registers and caches are built using two inverters feeding back into
 each other, which keeps a steady state. The two inverters are each built with
 two transistors, leaving one SRAM bit costing 6 transistors.
 
 ## DRAM
+
 ![Memory Cell](../../assets/computer_architecture_for_dummies/dram.png)
-<a href="https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(Model_of_Single_Circuit_Cell).PNG"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="Tosaka"
+    url="https://commons.wikimedia.org/wiki/File:DRAM_Cell_Structure_(Model_of_Single_Circuit_Cell).PNG"
+  />
+</div>
 
 Memory cells in DRAM are built with one transistor and one capacitor, which
 stores a high or low value. The transistor is cutoff until the word line has a
@@ -157,9 +214,17 @@ dedicated memory card. A conversation on the possibility of on-chip DRAM can be
 found <a href="http://www.zdnet.com/article/why-doesnt-intel-put-dram-on-the-cpu/"> here</a>.
 
 # Storage
+
 ## Hard Drives
+
 ![Memory Cell](../../assets/computer_architecture_for_dummies/hdd.jpg)
-<a href="http://www.pcquest.com/recovering-data-from-an-encrypted-hard-disk-on-ubuntu-14-04/"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="PC Quest"
+    url="http://www.pcquest.com/recovering-data-from-an-encrypted-hard-disk-on-ubuntu-14-04/"
+  />
+</div>
 
 Hard drives store and load data from small magnetic wells on magnetic disks,
 similar to how CDs and magnetic tapes are used in other media. Because the data
@@ -170,8 +235,15 @@ Keeping spinning disks in a portable device like a laptop is a bit dicey.
 Luckily, drives with no moving parts exist.
 
 ## Solid State Drives
+
 ![Memory Cell](../../assets/computer_architecture_for_dummies/ssd.svg)
-<a href="https://en.wikipedia.org/wiki/Flash_memory"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="Harald Wehnar"
+    url="https://en.wikipedia.org/wiki/Flash_memory#/media/File:Flash-Programming.svg"
+  />
+</div>
 
 Solid state drives have no moving parts, and use flash gates like those above to
 store data by holding some permanent electric field in the floating gate. The
@@ -184,7 +256,9 @@ directly into a circuit, which allows tighter integration of storage and
 circuitry.
 
 # Implementing Logic Gates
+
 ## Shrinking Computers
+
 Digital logic can be implemented by any electrical device that exhibits a
 'switching' behavior, meaning it can toggle between transmitting a signal and
 disconnecting that signal. In modern technology, transistors smaller than the
@@ -192,6 +266,14 @@ mind can comprehend are laid out by the billions on single chips, but that
 development is a new one.
 
 ![Vac Tube and Transistor](../../assets/computer_architecture_for_dummies/vacandtrans.jpeg)
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="unknown"
+    url="http://inst.eecs.berkeley.edu/~cs61cl/fa08/labs/lab20.html"
+  />
+</div>
+
 Vacuum Tube and Transistor. Note the physical transistor is smaller than it's
 packaging makes it seem.
 
@@ -206,7 +288,14 @@ tubes they replaced and required no heating element, allowing transistors to be
 packed more densely in designs.
 
 ![Intel CPU](../../assets/computer_architecture_for_dummies/intel.jpg)
-Billions of transistors in modern intel CPU. <a href="https://www.gamersnexus.net/guides/833-reading-a-cpu-die"> credit </a>
+
+<div class="flex flex-justify-end">
+  Billions of transistors in a modern intel CPU.
+  <ImageCredit
+    author="Gamer Nexus"
+    url="https://www.gamersnexus.net/guides/833-reading-a-cpu-die"
+  />
+</div>
 
 Over the years, designers discovered that transistor sizes were consistently
 decreasing year-to-year, and that they could integrate multiple transistors on
@@ -217,17 +306,18 @@ Nowadays, a single chip contains billions of transistors, and drastically
 outpaces the massive warehouse-scale computers of yore.
 
 To drive home the scale of the improvements made,
+
 <a href="https://en.wikipedia.org/wiki/ENIAC">ENIAC</a> weighed 30 tons, took up
-1,800 square feet of space, and had 20,000 vacuum tubes. Using a modern 14nm
-manufacturing process
+1,800 square feet of space, and had 20,000 vacuum tubes. Using a modern 14nm manufacturing
+process
 <a href="https://www.quora.com/What-is-the-average-transistor-count-per-unit-area-of-chips-produced-by-current-merchant-foundries">
-4.4 billion transistors can be fit into a square centimeter
+  4.4 billion transistors can be fit into a square centimeter
 </a>
-. Conservatively assuming we'll need 10x the transistors to implement
-the same logic the tubes did, a transistor-based ENIAC could fit into a 20th of
-a square centimeter.
+. Conservatively assuming we'll need 10x the transistors to implement the same logic
+the tubes did, a transistor-based ENIAC could fit into a 20th of a square centimeter.
 
 ## CMOS Logic
+
 Complementary Metal-Oxide Semiconductor technology is used to implement logical
 gates in computers. The technology uses a PMOS-NMOS pair of transistors to
 connect the output to the high or low voltage. Only one transistor of the pair
@@ -235,7 +325,13 @@ will be 'switched' on for any given input, which effectively means no current
 flows in a CMOS technology.
 
 ![CMOS Inverter](../../assets/computer_architecture_for_dummies/cmos-inverter.gif)
-<a href="https://www.quora.com/What-is-the-working-principle-of-CMOS-inverter"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="Umang Solanki"
+    url="https://www.quora.com/What-is-the-working-principle-of-CMOS-inverter"
+  />
+</div>
 
 The above CMOS inverter produces an output of 1 for an input of 0, and output of
 0 for and input of 1. This is because when the input is low, the PMOS (upper)
@@ -244,11 +340,24 @@ connecting the output to the supply voltage. The opposite occurs for a high
 input.
 
 ![Complex CMOS](../../assets/computer_architecture_for_dummies/complex-cmos.png)
-<a href="https://courses.engr.illinois.edu/ece110/fa2017/content/courseNotes/files/?logicAndCMOS"> credit </a>
+
+<div class="flex flex-justify-end">
+  <ImageCredit
+    author="University of Illinois Urbana-Champaign"
+    url="https://courses.engr.illinois.edu/ece110/fa2017/content/courseNotes/files/?logicAndCMOS"
+  />
+</div>
 
 The above circuits are more complex CMOS circuits, which are less easily
 understood. Further reading on them can be found
-<a href="https://courses.engr.illinois.edu/ece110/fa2017/content/courseNotes/files/?logicAndCMOS">here</a>.
-#Further Reading
-<a href="http://www.quadibloc.com/comp/cp01.htm"> A similar article to this,
-more focused on logic gates and older forms of memory. </a>
+
+<a href="https://courses.engr.illinois.edu/ece110/fa2017/content/courseNotes/files/?logicAndCMOS">
+  here
+</a>
+
+# Further Reading
+
+<a href="http://www.quadibloc.com/comp/cp01.htm">
+  A similar article to this, more focused on logic gates and older forms of
+  memory.
+</a>

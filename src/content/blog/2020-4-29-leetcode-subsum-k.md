@@ -1,0 +1,159 @@
+---
+title: "Breaking down Subsum Equals K"
+pubDate: "2020-4-29"
+author: "Tristan Sweeney"
+tags:
+  - Algorithms
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  given an array of integers, find the number of continuous subarrays equal to `k`.
+layout: "../../layouts/BlogPost.astro"
+---
+
+# Intro and Context
+
+I've spent arguably too long trying to intuit the best soution to leetcode's recent daily challenge, [Subsum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/). It's been a year since I've done anything algorithmically difficult, since firmware is mostly a game of data structures and synchronization, so this wiped the floor with me like the intro boss of a From Software game.
+
+> From Software created the games Demon's Souls, Dark Souls 1 thru 3, Bloodborne, and Sekiro. These games are famous for being unforgivingly difficult. There's no leinency and a steep learning curve, so newcomers will die repeatedly until finally developing the skills needed to play the game.
+>
+> My first of the bunch was Dark Souls 2, and I still remember the joy of finally defeating the first boss, 'The Last Giant'. I think that's the same joy felt when finally understanding something difficult. That "a-ha!" moment when you accheve the impossible is worth all the blood, sweat, and tears shed along the way. And I was lucky enough to have two of those moments, as I found a good solution on my own, then got to sort out the magic of the optimal solution.
+>
+> I started this aside just to give context since I love the games From Software makes, but look at that, it ties in. Life finds a way?
+
+The problem is this: given an array of integers, find the number of continuous subarrays equal to `k`. Not too hard to solve (I thought), and I quickly whipped something that crushed it (I thought). My strategy was simple and O(n) time, O(1) space: inchworm along the array, advancing the ending index when the sum was greater than `k` and advancing the starting index when the subsum was less than `k`. This woked... for positive integers. It immediately failed when the array had negative numbers in it.
+
+<img alt="you died meme" src="/images/leetcode_subsum/you_died.jpg" style="height: 300px; width: auto;"/>
+
+This was hard enough to merit hours of time sunk, so I might as well write a reflection on it, since it'll help it stick and be potentially useful to anyone who finds this.
+
+# Simple Solution
+
+It took a while to envision a solution that handled negatives; I stared into the void over the course of two nights while working on this (and admittedly watching Netflix w/ my SO). I felt there was a memoization solution, but couldn't intuit what I had to memoize since I was stuck thinking I needed a 2d array. This wasn't shaking out as I put down code. A hint stuck in my mind, `sum(i, j) = sum(0, j) - sum(0, i)`, and I used a spreadsheet to work out what data I needed to memoize.
+
+<img alt="memo table" src="/images/leetcode_subsum/memo.PNG" style="height: 200px; width: auto;"/>
+
+Clearly I only needed a 1d array of cumulative sums. I calculated that array, and walked all the valid `start, end` pairs, pulling values from that array find if the subarray sum was `k`. I came up with the below (I'm doing these in rust to build some muscle-memory), and felt confident in it. I submitted it, it worked, big horrah and... I was only in the 14th percentile of runtime? What am I missing?
+
+```rust
+impl Solution {
+    fn gen_sum_array(nums: &Vec<i32>) -> Vec<i32> {
+        let mut sum_array = vec![0; nums.len()];
+        sum_array[0] = nums[0];
+        for i in 1..nums.len() {
+            sum_array[i] = nums[i] + sum_array[i - 1];
+        }
+        sum_array
+    }
+
+    pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {
+        let sum_array = Self::gen_sum_array(&nums);
+        let mut matches = 0;
+        for i in 0..nums.len() {
+            let basis = if i == 0 { 0 } else { sum_array[i - 1]};
+            for j in i..nums.len() {
+                if (sum_array[j] - basis) == k {
+                    matches += 1;
+                }
+            }
+        }
+        matches
+    }
+}
+```
+
+## Slight Opimization
+
+There's a slight optimization to this approach I missed. The solution I found is O(n^2) time and O(n) space, but it's O(n^2) time and O(1) space to accumulate the rows of that table on the fly. That makes sense, Since you don't iterate over more than you did before, you just do marginally more math during that iteration. The solutions leetcode presents are in Java, don't mind the language change.
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int start = 0; start < nums.length; start++) {
+            int sum=0;
+            for (int end = start; end < nums.length; end++) {
+                sum+=nums[end];
+                if (sum == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+# Optimal Solution
+
+There's an optimal solution, and I busted my brain for half an hour trying to get why the magic worked. It builds a frequency map as you iterate down the array, and is O(n) time and O(n) space. It's below, and without meditation on why it worked it seems some eldritch black magic. I'm comment adverse, they often just describe in english what the code clearly is doing, but this is something that I'd expect comments on. I'll show further down how some careful naming makes this solution more intuitive.
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0, sum = 0;
+        HashMap < Integer, Integer > map = new HashMap < > ();
+        map.put(0, 1);
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k))
+                count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+```
+
+The magic works like this: A subarray sums to `k` when `sum(i, j) = k` (obviously). Taking the hint `sum(i, j) = sum(0, j) - sum(0, i)`, we can decompose what condition we're seeking to `sum(0, j) - sum(0, i) = k`. Rearranging, this condition is `sum(0, j) - k = sum(0, i)`. Let's define that term `sum(0, j) - k` as the complementary sum.
+
+The index `j` can be end to all subarrays that have a starting index `i` in the range `0..j`. Assuming we know `sum(0, j)`, we can derive the complementary sum for `j`. The number of subarrays summing to `k` that end at `j` is equal to the number of previous occurances where `sum(0, i)` was that complementary sum.
+
+Assume we have a frequency map `{sum(0, i): num_occurances}` and knowing the complementary sum, the number of subarrays summing to `k` is stored in this map. We may not know where those `i` are, but we only needed to know that they occured.
+
+Of course that map is initalized to to `{0: 1}`, as our sum begins at `0` and we begin exactly once.
+
+Hopefully that clarified the philosophy behind the optimal solution. It iterates `0..j`, calculating `sum(0, j)` and it's complementary sum, incrementing the number of subarrays summing to `k` by the number of times the complentary sum was seen, then stashing `sum(0, j)` into the map as it moves to `j + 1`.
+
+# Conclusion
+
+I think the code is easier to mentally model with variable names slightly massaged, I provided that below.
+I provided it in rust since I think it's cleaner, the use of `Option` returns and the hashmap `.entry` function reduces the amount of fumbling with the map object needed to accomplish the needed task. It has some comments explaining the semantics for the uninitiated.
+
+This solution was difficult to internalize at first, but I'm glad I took the time for it. It turned out to be a good intuition builder, hopefully later algorithm challenges won't require some deep reflection up on a mountainside.
+
+It's 2:51 AM, Elvis left the building and stumbled home a while ago, I'm running on fumes. Hope you've enjoyed this. Bye.
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {
+        /* Map of prior_sum: num_occurences */
+        let mut sum_map = HashMap::new();
+        sum_map.insert(0,1); /* Start having seen a sum of zero one time */
+
+        let mut sum = 0;
+        let mut count = 0;
+
+        for v in nums.iter() {
+            sum += v;
+
+            /* complemtary sum, such that `sum - comp_sum == k` */
+            let comp_sum = sum - k;
+            /* rust-iom, `get` returns an Option, unwrap_or returns the
+             * value if it's `Some(value)`, or the value passed in if
+             * it's `None`.
+             */
+            count += sum_map.get(&comp_sum).unwrap_or(&0);
+            /* rust-iom, get the `Entry` object for the key `sum`, if that
+             * key doesn't exist insert it with the value 0.
+             *
+             * The `Entry` is a reference into the map, and `*entry += 1` is
+             * the same as `map[i] + 1`.
+             */
+            *sum_map.entry(sum).or_insert(0) += 1;
+        }
+
+        count
+    }
+}
+```

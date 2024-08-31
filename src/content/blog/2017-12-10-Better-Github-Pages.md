@@ -1,0 +1,286 @@
+---
+title: "A Better Github Pages Theme"
+pubDate: "2017-12-10"
+author: "Tristan Sweeney"
+tags:
+  - Web
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  T'was the week before Christmas break, and all through the house, and not a
+  soul was stirring, except for the mouse. The deadlines were approaching, the
+  semester drawn short. Stress was upon us, and the time drew near. But wait! We
+  can procrastinate for years!
+layout: "../../layouts/BlogPost.astro"
+---
+
+# Foreword
+
+T'was the week before Christmas break, and all through the house, and not a
+soul was stirring, except for the mouse. The deadlines were approaching, the
+semester drawn short. Stress was upon us, and the time drew near. But wait! We
+can procrastinate for years!
+
+I'm working on a series of blog posts documenting how to setup a Linux HPC
+cluster, and need to customize my theme a bit. Here's what I did, and how to
+build your site locally to test on Windows. If you're looking for the GitHub
+docs on inserting styling (which this elaborates on), it lives
+[here](https://help.github.com/articles/customizing-css-and-html-in-your-jekyll-theme/).
+
+<figure>
+  <img src="https://octodex.github.com/images/grinchtocat.gif">
+  <figcaption>
+    This post was brought to you in part by typing frantically while watching
+    How the Grinch Stole Christmas.
+  </figcaption>
+</figure>
+
+# Modifying Templates
+
+Let's walk over how to modify the templates used by Github pages, a process I
+used to insert QTip2, a tooltip javascript library, into to my site.
+
+Create a file named `_layouts/default.html` at the root of your Github pages
+repo and copy your theme's default layout template to it (each github.io theme
+has a public repo on Github). This will be used by the engine that Github pages
+uses to build your site in place of the default-default layout. Patch the below
+content into the template.
+
+```
+<html>
+  <head>
+
+    ...
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css">
+
+    ...
+
+  </head>
+
+  <body>
+
+    ...
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+
+    <!-- QTip is a custom hover-over tooltip JS framework -->
+    <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
+
+    <script>
+      $('[data-qtip]').each(function() {
+        $(this).qtip({
+            content: {
+                text: $("#"+$(this).data("qtip")).detach().css('display', 'unset').html(),
+            }
+        });
+      });
+    </script>
+
+    ...
+
+  </body>
+</html>
+```
+
+The QTip CSS file provides styling for some sleek hover-over tooltips, and the
+JS files provides the functionality to load content for the tooltips from the
+HTML source. To add a tooltip to a HTML element, add the `data-qtip=<id>`
+attribute to it, referring to the id of the tooltip content.
+
+The child element should have it's style set to `display: none`, which will be
+unset by the javascript that rips out the html for the tooltip (that's all that
+the `qtip-tip` class does below). We'll get to injecting your own CSS to do that
+in a minute. First, let's see some examples (full docs for the QTip tool live
+[here](http://qtip2.com/guides)).
+
+<u data-qtip="example"> Here's an example of a tool-tipped post! </u>
+
+<p id="example" class="qtip-tip">
+  Hey look at me, I'm a tooltip!
+</p>
+
+```html
+<u data-qtip="example"> Here's an example of a tool-tipped post! </u>
+<p id="example" class="qtip-tip">Hey look at me, I'm a tooltip!</p>
+```
+
+<b data-qtip="example2"> Look, anything can be tooltipped! </b>
+
+<div id="example2" class="qtip-tip">
+  <figure>
+  <img src="/images/better_pages/shocked.gif">
+    <figcaption>
+      You can put arbitrary HTML in a caption!
+    </figcaption>
+  </figure>
+</div>
+```html
+<b data-qtip="example2"> Look, anything can be tooltipped!  </b>
+<div id="example2" class="qtip-tip">
+  <figure>
+  <img src='images/better_pages/shocked.gif'>
+    <figcaption>
+      You can put arbitrary HTML in a caption!
+    </figcaption>
+  </figure>
+</div>
+```
+
+Okay, enough showboating, on to adding your own styling.
+
+# Adding Your Own CSS
+
+The CSS used in your final site is generated from Sass, a preprocessor extension
+of CSS. The [full documentation for the language](http://sass-lang.com/) is
+worth reading, but the extension is pretty simple. The additions come together
+to allow to allow a more pragmatic design of CSS sheets, with variables, nested
+elements, and importing.
+
+You can inject your own styling with Sass adding a SCSS (Sass CSS) file at
+`assets/css/style.scss`, which will be loaded after the site's default CSS is
+generated. The `style.scss` file **must** begin with two rows of dashes, but
+other SCSS files should not (it's not valid SCSS and will break the sass-lang
+processor). Smaller **partial** files have filenames begining with '\_' and
+and are used to store variables (they aren't used to generate CSS).
+
+A version of my own SCSS file is below.
+
+```scss
+/**
+ * This file must start with two lines of '---' so that the jekyll engine will
+ * pick it up as a special file to be templated. This dynamically drops in
+ * site.theme below, but also breaks syntax highlighting and so I've omitted it.
+ */
+
+/**
+  * Imports the site's theme. Files are imported like in C (direct inclusion).
+  */
+@import "{{ site.theme }}";
+
+/**
+ * Will set $unused_color to red if it hasn't been set yet. Useful for when a
+ * import may or may not set that variable already, but it needs to have some
+ * value.
+ */
+$unused_color: red !default;
+
+// Variables abstract away magic values everywhere
+$body_width: 90%;
+$content_width: 50%;
+
+.container {
+  width: $body_width;
+  max-width: unset; // max-width: 600px; Stop the squishing of sites!
+  margin: 0 auto;
+}
+
+img {
+  width: $item_width;
+  margin: auto;
+  display: block;
+}
+figure {
+  width: $item_width;
+  margin: auto;
+  text-align: justify;
+
+  /**
+   * Iframes inside of figures should be centered, when expaned to CSS this
+   * styles figure iframe {}
+   */
+  iframe {
+    margin: auto;
+    display: block;
+  }
+}
+
+.qtip-tip {
+  display: none;
+  /**
+   * We don't want the figures and images inside the QTip being at half-width,
+   * like they should be in the main body.
+   */
+  figure,
+  img {
+    width: 90%;
+  }
+}
+```
+
+Note you'll have to add the below content to your `_config.yml` if you want to
+be able to properly find other files to import.
+
+```yml
+---
+sass:
+  sass_dir: assets/css
+```
+
+# Building Locally on Windows
+
+I spent many hours late at night trying to build my page locally on Windows, an
+endeavor that should have been straightforward. I just had to install ruby, and
+a few dependencies (libz and libcurl). Should be easy, right?
+
+Almost everything worked, but ruby couldn't find libcurl despite it being on the
+path. Trivial problem on Linux, should be a simple problem on Windows, but it
+wasn't working and drove me mad. I could confirm the .dll was on the path, but
+the app still was failing.
+
+Finally, the revelation came: give up on using the Windows environment for
+anything fancy and use the Ubuntu-On-Windows subsystem to do all the development
+work!
+
+<figure>
+  <img src="https://i.kinja-img.com/gawker-media/image/upload/s--JKwuy6Ul--/c_scale,fl_progressive,q_80,w_800/dx0xaxgvvszgtqgxyg94.png">
+  <figcaption>
+    <u data-qtip="star_wars">Many hairs were pulled out to bring us this
+    information. </u>
+  </figcaption>
+</figure>
+
+<p id="star_wars" class="qtip-tip">
+  (I can't wait for the 15th, Star Wars hyyyyyyyyyype!)
+</p>
+
+Follow the instructions on the [Microsoft Docs](https://docs.microsoft.com/en-us/windows/wsl/about)
+to enable the Windows subsystem for Linux. After, head to the [Ubuntu](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)
+app on the windows store and open Ubuntu. Run the below commands to install all
+your dependencies:
+
+```
+sudo apt install ruby ruby-dev gcc make zlibg1-dev libcurl3-dev
+sudo bundle install
+```
+
+Write a file named `Gemfile` at the top level off your github.io repo, and
+write the below contents to the file. This allows the site to be built locally
+against a remote github theme (the github-pages gem facilitates downloading the
+theme and building against it).
+
+```
+source 'https://rubygems.org'
+gem 'github-pages', group: :jekyll_plugins
+```
+
+After that, _`bundle exec jekyll serve`_ will serve up your site on
+`localhost:4000`. It'll rebuild your site when any files in the site repo
+change, so go wild! If you think for some reason your site isn't in sync,
+`Ctrl-C` the server and launch it again to rebuild.
+
+# Afterword
+
+It'd be very, very nice if you could write a `_colors.scss` partial file that
+could be used to override the default colors of different elements on the site.
+Namely, it'd be useful to override the green elements on the page with others,
+or set the background color.
+
+I just had a pull request accepted that moved the style sheets from using magic
+values everywhere (and really just using plain CSS in a SCSS file) to use more
+sass. That [pull request](https://github.com/pages-themes/hacker/pull/18) was
+just approved today, lucky me. This should lay the groundwork, if I make it
+through finals week.

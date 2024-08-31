@@ -1,0 +1,112 @@
+---
+title: "Counting Ones"
+pubDate: "2017-12-4"
+author: "Tristan Sweeney"
+tags:
+  - Algorithms
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  So, say you have a bitstring, `11010110`, and you want to count how many
+  ones are in it.
+layout: "../../layouts/BlogPost.astro"
+---
+
+# Counting Ones
+
+Okay, this one is a short one. Really, it's mostly on here solely so that I can
+find it later, and because I can't a concise explanation on the web anywhere.
+
+So, say you have a bitstring, `11010110`, and you want to count how many
+ones are in it. Trivially, you can perform the below logic to count it, running in `O(n_bits)` time.
+
+```c++
+int n = 0b11010110; // Yes, C++ 14 introduced binary literals! Yippie!
+int count = 0;
+while(n > 0)
+{
+    if (n & 1)
+        count ++;
+    n >>= 1;
+}
+```
+
+`O(64)` isn't too bad, but it feels like there's got to be
+a better solution (and of course, it's one of those ones that leaves you
+marveling at how simple it is).
+
+[Prismoskills](https://prismoskills.appspot.com/lessons/Bitwise_Operators/Count_ones_in_an_integer.jsp)
+(apparently a skills/interview prep site) highlights that the below logic will
+operate in `O(n_ones)` time. It operates with a bit of bitwise logic that's
+tricky to understand at first but actually quite intuitive.
+
+```c++
+int n = 0b11010110; // Yes, C++ 14 introduced binary literals! Yippie!
+int count=0;
+while (n!=0)
+{
+    n = n & (n-1);
+    count++;
+}
+```
+
+Let us look at the values in `n`, `n-1`, and `n & (n-1)` for each iteration, to get a sense for this magic.
+
+<table style="font-family: 'Lucida Console', Monaco, monospace">
+  <tr>
+    <th>n</th>
+    <th>n-1</th>
+    <th>n&(n-1)</th>
+    <th>count++</th>
+  </tr>
+  <tr>
+    <td>1101 011<b>1</b></td>
+    <td>1101 011<b>0</b></td>
+    <td>1101 0110</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1101 01<b>1</b>0</td>
+    <td>1101 01<b>0</b>1</td>
+    <td>1101 0100</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>1101 0<b>1</b>00</td>
+    <td>1101 0<b>0</b>11</td>
+    <td>1101 0000</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>110<b>1</b> 0000</td>
+    <td>110<b>0</b> 1111</td>
+    <td>1100 0000</td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>1<b>1</b>00 0000</td>
+    <td>1<b>0</b>11 1111</td>
+    <td>1000 0000</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><b>1</b>000 0000</td>
+    <td><b>0</b>111 1111</td>
+    <td>0000 0000</td>
+    <td>6</td>
+  </tr>
+</table>
+
+So, what looked like a strange abuse of bitwise operations is actually quite elegant. The algorithm generates a bitmask by performing `n-1` that masks out the lowest one in `n` at that iteration. This operation knocks a one off of `n` on each iteration, therefore running in `O(n_bits)` time.
+
+# Counting Zeros
+
+Suppose you wanted to instead count how many zeros are in a bitstring. Either inverting the bits with `~` (a bitwise not) and putting the result through the one-counting algorithm or subtracting the
+number of ones from `sizeof(type)` (C/C++) will give you the number of zeros.
+
+Both approaches should run in near-identical runtime, with the invert-and-count-ones approach being marginally faster due to not having to load the literal `sizeof(int)` into a register from constant memory.
+
+# Hamming Distance
+
+For the curious, this came from a coding challenge on [leetcode](https://leetcode.com/problems/hamming-distance/description/) to calculate the "Hamming Distance" between two numbers, the count of locations in them where their bits differ.
+
+The hamming distance between `0001` and `0100` would be 2, since two locations differ. Performing an `XOR` on the two numbers then counting the ones gives the hamming distance between two values.

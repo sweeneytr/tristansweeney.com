@@ -1,0 +1,207 @@
+---
+title: "Do You Wanna Build a HPC Cluster?: Part 2 - Users"
+pubDate: "2017-12-19"
+author: "Tristan Sweeney"
+tags:
+  - Hardware
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  With all your computers networked together, you're going to quickly realize that
+  user management becomes a nightmare across machines. Ansible can help for small
+  clusters.
+layout: "../../layouts/BlogPost.astro"
+---
+
+# Foreword
+
+With all your computers networked together, you're going to quickly realize that
+user management becomes a nightmare across machines. Users have to be added to
+every machine, they need to be a part of the same groups on each machine, have
+the proper permissions, etc.
+
+The proper way to handle user authentication is to have a central user database
+that the nodes on the network look to for information on what users should be
+allowed into the system. That can be a bit over-the-top for small clusters, so
+first I'll discuss a simple way to manage users.
+
+# Ansible Management
+
+Ansible is a tool for orchestrating actions across many different hosts in a
+network. It can be used to install packages on different machines, configure
+anything, run any command. It's truely a dream if you have any sort of a problem
+that can be solved with performing an action on all the machines concurrently.
+this includes adding user accounts.
+
+Ansible is distributed through many package managers, but the latest and
+greatest is available through `pip`, the python package manager. Ansible is
+built on python, and runs on just about anything. The below bit of magic will
+install Ansible on any system that uses aptitude.
+
+```
+sudo apt install python3 python3-pip
+pip3 install ansible
+```
+
+Ansible uses a data description language called YAML to describe tasks to be run
+on hosts. The below YAML describes setting up user accounts on a set of host
+machines. It uses a "with items" loop (similar to a for-each loop) to add users
+defined in `user-vars.yml` file to all the machines Ansible is managing.
+
+```yaml
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - user-vars.yml
+  tasks:
+    - name: Create users.
+      user:
+        name: "{{ item.name }}"
+        comment: "{{ item.fullname }}"
+        createhome: yes
+        groups: "{{ item.groups }}"
+        uid: "{{ item.uid }}"
+        shell: /bin/bash
+        password: "{{ item.password }}"
+      with_items:
+        - "{{ users }}"
+```
+
+You may notice that interestingly, the password and UID are being set for the
+user. This was necessary for our architecture because we were using a
+networked file system, and OSs track ownership and access permissions by user
+ID and not username. Without setting the UID of each user, machines went mad as
+users were signing in and their UID didn't match the UID that owned their home
+directories.
+
+Below is the content of `user-vars.yml`. You'll notice that passwords are stored
+as hashes. Those hashes are generated with `mkpasswd`, the command which
+normally hashes passwords that'll be stored in the `/etc/passwd`. It can be
+installed with `sudo apt install whois`, and `mkpasswd -m sha-512` will generate
+the passwords to be inserted into the file.
+
+```YAML
+users:
+  - name: tsweeney
+    password: $6$raieteigijnrlak35030/.who.would.actually.put.a.hash.online.sgf
+    fullname: Tristan Sweeney
+    groups: sudo
+    uid: 5001
+
+  - name: shance
+    password: $6$raieteigijnrlak35030/.who.would.actually.put.a.hash.online.sgf
+    fullname: Spencer Hance
+    groups: sudo
+    uid: 5002
+```
+
+The last bit to tie this all together is a file in `/etc/ansible/hosts`. This is
+an `.ini` file that describes the hosts to be managed by Ansible. This file can
+get more complicated and define values attached to hosts, but it also can be as
+simple as the one below. you can use IPs or hostnames if those host names are
+resolvable against DNS or `/etc/hosts`. The group of hosts `all` referred to in
+the playbook implicitly refers to all the hosts defined in the hosts file.
+
+```ini
+[access_node]
+pantheon-pi
+
+[work_nodes]
+pantheon-0
+pantheon-1
+pantheon-2
+pantheon-3
+```
+
+And that's all folks, all you need to manage user accounts with ansible. All
+that's left is to do is to run `ansible-playbook ./setup_users.yml
+--ask-become-pass`, provide your password so ansible can run sudo tasks to add
+the users, and sit pretty as Ansible churns away. Also, marvel at Ansible and
+the magic it does.
+
+<figure>
+  <img src="http://i.imgur.com/H45R5Js.gif">
+  <figcaption>
+    Don't worry, we'll talk about how Ansible can be used to do more
+    administrative magic soon.
+  </figcaption>
+</figure>
+
+# Pluggable Authentication
+
+Luckily, those wacky Linux folks we all know identified that sysadmins would
+want to have pluggable authentication modules (PAMs) that they could add to
+their systems, that would allow them to have users from a central user database.
+That way, you have one account of a user living out in a database, and the OS
+knows to ask that database for UID, passwords, and all else.
+
+LDAP (lightweight directory access protocol) is a protocol for accessing
+directory databases. This is a (relatively) old fashioned style of database,
+where hierarchical data is stored. If you're imagining that this mirrors how
+you'd try to organize data on a file system: you got it. LDAP is commonly used
+to store a hierarchy of user data, including login data.
+
+LDAP is also ancient and a massive pain to set up and configure. There are
+reference materials for setting it up from [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-authenticate-client-computers-using-ldap-on-an-ubuntu-12-04-vps)
+which I did follow on an initial exploration LDAP authentication. My takeaway
+from that foray is that you should never deal with LDAP's nonsense, and with
+Ansible you never will have to.
+
+[Ansible Galaxy](https://galaxy.ansible.com/) Provides packaged "Roles" you can
+have hosts perform, which are decently maintained and developed. You can use
+`ansible-galaxy install username.rolename` to install a role to your Ansible
+controller. The roles `jnv.ldap-auth-client`, `bennojoy.openldap_server`,
+and `net2grid.openldap_config` handle all the configuration you'll need, they
+just need to be provided a simple set of parameters that are discernable from
+the documents on digital ocean and the repos for the ansible roles.
+
+```YAML
+---
+- hosts: all
+  roles:
+  - role: jnv.ldap-auth-client
+    tags: ldap
+    ldap_auth_config:
+        ldapns/base-dn:
+          type: string
+          value: "dc=example,dc=com"
+        ldapns/ldap-server:
+          type: string
+          value: "ldap://pantheon-0:389"
+        pam_password:
+          type: select
+          value: exop
+        dbrootlogin:
+          type: boolean
+          value: false
+- hosts: openldap_servers
+  become: yes
+  become_method: sudo
+  roles:
+  - role: bennojoy.openldap_server
+    openldap_server_domain_name: pantheon.ece.neu.edu
+    openldap_server_rootpw: zeus
+    openldap_server_enable_ssl: false
+
+  - role: net2grid.openldap_config
+    default_user_password: nucar
+    openldap_create_organizationalunits:
+      - Groups
+      - People
+      - Hosts
+    openldap_create_users:
+      - name: tsweeney
+        cn: Tristan Sweeney
+        sn: Sweeney
+        password: nucar
+        email: sweeney.tr@husky.neu.edu
+        group_ou: ou=People
+```
+
+# Single Sign On
+
+We didn't manage to get SSO working on our cluster, which isn't a problem for a
+small cluster or a cluster with an NFS home directory where SSH keys can be
+propagated, but a proper SSO authentication service would be wonderful. If I'm
+at SC next year I'll explore using Kerboros for SSO.

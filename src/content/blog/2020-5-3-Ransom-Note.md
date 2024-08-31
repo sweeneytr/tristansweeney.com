@@ -1,0 +1,129 @@
+---
+title: "Ransom Note"
+pubDate: "2020-5-3"
+author: "Tristan Sweeney"
+tags:
+  - Algorithms
+imgUrl: "../../assets/bg-2.jpg"
+description: |
+  Given the text for a ransom note, determine if enough letters exist in a magazine to create it.
+layout: "../../layouts/BlogPost.astro"
+---
+
+# Intro
+
+> Given the text for a ransom note, determine if enough letters exist in a magazine to create it.
+
+Dark premise, but achievable. I'd call this problem easy, but hard to do optimally if you don't have the right tool (e.g. frequency-map) in the mental toolbox. I've annotated the code with time/space complexity thoughts, and their leetcode submission runtimes.
+
+I guided a friend through discovering to the optimal solution, and found it was easiest to reach that solution when he wasn't thinking of code. Pushing him to describe "what process would you follow" got him envisioning what that optimal solution would look like from a process perspective, short-circuiting the impulse to write some code and stare at it wondering "how could this be quicker". Once I got an answer, prodding him with "would that be optimal?" was enough to get a response of "oh, of course not, I'd tally up what letters I needed then work from that". A final "would you keep looking at the magazine after you found all the letters you needed?" finished the journey, leaving him with an implementation similar to what I have below.
+
+It was a good practice for teaching and interviewing, getting someone out of a problem-solving rut without handing them a solution takes care, and it's been better to clutz with a friend rather then a student or applicant.
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    /* O(b) time, O(1) space (looks like it's O(b) space but it's bounded to
+     * having 26 keys 'a'..='z') */
+    fn build_freq_map(b: Vec<u8>) -> HashMap<u8, u32> {
+        /* Avoid on-the-fly reallocation, only ascii lowercase chars */
+        let mut map = HashMap::with_capacity(26);
+
+        for c in b.into_iter() {
+            map.entry(c).and_modify(|e| *e += 1).or_insert(1);
+        }
+
+        map
+    }
+
+    /* O(r + m) time, O(1) space (looks like it's O(r) but it's bounded to having
+     * 26 'a'..'z' elements) */
+    /* ~4ms runtime for submission tests */
+    fn can_construct_ransom_freq(ransom_note: String, magazine: String) -> bool {
+        if ransom_note.len() == 0 {
+            return true;
+        }
+
+        let mut note_freq_map = Self::build_freq_map(ransom_note.into_bytes());
+
+        for c in magazine.into_bytes() {
+            if let Some(val) = note_freq_map.get_mut(&c) {
+                *val -= 1;
+                if *val == 0 {
+                    note_freq_map.remove(&c);
+                    if note_freq_map.len() == 0 {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        false
+    }
+
+    /* O(r + m) time, O(1) space (looks like it's O(m) but it's bounded to having
+     * 26 'a'..'z' elements) */
+    /* ~8ms runtime for submission tests */
+    /* All intution was (correctly) against this being faster, since it's best-case
+     * requires processing all elements of magazine. I saw in the histogram of solutions
+     * that there as a 0ms solution, and while I was sure this wasn't it I was curious
+     * to see it's runtime.
+     */
+    fn can_construct_mag_freq(ransom_note: String, magazine: String) -> bool {
+        let mut mag_freq_map = Self::build_freq_map(magazine.into_bytes());
+
+        for c in ransom_note.into_bytes() {
+            if let Some(val) = mag_freq_map.get_mut(&c) {
+                *val -= 1;
+                if *val == 0 {
+                    mag_freq_map.remove(&c);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        true
+    }
+
+    /* O(r + m) time, O(1) space */
+    /* ~0ms runtime for submission tests */
+    /* Implements the `ransom_freq` solution with a primitive array. Since there's no
+     * more `map.len()` to call it scans the array when it hits val == 0 for the first
+     * time
+     *
+     * Shouldn't be faster given an ideal compiler, but is closer to the optimal asm
+     * expression of the solution.
+     */
+    fn can_construct_ransom_freq_jank(ransom_note: String, magazine: String) -> bool {
+        let mut note_freq_map: [u32; 26] = [0; 26];
+
+        if ransom_note.len() == 0 {
+            return true;
+        }
+
+        for c in ransom_note.into_bytes() {
+            note_freq_map[(c - 'a' as u8) as usize] += 1;
+        }
+
+        for c in magazine.into_bytes() {
+            let val = &mut note_freq_map[(c - 'a' as u8) as usize];
+            if *val > 0 {
+                *val -= 1;
+                /* O(1) scan since note_freq_map doesn't scale w/ problem size. Only
+                 * scan when a value hits 0 */
+                if *val == 0 && note_freq_map.iter().all(|count| *count == 0) {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
+    pub fn can_construct(ransom_note: String, magazine: String) -> bool {
+        Self::can_construct_ransom_freq_jank(ransom_note, magazine)
+    }
+}
+```
