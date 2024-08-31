@@ -58,7 +58,7 @@ const { tag, blogposts } = Astro.props;
       {
         blogposts.map((post) => (
           <PostItem>
-            <BlogSummaryCard post={post} />
+            <BlogSummaryCard post={post} baseUrl="/projects" />
           </PostItem>
         ))
       }

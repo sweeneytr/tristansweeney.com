@@ -7,10 +7,12 @@ tags:
   - MobileDev
   - React Native
 imgUrl: '../../assets/sara-polo-lady-lake-thmb1-v07.jpg'
+imgAuthor: Sara Polo
+imgLink: https://sarapolo.artstation.com/
 description: |
   I created a platform to expose custom iOS functionality to web apps, and had a
-  lot of fun doing it. Mobile development is a fun time, but now developers can
-  use our mobile functionality before they invest in building their own app.
+  lot of fun doing it. Now developers can use our mobile functionality before
+  they invest in building their own app.
 layout: '../../layouts/BlogPost.astro'
 ---
 
