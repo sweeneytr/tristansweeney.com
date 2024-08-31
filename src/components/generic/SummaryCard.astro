@@ -9,14 +9,16 @@ interface Props {
   imgSrc: ImageMetadata;
   imgAlt: string;
   description: string;
+  date: Date;
   credit?: ComponentProps<typeof ImageCredit>;
 }
 
-const { title, imgAlt, imgSrc, description, credit } = Astro.props;
+const { title, imgAlt, imgSrc, description, credit, date } = Astro.props;
 ---
 
 <Card color="white">
   <h3 class="poppins text-lg md:text-xl">{title}</h3>
+  <span class="text-gray-500">{date.toLocaleDateString()}</span>
   <div class="my-4">
     <div class="rounded-lg border-3 border-black h-56">
       <Image
