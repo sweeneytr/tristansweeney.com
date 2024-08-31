@@ -1,4 +1,5 @@
 ---
+import { Pill } from "@eliancodes/brutal-ui";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Default.astro";
@@ -47,12 +48,12 @@ const { tag, blogposts } = Astro.props;
   pageTitle={`Brutal Blog | Blogposts tagged with ${tag}`}
 >
   <main class="p-6 bg-purple grid gap-4">
-    <div>
+    <div class="gap-4 flex flex-items-center">
       <Button href="/projects/">&larr; Back to projects</Button>
+
+      <Pill><span class="case-capital">{tag}</span></Pill>
     </div>
-    <p>
-      {tag}
-    </p>
+
     <PostGrid>
       {
         blogposts.map((post) => (

@@ -1,6 +1,9 @@
 ---
 interface Props {
-  content: any;
+  content: {
+    pubDate: string;
+    author: string;
+  };
 }
 
 const { content } = Astro.props;

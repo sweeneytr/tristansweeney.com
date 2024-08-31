@@ -12,7 +12,7 @@ const posts = await getCollection("projects").then((collection) =>
 
 <Layout
   title="Projects"
-  description="Brutal Blog | On this page you can find a collection of blogposts"
+  description="Projects | Here's some fun things I've worked on!"
   pageTitle="My Projects"
 >
   <main class="bg-purple p-6">
@@ -20,7 +20,7 @@ const posts = await getCollection("projects").then((collection) =>
       {
         posts.map((post) => (
           <PostItem>
-            <BlogSummaryCard post={post} />
+            <BlogSummaryCard post={post} baseUrl="/projects" />
           </PostItem>
         ))
       }

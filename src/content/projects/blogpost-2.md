@@ -1,13 +1,16 @@
 ---
-title: Blogpost 2
-pubDate: 12/31/2022 12:05
-author: "Elian Van Cutsem"
+title: iOS Native Browser Plugins
+pubDate: 8/30/2024
+author: "Tristan Sweeney"
 tags:
-  - Astro
   - WebDev
-  - Programming
-imgUrl: '../../assets/bg-2.jpg'
-description: Lorem markdownum longo os thyrso telum, continet servat fetus nymphae, vox nocte sedesque, decimo. Omnia esse, quam sive; conplevit illis indestrictus admovit dedit sub quod protectus, impedit non.
+  - MobileDev
+  - React Native
+imgUrl: '../../assets/sara-polo-lady-lake-thmb1-v07.jpg'
+description: |
+  I created a platform to expose custom iOS functionality to web apps, and had a
+  lot of fun doing it. Mobile development is a fun time, but now developers can
+  use our mobile functionality before they invest in building their own app.
 layout: '../../layouts/BlogPost.astro'
 ---
 
