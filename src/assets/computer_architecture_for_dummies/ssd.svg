@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="382" width="460">
+<defs>
+	<pattern id="a" width="6" patternUnits="userSpaceOnUse" height="6">
+		<path d="m0 0h6v6h-6z" fill="#eee"/>
+		<circle cx="4" cy="4" r="1.2"/>
+	</pattern>
+</defs>
+<g stroke="#000" stroke-width="2">
+	<g stroke-width="3.5">
+		<path d="m25 215s-9.1 6.95-9.1 16.95 7.211 13.85 7.211 22.35h122.4v-39.3zm354 0s17.2 9.8 17.2 17c0 9.9-16.5 16.09-16.5 22.39h-121.3v-39.39z" fill="#eee"/>
+		<path fill="url(#a)" d="m221 195h58.8v-15.2h-58.8zm-50.2-0.4948 69-69.01h39v-19.9h-49.9l-69 70h-37.82v18.91zm206.2 179h-354s-16.4-18.6-16.4-37.6c0-19.9 23-22 24-36.8 0.8-14.9-19.9-10.4-19.9-21.6 0-11.3 12.4-14.7 12.4-23.5h85c16.9 0 33-19.01 33-39h119c0 16.99 15.9 39 35.4 39h84c0.3 13.3 20.9 12.8 20.4 27.6-0.5 14.9-21.6 18-21.6 32.7 0 15 6.8 10.9 6.8 23 0 11-15.5 9.6-15.5 18.4 0 8.7 8.6 17.8 8.6 17.8z"/>
+	</g>
+	<path d="m269 169 5.2 6.1-10.1 3.3 4.9-9.4z"/>
+	<path d="m281 201v8l-9.8-4 9.8-4z"/>
+	<path fill="none" d="m281.6 205h25c7 0 13.6-4 21.9-12.4l79.9-76m-95.4 20.4-42 35.7m-10-93.7v31.5m-188 65.5c-6.6 12.6-0.6 31 2.2 45.9m315.8 10.1c14.8-1.2 22 4.5 26.3 10.9"/>
+</g>
+<g style="text-anchor:middle;font-family:Arial,sans-serif;font-weight:bold;font-size:17">
+
+  <switch transform="translate(229 26)">
+		<text systemLanguage="de">Programmierung durch <tspan style="font-style:oblique;">Hot-Electron-Injection</tspan></text>
+		<text systemLanguage="ru">Программирование инжекцией электронов</text>
+		<text>Programming via hot electron injection</text>
+  </switch>
+
+  <switch font-size="18" transform="translate(75 240)">
+    <text systemLanguage="ru">Исток</text>
+    <text>SOURCE</text>
+  </switch>
+
+  <switch font-size="18" transform="translate(331 240)">
+    <text systemLanguage="ru">Сток</text>
+    <text>DRAIN</text>
+  </switch>
+
+  <switch transform="translate(339,126)">
+		<text systemLanguage="de">Floating-<tspan y="17" x="0">Gate</tspan></text>
+		<text font-size="15" systemLanguage="ru">плавающий<tspan y="17" x="0">затвор</tspan></text>
+		<text>floating<tspan y="17" x="0">gate</tspan></text>
+	</switch>
+  
+	<text y="155" x="73">0 V</text>
+	<text y="271" x="423.8">12 V</text>
+	<text y="58" x="259">12 V</text>
+	<text y="112" x="402">200 Å</text>
+</g>
+<circle cx="418.4" cy="244.3" r="5.3"/>
+<circle cx="261" cy="75.55" r="5.3"/>
+<circle cx="73.18" cy="174.4" r="5.3"/>
+</svg>
