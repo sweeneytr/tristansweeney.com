@@ -1,9 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('projects');
+  const blogEntries = await getCollection("projects");
   return blogEntries.map((blogpost) => ({
     params: { slug: blogpost.slug },
     props: { blogpost },
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  blogpost: CollectionEntry<'projects'>;
+  blogpost: CollectionEntry<"projects">;
 }
 
 const { blogpost } = Astro.props;
