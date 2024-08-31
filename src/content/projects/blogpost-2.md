@@ -13,7 +13,7 @@ description: |
   I created a platform to expose custom iOS functionality to web apps, and had a
   lot of fun doing it. Now developers can use our mobile functionality before
   they invest in building their own app.
-layout: '../../layouts/BlogPost.astro'
+layout: '../../layouts/Project.astro'
 ---
 
 ## Deorum petiit ignis

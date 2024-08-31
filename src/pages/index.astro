@@ -93,6 +93,11 @@ const builtWith = [
         </Card>
       </div>
     </section>
-    <RecentBlogPosts />
+    <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
+    <RecentBlogPosts
+      baseUrl="/projects"
+      plural="projects"
+      collection="projects"
+    />
   </main>
 </Layout>

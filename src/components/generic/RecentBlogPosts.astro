@@ -5,36 +5,40 @@ import { Button } from "@eliancodes/brutal-ui";
 import PostGrid from "./PostGrid.astro";
 import PostItem from "./PostItem.astro";
 import BlogSummaryCard from "@components/blog/BlogSummaryCard.astro";
+import type { ContentEntryMap } from "astro:content";
 
 interface Props {
   count?: number;
+  collection: keyof ContentEntryMap;
+  baseUrl: string;
+  plural: string;
 }
 
-const { count } = Astro.props;
+const { count, collection, baseUrl, plural } = Astro.props;
 
-const posts = await getCollection("blog").then((posts) =>
+const posts = await getCollection(collection).then((posts) =>
   posts.reverse().slice(0, count ?? 3)
 );
 ---
 
 <section class="mt-8">
-  <Card color="#4ade80">
+  <Card color={collection === "blog" ? "#4ade80" : "#C084FC"}>
     <div class="flex justify-between items-start">
-      <h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 dm-serif">
-        Recent Blogposts
+      <h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 dm-serif case-capital">
+        Recent {plural}
       </h2>
       <div class="hidden md:block">
-        <Button href="/blog/">Go to blog &rarr;</Button>
+        <Button href={baseUrl}>Go to {collection} &rarr;</Button>
       </div>
       <div class="block md:hidden">
-        <Button href="/blog/">to blog</Button>
+        <Button href={baseUrl}>to {collection}</Button>
       </div>
     </div>
     <PostGrid>
       {
         posts.map((post) => (
           <PostItem>
-            <BlogSummaryCard post={post} baseUrl="/blog" />
+            <BlogSummaryCard post={post} baseUrl={baseUrl} />
           </PostItem>
         ))
       }
