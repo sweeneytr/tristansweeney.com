@@ -4,14 +4,19 @@ interface Props {
     pubDate: string;
     author: string;
   };
+
+  collection: keyof ContentEntryMap;
+  baseUrl: string;
 }
 
+import type { ContentEntryMap } from "astro:content";
 import "./content.css";
-const { content } = Astro.props;
+const { content, baseUrl, collection } = Astro.props;
 ---
 
 <article class="prose-slate w-sm md:w-prose md:prose poppins">
-  <a href="/blog/" title="Back to blog">&larr; Back to blog</a>
+  <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
+  >
   <p class="text-slate text-sm md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
@@ -19,5 +24,6 @@ const { content } = Astro.props;
     <slot />
   </div>
   <p class="text-slate">Written by {content.author}</p>
-  <a href="/blog/" title="Back to blog">&larr; Back to blog</a>
+  <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
+  >
 </article>
