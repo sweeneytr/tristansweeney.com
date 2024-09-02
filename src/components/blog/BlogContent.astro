@@ -4,14 +4,18 @@ interface Props {
     pubDate: string;
     author: string;
   };
-
-  collection: keyof ContentEntryMap;
-  baseUrl: string;
+  context: {
+    collection: keyof ContentEntryMap;
+    baseUrl: string;
+  };
 }
 
 import type { ContentEntryMap } from "astro:content";
 import "./content.css";
-const { content, baseUrl, collection } = Astro.props;
+const {
+  content,
+  context: { collection, baseUrl },
+} = Astro.props;
 ---
 
 <article class="prose-slate w-sm md:w-prose md:prose poppins">
