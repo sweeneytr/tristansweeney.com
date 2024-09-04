@@ -5,6 +5,9 @@ author: "Tristan Sweeney"
 tags:
   - Hardware
 imgUrl: "../../assets/hpc.jpg"
+credit:
+  author: Argonne National Laboratory
+  url: https://commons.wikimedia.org/wiki/File:Nanoscience_High-Performance_Computing_Facility.jpg
 description: |
   For those of you that don't personally know me, and therefore haven't witnessed
   the slow descent into madness that comes every fall to haunt me, welcome to the

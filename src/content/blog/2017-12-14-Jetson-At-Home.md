@@ -5,6 +5,9 @@ author: "Tristan Sweeney"
 tags:
   - Hardware
 imgUrl: "../../assets/jetson.png"
+credit:
+  author: NVIDIA
+  url: https://developer.nvidia.com/blog/power-optimization-with-nvidia-jetson/
 description: |
   I have a couple of CUDA-capable devices though my house
 layout: "../../layouts/BlogPost.astro"
