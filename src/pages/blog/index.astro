@@ -6,7 +6,9 @@ import BlogSummaryCard from "@components/blog/BlogSummaryCard.astro";
 import PostItem from "@components/generic/PostItem.astro";
 
 const posts = await getCollection("blog").then((collection) =>
-  collection.reverse()
+  collection.toSorted(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  )
 );
 ---
 
