@@ -2,13 +2,13 @@
 import { Pill } from "@eliancodes/brutal-ui";
 
 const tools = {
-  "Fun Tools": [
+  "For Fun": [
     {
       name: "FromSoft Meme Generator",
       url: "https://rezuaq.be/new-area/image-creator/",
     },
   ],
-  Web: [{ name: "Open Graph", url: "https://opengraph.dev/" }],
+  "Web Dev": [{ name: "Open Graph", url: "https://opengraph.dev/" }],
 };
 ---
 
@@ -18,7 +18,7 @@ const tools = {
     Object.entries(tools).map(([title, entries]) => {
       return (
         <div>
-          <h1>{title}</h1>
+          <h3 class="text-xl md:text-2xl lg:text-4xl">{title}</h3>
           {entries.map((item) => (
             <li>
               <Pill>
