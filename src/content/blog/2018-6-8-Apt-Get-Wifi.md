@@ -4,7 +4,10 @@ pubDate: "2018-6-8"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/chrome-dino-hero.avif"
+credit:
+  author: Google
+  url: https://en.wikipedia.org/wiki/Dinosaur_Game
 description: |
   I just was installing ubuntu on a platform that only has wireless capabilities, and
   decided to install the server edition to minimize overhead / avoid having an X

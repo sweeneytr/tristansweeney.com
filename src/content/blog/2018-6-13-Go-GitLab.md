@@ -4,7 +4,10 @@ pubDate: "2018-6-13"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/gitlab-v-github.png"
+credit:
+  author: Stanislas
+  url: https://stanislas.blog/2018/09/using-gitlab-ci-with-github/
 description: |
   I just finished migrating from GitHub to GitLab.
 layout: "../../layouts/BlogPost.astro"

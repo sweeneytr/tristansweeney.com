@@ -4,7 +4,10 @@ pubDate: "2018-6-4"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/pc-sleep.webp"
+credit:
+  author: Microsoft Designer / DALL-E 3
+  url: https://designer.microsoft.com/
 description: |
   I built a JS visualization tool for my CS networking class, in which we had to
   design a program for emulating a network bridge implementing spanning tree

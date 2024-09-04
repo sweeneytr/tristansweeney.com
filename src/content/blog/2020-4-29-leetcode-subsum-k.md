@@ -4,7 +4,11 @@ pubDate: "2020-4-29"
 author: "Tristan Sweeney"
 tags:
   - Algorithms
-imgUrl: "../../assets/bg-2.jpg"
+
+imgUrl: "../../assets/array.jpg"
+credit:
+  author: Meghan Vestal
+  url: https://www.elephango.com/index.cfm/pg/k12learning/lcid/11366/Arrays
 description: |
   given an array of integers, find the number of continuous subarrays equal to `k`.
 layout: "../../layouts/BlogPost.astro"

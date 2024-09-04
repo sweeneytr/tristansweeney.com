@@ -4,7 +4,10 @@ pubDate: "2020-5-3"
 author: "Tristan Sweeney"
 tags:
   - Algorithms
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/ransom-note.webp"
+credit:
+  author: Jamie Eckle
+  url: https://www.computerworld.com/profile/jamie-eckle/
 description: |
   Given the text for a ransom note, determine if enough letters exist in a magazine to create it.
 layout: "../../layouts/BlogPost.astro"

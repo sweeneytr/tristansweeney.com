@@ -4,7 +4,10 @@ pubDate: "2018-6-5"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/dd-wrt.jpeg"
+credit:
+  author: DD-WRT
+  url: https://dd-wrt.com/
 description: |
   I run a DD-WRT router on a Netgear WNDR4500 router. It's been in my life since I can
   remember, and came along with me to college. A while back I loaded the DD-WRT firmware

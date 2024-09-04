@@ -4,7 +4,7 @@ pubDate: "2017-12-10"
 author: "Tristan Sweeney"
 tags:
   - Web
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/ghpages.webp"
 description: |
   T'was the week before Christmas break, and all through the house, and not a
   soul was stirring, except for the mouse. The deadlines were approaching, the

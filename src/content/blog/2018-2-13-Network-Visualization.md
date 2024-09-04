@@ -4,7 +4,10 @@ pubDate: "2018-2-13"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/network.jpg"
+credit:
+  author: Paul Zdzitowiecki
+  url: https://computercures.com.au/the-benefits-of-using-a-server-rack/
 description: |
   I built a JS visualization tool for my CS networking class, in which we had to
   design a program for emulating a network bridge implementing spanning tree

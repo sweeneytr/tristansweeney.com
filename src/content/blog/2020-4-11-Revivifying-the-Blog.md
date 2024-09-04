@@ -4,7 +4,10 @@ pubDate: "2020-4-11"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/c3po.jpg"
+credit:
+  author: Milê Murtanovski
+  url: https://murtanovski.blogspot.com/2015/08/c-3po-112-scale-model.html
 description: |
   I recently had a friend come across my blog, and was promptly shamed for
   having a certificate more out of date than the VCR. Such an embarrassment

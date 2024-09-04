@@ -4,7 +4,7 @@ pubDate: "2017-12-14"
 author: "Tristan Sweeney"
 tags:
   - Hardware
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/jetson.png"
 description: |
   I have a couple of CUDA-capable devices though my house
 layout: "../../layouts/BlogPost.astro"

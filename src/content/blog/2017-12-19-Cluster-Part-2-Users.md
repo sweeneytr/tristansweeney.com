@@ -4,7 +4,7 @@ pubDate: "2017-12-19"
 author: "Tristan Sweeney"
 tags:
   - Hardware
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/users.svg"
 description: |
   With all your computers networked together, you're going to quickly realize that
   user management becomes a nightmare across machines. Ansible can help for small

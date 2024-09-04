@@ -4,7 +4,7 @@ pubDate: "2017-12-4"
 author: "Tristan Sweeney"
 tags:
   - Algorithms
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/count.webp"
 description: |
   So, say you have a bitstring, `11010110`, and you want to count how many
   ones are in it.

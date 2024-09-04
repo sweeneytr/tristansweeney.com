@@ -4,7 +4,10 @@ pubDate: "2018-6-14"
 author: "Tristan Sweeney"
 tags:
   - Network
-imgUrl: "../../assets/bg-2.jpg"
+imgUrl: "../../assets/cybersecurity.webp"
+credit:
+  author: Alexander Supertramp
+  url: https://www.shutterstock.com/g/Alexander+Supertramp/about
 description: |
   Last friday / weekend I installed my TLS cert I generated for my router on my
   desktop for services I run off of it.
