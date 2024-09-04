@@ -2,21 +2,12 @@
 import Layout from "@layouts/Default.astro";
 import RecentBlogPosts from "@components/generic/RecentBlogPosts.astro";
 import MobileSocials from "@components/home/MobileSocials.astro";
-import { Pill } from "@eliancodes/brutal-ui";
-import { Button } from "@eliancodes/brutal-ui";
+import Tech from "@components/home/Tech.astro";
+import Hero from "@components/home/Hero.astro";
+import AboutMe from "@components/home/AboutMe.astro";
+import Fullstack from "@components/home/Fullstack.astro";
 import { Card } from "@eliancodes/brutal-ui";
-
-const builtWith = [
-  { name: "Astro", url: "https://astro.build/" },
-  { name: "Remix", url: "https://remix.run/" },
-  { name: "Expo", url: "https://expo.dev/" },
-  { name: "FastAPI", url: "https://fastapi.tiangolo.com/" },
-  { name: "React Native", url: "https://reactnative.dev/" },
-  { name: "Kubernetes", url: "https://kubernetes.io/" },
-  { name: "ArgoCD", url: "https://argo-cd.readthedocs.io/en/stable/" },
-  { name: "SQLAlchemy", url: "https://argo-cd.readthedocs.io/en/stable/" },
-  { name: "Pydantic", url: "https://argo-cd.readthedocs.io/en/stable/" },
-];
+import Tools from "@components/home/Tools.astro";
 ---
 
 <Layout
@@ -30,66 +21,27 @@ const builtWith = [
       <h2 class="hidden">About Me</h2>
       <div class="col-span-4">
         <Card color="#c084fc">
-          <div class="flex flex-col justify-between items-start gap-4">
-            <p class="mt-4 outfit text-2xl md:text-5xl lg:text-7xl">
-              Software engineer for <span class="text-white">humans</span>
-            </p>
-            <p class="mt-2 outfit text-xl md:text-3xl lg:text-5xl">
-              Bringing together developers, by bringing together technology.
-            </p>
-            <Button target={"_self"} href="/blog/">
-              Check out my blog &rarr;
-            </Button>
-          </div>
+          <Hero />
         </Card>
       </div>
       <div class="col-span-2">
         <Card color="#fb923c">
-          <h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 dm-serif">
-            Tech I love
-          </h2>
-          <ul class="flex gap-4 flex-wrap">
-            {
-              builtWith.map((item) => (
-                <li>
-                  <Pill>
-                    <a
-                      class="sanchez"
-                      href={item.url}
-                      target="_blank"
-                      title={`Go to ${item.name}`}
-                    >
-                      {item.name}
-                    </a>
-                  </Pill>
-                </li>
-              ))
-            }
-          </ul>
+          <Tech />
         </Card>
       </div>
       <div class="col-span-2">
         <Card color="#facc15">
-          <h2 class="text-2xl md:text-4xl lg:text-6xl mb-4 dm-serif">
-            What is a full-stack engineer?
-          </h2>
-
-          <Button
-            target={"_self"}
-            href="https://www.martinfowler.com/"
-            color="#60a5fa"
-          >
-            <blockquote>
-              Any fool can write code that a computer can understand. Good
-              programmers write code that humans can understand.
-            </blockquote>
-            <cite>Martin Fowler</cite>
-          </Button>
-
-          <p class="poppins mt-2">
-            Full-stack engineers write code that humans can understand for web,
-            mobile, and backend (server-side) environments.
-          </p>
+          <Fullstack />
+        </Card>
+      </div>
+      <div class="col-span-6">
+        <Card>
+          <AboutMe />
+        </Card>
+      </div>
+      <div class="col-span-2">
+        <Card color="#facc15">
+          <Tools />
         </Card>
       </div>
     </section>
