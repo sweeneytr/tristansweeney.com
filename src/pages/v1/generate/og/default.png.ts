@@ -15,17 +15,17 @@ const width = 1200;
 export const GET: APIRoute = async () => {
   const link = "https://tristansweeney.com";
   const html = toReactElement(`
-  <div style="background-color: white; display: flex; flex-direction: column; height: 100%; padding: 3rem; width: 100%">
-    <div style="display:flex; height: 100%; width: 100%; background-color: white; border: 6px solid black; border-radius: 0.5rem; padding: 2rem; filter: drop-shadow(6px 6px 0 rgb(0 0 0 / 1));">
+  <div style="background-color: #c084fc; display: flex; flex-direction: column; height: 100%; padding: 3rem; width: 100%">
+    <div style="display:flex; height: 100%; width: 100%; background-color: white; border: 6px solid black; border-radius: 0.5rem; padding: 2rem; filter: drop-shadow(6px 6px 0 rgb(0 0 0 / 1)); box-shadow: 8px 8px 0 black;">
       <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; filter: drop-shadow()">
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">  
-          <p style="font-size: 48px;">Tristan Sweeney</p>
-          <p style="font-size: 38px;">A developer for a less civilized age</p>
+        <div style="display: flex; flex-direction: column;">  
+          <p style="font-size: 58px; margin: 0; ">Tristan Sweeney</p>
+          <p style="font-size: 38px; margin: 0; margin-bottom: 0.75 rem;">Software engineer for humans</p>
           <p style="font-size: 38px;">Brought to you by himself</p>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: -2rem;">
           <p style="font-size: 32px">${link}</p>
-          <img src="https://media.licdn.com/dms/image/v2/D4E03AQEaDQ0_v3CrDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1681700280055?e=1730937600&v=beta&t=NGnuiydWpJLNhqQNs_n-EHzhU0lGqr7srokC6Bcapw4" width="200px" height="200px" style="border: 3px solid black; border-radius: 0.5rem;" />
+          <img src="https://media.licdn.com/dms/image/v2/D4E03AQEaDQ0_v3CrDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1681700280055?e=1730937600&v=beta&t=NGnuiydWpJLNhqQNs_n-EHzhU0lGqr7srokC6Bcapw4" width="200px" height="200px" style="border: 3px solid black; border-radius: 0.5rem; box-shadow: 3px 3px 0 black;" />
         </div>
       </div>
     </div>
