@@ -26,6 +26,7 @@
     "astro": "^4.14.2",
     "astro-expressive-code": "^0.36.0",
     "astro-font": "^0.0.80",
+    "masonry-layout": "^4.2.2",
     "satori": "^0.5.0",
     "satori-html": "^0.3.2",
     "typescript": "^5.5.4"

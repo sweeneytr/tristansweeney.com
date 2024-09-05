@@ -17,30 +17,39 @@ import Tools from "@components/home/Tools.astro";
 >
   <main class="bg-pink p-6">
     <MobileSocials />
-    <section id="about" class="grid md:grid-cols-8 gap-8 mt-4">
+    <section
+      id="about"
+      class="mt-4 g-4 flex flex-row flex-wrap"
+      data-masonry={JSON.stringify({
+        itemSelector: ".brick",
+        columnWidth: ".brick-sizer",
+        percentPosition: true,
+        horizontalOrder: true,
+      })}
+    >
       <h2 class="hidden">About Me</h2>
-      <div class="col-span-4">
+      <div class="brick w-1/2 p-4">
         <Card color="#c084fc">
           <Hero />
         </Card>
       </div>
-      <div class="col-span-2">
+      <div class="brick-sizer brick w-1/4 p-4">
         <Card color="#fb923c">
           <Tech />
         </Card>
       </div>
-      <div class="col-span-2">
+      <div class="brick w-1/4 p-4">
         <Card color="#facc15">
           <Fullstack />
         </Card>
       </div>
-      <div class="col-span-2">
+      <div class="brick w-1/4 p-4">
         <Card color="#facc15">
           <Tools />
         </Card>
       </div>
 
-      <div class="col-span-6">
+      <div class="brick w-3/4 p-4">
         <Card>
           <AboutMe />
         </Card>
@@ -52,5 +61,8 @@ import Tools from "@components/home/Tools.astro";
       plural="projects"
       collection="projects"
     />
+    <script>
+      import "masonry-layout";
+    </script>
   </main>
 </Layout>
