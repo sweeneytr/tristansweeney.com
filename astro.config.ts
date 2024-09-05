@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 
 import expressiveCode from "astro-expressive-code";
 
-const prodUrl = undefined; // "https://tristansweeney.com/"
+const prodUrl = "https://sweeneytr-github-io.vercel.app/";
 
 // https://astro.build/config
 export default defineConfig({
