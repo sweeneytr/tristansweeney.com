@@ -1,6 +1,7 @@
 import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import type { ReactNode } from "react";
 import satori from "satori";
 import { html as toReactElement } from "satori-html";
 
@@ -43,7 +44,7 @@ export const GET: APIRoute = async ({ params, props }) => {
   </div>
   `);
 
-  const svg = await satori(html, {
+  const svg = await satori(html as ReactNode, {
     fonts: [
       {
         name: "Inter Latin",
