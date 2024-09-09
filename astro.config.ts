@@ -15,7 +15,7 @@ export default defineConfig({
       ? prodUrl
       : process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}/`
-        : "https://localhost:3000/",
+        : "http://localhost:4321/",
   trailingSlash: "ignore",
   integrations: [
     sitemap(),
