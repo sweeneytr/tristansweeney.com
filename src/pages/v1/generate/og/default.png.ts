@@ -2,7 +2,6 @@ import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { APIRoute } from "astro";
 import satori, { type Font } from "satori";
 
-import config from "astro.config";
 import { OpenGraphCard } from "@components/opengraph/card";
 
 const loadFont = async (url: string) => {
@@ -10,7 +9,7 @@ const loadFont = async (url: string) => {
   return await fontFile.arrayBuffer();
 };
 
-const fonts: Font[] = [
+const loadFonts = async (site: string): Promise<Font[]> => [
   {
     name: "Inter Latin",
     data: await loadFont(
@@ -20,27 +19,27 @@ const fonts: Font[] = [
   },
   {
     name: "outfit",
-    data: await loadFont(`${config.site}/public/fonts/outfit.ttf`),
+    data: await loadFont(`${site}/public/fonts/outfit.ttf`),
     style: "normal",
   },
   {
     name: "poppins",
-    data: await loadFont(`${config.site}/public/fonts/poppins.ttf`),
+    data: await loadFont(`${site}/public/fonts/poppins.ttf`),
     style: "normal",
   },
   {
     name: "righteous",
-    data: await loadFont(`${config.site}/public/fonts/righteous.ttf`),
+    data: await loadFont(`${site}/public/fonts/righteous.ttf`),
     style: "normal",
   },
   {
     name: "sanchez",
-    data: await loadFont(`${config.site}/public/fonts/sanchez.ttf`),
+    data: await loadFont(`${site}/public/fonts/sanchez.ttf`),
     style: "normal",
   },
   {
     name: "dm-serif",
-    data: await loadFont(`${config.site}/public/fonts/dm-serif.ttf`),
+    data: await loadFont(`${site}/public/fonts/dm-serif.ttf`),
     style: "normal",
   },
 ];
@@ -48,10 +47,11 @@ const fonts: Font[] = [
 const height = 630;
 const width = 1200;
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
   const html = OpenGraphCard();
+
   const svg = await satori(html, {
-    fonts,
+    fonts: await loadFonts(site?.toString() ?? ""),
     height,
     width,
   });

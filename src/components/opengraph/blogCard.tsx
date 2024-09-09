@@ -1,3 +1,5 @@
+import React from "react";
+
 export const BlogCard = ({ title, description }: Record<string, string>) => (
   <div
     style={{
