@@ -4,9 +4,10 @@
     "baseUrl": ".",
     "jsx": "preserve",
     "paths": {
+      "@public/*": ["public/*"],
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@pages/*": ["src/pages/*"],
+      "@pages/*": ["src/pages/*"]
     }
   }
 }

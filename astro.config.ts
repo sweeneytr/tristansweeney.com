@@ -2,6 +2,8 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import UnoCSS from "unocss/astro";
 import mdx from "@astrojs/mdx";
+// @ts-ignore
+import arraybuffer from "./plugin";
 
 import expressiveCode from "astro-expressive-code";
 
@@ -37,8 +39,9 @@ export default defineConfig({
     mdx(),
   ],
   vite: {
+    plugins: [arraybuffer({ include: "public/fonts/*.ttf" })],
     optimizeDeps: {
-      exclude: ["@resvg/resvg-js", "fsevents"],
+      exclude: ["@resvg/resvg-js"],
     },
   },
 });

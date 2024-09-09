@@ -4,6 +4,12 @@ import satori, { type Font } from "satori";
 
 import { OpenGraphCard } from "@components/opengraph/card";
 
+import outfit from "@public/fonts/outfit.ttf";
+import poppins from "@public/fonts/poppins.ttf";
+import righteous from "@public/fonts/righteous.ttf";
+import sanchez from "@public/fonts/sanchez.ttf";
+import serif from "@public/fonts/dm-serif.ttf";
+
 const loadFont = async (url: string) => {
   const fontFile = await fetch(url);
   return await fontFile.arrayBuffer();
@@ -19,27 +25,27 @@ const loadFonts = async (site: string): Promise<Font[]> => [
   },
   {
     name: "outfit",
-    data: await loadFont(`${site}/public/fonts/outfit.ttf`),
+    data: outfit,
     style: "normal",
   },
   {
     name: "poppins",
-    data: await loadFont(`${site}/public/fonts/poppins.ttf`),
+    data: poppins,
     style: "normal",
   },
   {
     name: "righteous",
-    data: await loadFont(`${site}/public/fonts/righteous.ttf`),
+    data: righteous,
     style: "normal",
   },
   {
     name: "sanchez",
-    data: await loadFont(`${site}/public/fonts/sanchez.ttf`),
+    data: sanchez,
     style: "normal",
   },
   {
     name: "dm-serif",
-    data: await loadFont(`${site}/public/fonts/dm-serif.ttf`),
+    data: serif,
     style: "normal",
   },
 ];
