@@ -1,9 +1,8 @@
+import { BlogCard } from "@components/opengraph/blogCard";
 import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import type { ReactNode } from "react";
 import satori from "satori";
-import { html as toReactElement } from "satori-html";
 
 const fontFile = await fetch(
   "https://og-playground.vercel.app/inter-latin-ext-700-normal.woff"
@@ -25,26 +24,8 @@ export function getStaticPaths() {
 export const GET: APIRoute = async ({ params, props }) => {
   const title = props.title.trim() ?? "Blogpost";
   const description = props.description ?? null;
-  const html = toReactElement(`
-  <div style="background-color: white; display: flex; flex-direction: column; height: 100%; padding: 3rem; width: 100%">
-    <div style="display:flex; height: 100%; width: 100%; background-color: white; border: 6px solid black; border-radius: 0.5rem; padding: 2rem; filter: drop-shadow(6px 6px 0 rgb(0 0 0 / 1));">
-      <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; filter: drop-shadow()">
-        <div style="display: flex; justify-content: space-between;">
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <p style="font-size: 48px;">Brutal theme for Astro</p>
-            <p style="font-size: 38px;">${title}</p>
-          </div>
-          <img src="https://media.licdn.com/dms/image/v2/D4E03AQEaDQ0_v3CrDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1681700280055?e=1730937600&v=beta&t=NGnuiydWpJLNhqQNs_n-EHzhU0lGqr7srokC6Bcapw4" width="200px" height="200px" style="border: 3px solid black; border-radius: 0.5rem;" />
-        </div>
-        <div style="display: flex;">
-          <p style="font-size: 24px;">${description}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  `);
 
-  const svg = await satori(html as ReactNode, {
+  const svg = await satori(BlogCard({ title, description }), {
     fonts: [
       {
         name: "Inter Latin",
