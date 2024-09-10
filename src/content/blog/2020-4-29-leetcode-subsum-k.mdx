@@ -14,6 +14,11 @@ description: |
 layout: "../../layouts/BlogPost.astro"
 ---
 
+import { Image } from "astro:assets";
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+import youdied from "../../assets/leetcode_subsum/you_died.jpg";
+import spreadsheet from "../../assets/leetcode_subsum/memo.PNG";
+
 # Intro and Context
 
 I've spent arguably too long trying to intuit the best soution to leetcode's recent daily challenge, [Subsum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/). It's been a year since I've done anything algorithmically difficult, since firmware is mostly a game of data structures and synchronization, so this wiped the floor with me like the intro boss of a From Software game.
@@ -26,7 +31,11 @@ I've spent arguably too long trying to intuit the best soution to leetcode's rec
 
 The problem is this: given an array of integers, find the number of continuous subarrays equal to `k`. Not too hard to solve (I thought), and I quickly whipped something that crushed it (I thought). My strategy was simple and O(n) time, O(1) space: inchworm along the array, advancing the ending index when the sum was greater than `k` and advancing the starting index when the subsum was less than `k`. This woked... for positive integers. It immediately failed when the array had negative numbers in it.
 
-<img alt="you died meme" src="/images/leetcode_subsum/you_died.jpg" style="height: 300px; width: auto;"/>
+<Image src={youdied} alt="'You died' meme" height={300} />
+
+<div class="flex flex-justify-end">
+  <ImageCredit author="unknown" url="" />
+</div>
 
 This was hard enough to merit hours of time sunk, so I might as well write a reflection on it, since it'll help it stick and be potentially useful to anyone who finds this.
 
@@ -34,7 +43,11 @@ This was hard enough to merit hours of time sunk, so I might as well write a ref
 
 It took a while to envision a solution that handled negatives; I stared into the void over the course of two nights while working on this (and admittedly watching Netflix w/ my SO). I felt there was a memoization solution, but couldn't intuit what I had to memoize since I was stuck thinking I needed a 2d array. This wasn't shaking out as I put down code. A hint stuck in my mind, `sum(i, j) = sum(0, j) - sum(0, i)`, and I used a spreadsheet to work out what data I needed to memoize.
 
-<img alt="memo table" src="/images/leetcode_subsum/memo.PNG" style="height: 200px; width: auto;"/>
+<Image src={spreadsheet} alt="spreadsheet" />
+
+<div class="flex flex-justify-end">
+  <ImageCredit author="unknown" url="" />
+</div>
 
 Clearly I only needed a 1d array of cumulative sums. I calculated that array, and walked all the valid `start, end` pairs, pulling values from that array find if the subarray sum was `k`. I came up with the below (I'm doing these in rust to build some muscle-memory), and felt confident in it. I submitted it, it worked, big horrah and... I was only in the 14th percentile of runtime? What am I missing?
 
