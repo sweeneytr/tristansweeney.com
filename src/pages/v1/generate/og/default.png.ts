@@ -9,13 +9,14 @@ import poppins from "@public/fonts/poppins.ttf";
 import righteous from "@public/fonts/righteous.ttf";
 import sanchez from "@public/fonts/sanchez.ttf";
 import serif from "@public/fonts/dm-serif.ttf";
+import type { ReactNode } from "react";
 
 const loadFont = async (url: string) => {
   const fontFile = await fetch(url);
   return await fontFile.arrayBuffer();
 };
 
-const loadFonts = async (site: string): Promise<Font[]> => [
+const fonts: Font[] = [
   {
     name: "Inter Latin",
     data: await loadFont(
@@ -50,14 +51,17 @@ const loadFonts = async (site: string): Promise<Font[]> => [
   },
 ];
 
-const height = 630;
-const width = 1200;
+namespace render {
+  export type Props = {
+    html: ReactNode;
+    width: number;
+    height: number;
+  };
+}
 
-export const GET: APIRoute = async ({ site }) => {
-  const html = OpenGraphCard();
-
+export const render = async ({ html, width, height }: render.Props) => {
   const svg = await satori(html, {
-    fonts: await loadFonts(site?.toString() ?? ""),
+    fonts,
     height,
     width,
   });
@@ -70,9 +74,19 @@ export const GET: APIRoute = async ({ site }) => {
   };
   const resvg = new Resvg(svg, opts);
   const pngData = resvg.render();
-  const pngBuffer = pngData.asPng();
+  return pngData.asPng();
+};
 
-  return new Response(pngBuffer, {
+export const GET: APIRoute = async () => {
+  const html = OpenGraphCard({
+    title: "Tristan Sweeney",
+    subtitle: "Software engineer for humans",
+    link: "https://tristansweeney.com",
+    description:
+      "Bringing together developers, by bringing together technology",
+  });
+
+  return new Response(await render({ html, width: 1200, height: 630 }), {
     headers: {
       "content-type": "image/png",
     },

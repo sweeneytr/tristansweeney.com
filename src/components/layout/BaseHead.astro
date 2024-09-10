@@ -36,19 +36,13 @@ const { title, description, ogImage } = Astro.props;
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta
-    property="og:image"
-    content={`${canonicalURL}v1/generate/og/default.png`}
-  />
+  <meta property="og:image" content={ogImage} />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content={canonicalURL} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
-  <meta
-    property="twitter:image"
-    content={`${canonicalURL}v1/generate/og/default.png`}
-  />
+  <meta property="twitter:image" content={ogImage} />
 
   <link rel="canonical" href={canonicalURL} />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />

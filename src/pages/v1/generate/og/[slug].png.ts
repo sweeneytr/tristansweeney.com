@@ -1,16 +1,8 @@
-import { BlogCard } from "@components/opengraph/blogCard";
-import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import satori from "satori";
 
-const fontFile = await fetch(
-  "https://og-playground.vercel.app/inter-latin-ext-700-normal.woff"
-);
-const fontData: ArrayBuffer = await fontFile.arrayBuffer();
-
-const height = 630;
-const width = 1200;
+import { OpenGraphCard } from "@components/opengraph/card";
+import { render } from "./default.png";
 
 const posts = await getCollection("blog");
 
@@ -25,29 +17,14 @@ export const GET: APIRoute = async ({ params, props }) => {
   const title = props.title.trim() ?? "Blogpost";
   const description = props.description ?? null;
 
-  const svg = await satori(BlogCard({ title, description }), {
-    fonts: [
-      {
-        name: "Inter Latin",
-        data: fontData,
-        style: "normal",
-      },
-    ],
-    height,
-    width,
+  const html = OpenGraphCard({
+    title: "Tristan Sweeney",
+    subtitle: title,
+    description,
+    link: "https://tristansweeney.com",
   });
 
-  const opts: ResvgRenderOptions = {
-    fitTo: {
-      mode: "width", // If you need to change the size
-      value: width,
-    },
-  };
-  const resvg = new Resvg(svg, opts);
-  const pngData = resvg.render();
-  const pngBuffer = pngData.asPng();
-
-  return new Response(pngBuffer, {
+  return new Response(await render({ html, width: 1200, height: 630 }), {
     headers: {
       "content-type": "image/png",
     },
