@@ -12,6 +12,9 @@ description: |
 layout: "../../layouts/BlogPost.astro"
 ---
 
+import { Image } from "astro:assets";
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+
 # Foreword
 
 With all your computers networked together, you're going to quickly realize that
@@ -81,7 +84,7 @@ normally hashes passwords that'll be stored in the `/etc/passwd`. It can be
 installed with `sudo apt install whois`, and `mkpasswd -m sha-512` will generate
 the passwords to be inserted into the file.
 
-```YAML
+```yaml
 users:
   - name: tsweeney
     password: $6$raieteigijnrlak35030/.who.would.actually.put.a.hash.online.sgf
@@ -121,7 +124,8 @@ the users, and sit pretty as Ansible churns away. Also, marvel at Ansible and
 the magic it does.
 
 <figure>
-  <img src="http://i.imgur.com/H45R5Js.gif">
+  <Image src={"http://i.imgur.com/H45R5Js.gif"} alt="'misaligned text' meme" width={632} height={355.5} />
+
   <figcaption>
     Don't worry, we'll talk about how Ansible can be used to do more
     administrative magic soon.
@@ -156,13 +160,13 @@ and `net2grid.openldap_config` handle all the configuration you'll need, they
 just need to be provided a simple set of parameters that are discernable from
 the documents on digital ocean and the repos for the ansible roles.
 
-```YAML
+```yaml
 ---
 - hosts: all
   roles:
-  - role: jnv.ldap-auth-client
-    tags: ldap
-    ldap_auth_config:
+    - role: jnv.ldap-auth-client
+      tags: ldap
+      ldap_auth_config:
         ldapns/base-dn:
           type: string
           value: "dc=example,dc=com"
@@ -179,24 +183,24 @@ the documents on digital ocean and the repos for the ansible roles.
   become: yes
   become_method: sudo
   roles:
-  - role: bennojoy.openldap_server
-    openldap_server_domain_name: pantheon.ece.neu.edu
-    openldap_server_rootpw: zeus
-    openldap_server_enable_ssl: false
+    - role: bennojoy.openldap_server
+      openldap_server_domain_name: pantheon.ece.neu.edu
+      openldap_server_rootpw: zeus
+      openldap_server_enable_ssl: false
 
-  - role: net2grid.openldap_config
-    default_user_password: nucar
-    openldap_create_organizationalunits:
-      - Groups
-      - People
-      - Hosts
-    openldap_create_users:
-      - name: tsweeney
-        cn: Tristan Sweeney
-        sn: Sweeney
-        password: nucar
-        email: sweeney.tr@husky.neu.edu
-        group_ou: ou=People
+    - role: net2grid.openldap_config
+      default_user_password: nucar
+      openldap_create_organizationalunits:
+        - Groups
+        - People
+        - Hosts
+      openldap_create_users:
+        - name: tsweeney
+          cn: Tristan Sweeney
+          sn: Sweeney
+          password: nucar
+          email: sweeney.tr@husky.neu.edu
+          group_ou: ou=People
 ```
 
 # Single Sign On

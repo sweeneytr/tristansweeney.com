@@ -15,6 +15,9 @@ description: |
 layout: "../../layouts/BlogPost.astro"
 ---
 
+import { Image } from "astro:assets";
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+
 # Foreword
 
 For those of you that don't personally know me, and therefore haven't witnessed
@@ -50,27 +53,44 @@ older supercomputers, like the Cray II, which were more like one massive very
 powerful computer. It... actually is a bit like the [horse-sized duck question](https://www.digitaltrends.com/web/1-duck-sized-horse-vs-100-horse-sized-ducks-the-final-showdown/).
 The decline of the supercomputer as <u data-qtip="horsesized">one massive machine</u>
 is actually due to how far modern CPU and GPU processing has come - there's
-<u data-qtip="why_not_bigger">no way to make them better by making them bigger anymore</u>.
+
+<u data-qtip="why_not_bigger">
+  no way to make them better by making them bigger anymore
+</u>
+.
 
 <div id="horsesized" class="qtip-tip">
-  <img  src='https://img.devrant.com/devrant/rant/r_204772_cp1xk.jpg' style="width: 100%;">
+  <img
+    src="https://img.devrant.com/devrant/rant/r_204772_cp1xk.jpg"
+    style="width: 100%;"
+  />
 </div>
 
 <div id="why_not_bigger" class="qtip-tip">
-<p>
-  This is partially due to modern microprocessors being limited by
-  manufacturing yield. Processors are manufactured on silicon crystal wafers,
-  which have a random scattering of defects. The larger the chip, the more
-  likely it is to contain one of the random defects (and thus, not work).
-</p>
+  <p>
+    This is partially due to modern microprocessors being limited by
+    manufacturing yield. Processors are manufactured on silicon crystal wafers,
+    which have a random scattering of defects. The larger the chip, the more
+    likely it is to contain one of the random defects (and thus, not work).
+  </p>
 </div>
 
 <figure>
-  <iframe src="https://giphy.com/embed/AYLNzUe39OSgE" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-  <figcaption>Yes, in this analogy the duck-sized horses come together like Voltron.</figcaption>
+  <iframe
+    src="https://giphy.com/embed/AYLNzUe39OSgE"
+    width="480"
+    height="360"
+    frameBorder="0"
+    class="giphy-embed"
+    allowFullScreen
+  ></iframe>
+  <figcaption>
+    Yes, in this analogy the duck-sized horses come together like Voltron.
+  </figcaption>
 </figure>
 
 Since clusters are just multiple machines acting together, let's start with the
+
 <u data-qtip="slightly_false">first problem</u> - networking!
 
 <p id="slightly_false" class="qtip-div">
@@ -89,7 +109,7 @@ have a quick discussion on the difference between routers and switches. The
 difference in their functions can be best understood by figuring what level of
 the OSI stack they operate at.
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/OSI_Model_v1.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/OSI_Model_v1.svg" />
 
 The lowest level of the stack, the physical layer, is accomplished in modern
 times by the hardware inside network-interface-cards (NICs) that electrically
@@ -114,7 +134,7 @@ multiple machines, which it sees as being "connected" to it at this layer. Those
 machines that the machine are connected to at the data link layer are considered
 a local-area-network (LAN).
 
-<img src="http://www.dlink.com/al/sq/-/media/product-pages/dgs/108/dgs108b1image-lside.png?h=936&la=sq-AL&w=1664">
+<img src="http://www.dlink.com/al/sq/-/media/product-pages/dgs/108/dgs108b1image-lside.png?h=936&la=sq-AL&w=1664" />
 
 Switches operate as level-2 devices. They connect multiple machines in a LAN,
 receiving frames on their many interfaces and sending them out the appropriate
@@ -123,7 +143,7 @@ a frame is done by the target MAC address packed within it, but the switch
 itself doesn't have a MAC address. It's <b>transparent</b> at the data-link
 layer.
 
-<img src="https://www.linksys.com/resources/img/category/fpo/wireless-routers-back.png">
+<img src="https://www.linksys.com/resources/img/category/fpo/wireless-routers-back.png" />
 
 Routers and computers operate as level-3 devices. They have internet-protocol
 (IP) addresses, which is used to identify machines as part of a network (MAC
@@ -147,7 +167,7 @@ together, and a router to connect our LAN to the WAN. Since routers typically
 have a four-port switch built-in, we could have a simple router connecting our
 four nodes, as shown below.
 
-<img src="/images/cluster/router_cluster.svg"/>
+<img src="/images/cluster/router_cluster.svg" />
 
 However, this isn't scalable: what if we want to connect more devices to the
 LAN? Luckily, the mighty Ethernet switch comes to the rescue! A good
@@ -155,7 +175,7 @@ rack-mounted switch has 24 ports, enough to be sure we won't run out anytime
 soon. Since switches operate as transparent level-2 devices, we can add them
 to our network and nobody would know the difference.
 
-<img src="/images/cluster/router_switch_cluster.svg"/>
+<img src="/images/cluster/router_switch_cluster.svg" />
 
 If this were a server in the modern cloud, where 100-percent uptime is
 required, we'd need more redundant networking hardware (seriously, if a piece of
@@ -190,7 +210,7 @@ on our router that only could be set up on a professional router. So, how could
 we possibly build a router that'll meet these needs? Won't it be a hard task?
 
 <figure>
-  <img src="http://cdn.mos.cms.futurecdn.net/bd63ae1ad029c6699d08f8862a347d51.jpg">
+  <img src="http://cdn.mos.cms.futurecdn.net/bd63ae1ad029c6699d08f8862a347d51.jpg" />
   <figcaption>
     Nope. Raspberry Pi's are enough to handle the job, and the software to do
     this is rock-solid.
@@ -304,7 +324,11 @@ a bit unnecissary, but hear me out: with a DNS server, you can address all the
 nodes by name without having to maintain a `/etc/hosts` file on each machine,
 which makes adding and removing machines <u data-qtip='silky'>silky-smooth</u>.
 
-<img class='qtip-tip' id='silky-smooth' src='https://resizing.flixster.com/zOVWciOT2flppBsx3mTEykv2YRc=/300x300/v1.aDszMjQ0O2o7MTc1NTA7MTIwMDs3MDA7NDY3'>
+<img
+  class="qtip-tip"
+  id="silky-smooth"
+  src="https://resizing.flixster.com/zOVWciOT2flppBsx3mTEykv2YRc=/300x300/v1.aDszMjQ0O2o7MTc1NTA7MTIwMDs3MDA7NDY3"
+/>
 
 DNSMASQ also runs a DNS server by default, serving up the addresses available in
 the hostfile of the router. To add our nodes to the DNS server, we'd open
@@ -337,4 +361,11 @@ Boy, this got long fast. Thanks for sticking around for the ride. Next post I'll
 be discussing Ansible, an automation tool which makes maintaining the state of
 a cluster managable. Ta-ta for now.
 
-<iframe src="https://giphy.com/embed/yidUzqLoT6SxgKzv20" width="480" height="271" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+<iframe
+  src="https://giphy.com/embed/yidUzqLoT6SxgKzv20"
+  width="480"
+  height="271"
+  frameBorder="0"
+  class="giphy-embed"
+  allowFullScreen
+></iframe>

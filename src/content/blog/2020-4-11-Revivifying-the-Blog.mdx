@@ -15,6 +15,12 @@ description: |
 layout: "../../layouts/BlogPost.astro"
 ---
 
+import { Image } from "astro:assets";
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+import misaligned from "../../assets/revivify/misaligned.PNG";
+import longbutton from "../../assets/revivify/loooong.PNG";
+import battlement from "../../assets/revivify/battlement.jpg";
+
 > Revivify is the simplest spell in D&D to return the dead to life.
 > I'm not restyling CSS or changing my site-generation, so this seemed
 > appropriate.
@@ -46,11 +52,11 @@ broken and mentioned github rather than gitlab. I fixed up the text and
 grabbed an icon from the gitlab press kit, but the icon was blowing out the
 alignment of the text.
 
-<img
-  alt="misaligned text"
-  src="/images/revivify/misaligned.PNG"
-  style="height:100px; width: auto;"
-/>
+<Image src={misaligned} alt="'misaligned text' meme" height={100} />
+
+<div class="flex flex-justify-end">
+  <ImageCredit author="Tristan Sweeney" url="" />
+</div>
 
 After some consulting the oracle (stack overflow) the suggestion came to use
 a flex container. More alignment directives are available to their contents.
@@ -59,11 +65,11 @@ work in terms of flexible rows of elements, so it was familiar. That mostly
 worked, but making the button a flex element stretched it to the width of the
 page. Whoops.
 
-<img
-  alt="long button"
-  src="/images/revivify/loooong.PNG"
-  style="height:100px; width: auto;"
-/>
+<Image src={longbutton} alt="long button" height={100} />
+
+<div class="flex flex-justify-end">
+  <ImageCredit author="Tristan Sweeney" url="" />
+</div>
 
 What went wrong was that `display: flex;` can either declare something a flex
 container or flex element. It may be that isn't a real distinction, and any
@@ -88,11 +94,11 @@ COVID-19 quarantine).
 
 A quick demo, you know how most castle / tower battlements look like this?
 
-<img
-  alt="battlement"
-  src="/images/revivify/battlement.jpg"
-  style="height:300px; width: auto;"
-/>
+<Image src={battlement} alt="battlement" height={300} />
+
+<div class="flex flex-justify-end">
+  <ImageCredit author="Tristan Sweeney" url="" />
+</div>
 
 The alternating blocks up top are called **merlons**, the gaps between
 **crenels**, the two together are crenelations, and provide alternating full and
@@ -116,5 +122,5 @@ I think his channel's awesome, you should check him out!
   frameborder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen
-  style="display: block; margin: 0 auto;">
-</iframe>
+  style="display: block; margin: 0 auto;"
+></iframe>

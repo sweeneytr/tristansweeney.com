@@ -13,6 +13,11 @@ description: |
 layout: "../../layouts/BlogPost.astro"
 ---
 
+import { Image } from "astro:assets";
+import ImageCredit from "../../components/generic/ImageCredit.astro";
+
+import ports from "../../assets/jetson_at_home/ports.PNG";
+
 # Jetson at Home
 
 I have a couple of CUDA-capable devices though my house (go NVIDIA!) but they
@@ -23,7 +28,7 @@ stressing over how to get the work done. Was I going to have to download CUDA
 on a Windows machine and deal with development on Windows?
 
 <figure>
-  <img src='https://developer.nvidia.com/sites/default/files/akamai/embedded/images/jetsontx1/JetsonTX1_DevKit_3Quarter_ON.png'>
+  <img src="https://developer.nvidia.com/sites/default/files/akamai/embedded/images/jetsontx1/JetsonTX1_DevKit_3Quarter_ON.png" />
   <figcaption>
     Jetson to the rescue! I got a TX1 for free at SC15 because I was fanboying
     real hard, and it's saving my academic bacon.
@@ -93,8 +98,11 @@ sudo apt install openssh-server
   laptop I regularly use.
 </p>
 
-<b> This information is Verizon-FIOS router model G1100 specific, if you have a
-different router you'll need to do some research. </b>
+<b>
+  {" "}
+  This information is Verizon-FIOS router model G1100 specific, if you have a different
+  router you'll need to do some research.{" "}
+</b>
 
 First, we'll have to pin down the IP address assigned to the login-node in the
 DHCP server running on the router. Without doing this, a device could be
@@ -126,7 +134,7 @@ click apply.
 
 Click back to the main menu, then into port forwarding under quick links.
 
-<img src="/images/jetson_at_home/ports.PNG">
+<Image src={ports} />
 
 Select the login node from the 'Select IP from menu' dropdown and 'Custom Ports'
 from the 'Application to forward' menu. In the new context that appears, select

@@ -4,7 +4,7 @@ Brutal is a minimal neobrutalist theme for [Astro](https://astro.build/). It's b
 
 The theme has no JavaScript integration out of the box, but can always be added of course.
 
-This template is based on [my own personal website](<https://www.elian.codes/>), with some more generic things added.
+This template is based on [my own personal website](https://www.elian.codes/), with some more generic things added.
 
 ## Usage
 
@@ -50,10 +50,10 @@ In this theme, I'm using [UnoCSS](https://uno.antfu.me/) to generate the CSS. It
 To generate the sitemap, you don't need to do anything. It's automatically generated when you build your site. You'll just need to switch out the `site` on `astro.config.mjs` to your own.
 
 ```js title="astro.config.mjs"
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: "https://example.com",
 });
 ```
 
@@ -62,34 +62,6 @@ export default defineConfig({
 The RSS feed is automatically generated from the Markdown files in the `src/content/blog` folder. You can ofcourse completely change this to your own needs.
 
 The RSS will output to `https://example.com/feed.xml` by default. You can change this, by renaming `src/pages/feed.xml.js`.
-
-### Image
-
-## Components
-
-### `components/blog/`
-
-This directory contains all components for the blog.
-
-### `components/errors/`
-
-This directory contains all error components.
-
-#### `components/errors/404.astro`
-
-This component is used when a page is not found.
-
-### `components/generic/`
-
-This directory contains all generic components, reused over multiple pages.
-
-### `components/home/`
-
-This directory contains all components for the home page.
-
-### `components/layout/`
-
-This directory contains all layout components. For instance, the header and footer and `<head>` section.
 
 ### Colors
 
