@@ -28,7 +28,10 @@ stressing over how to get the work done. Was I going to have to download CUDA
 on a Windows machine and deal with development on Windows?
 
 <figure>
-  <img src="https://developer.nvidia.com/sites/default/files/akamai/embedded/images/jetsontx1/JetsonTX1_DevKit_3Quarter_ON.png" />
+  <img
+    src="https://developer.nvidia.com/sites/default/files/akamai/embedded/images/jetsontx1/JetsonTX1_DevKit_3Quarter_ON.png"
+    alt="NVIDIA Jetson"
+  />
   <figcaption>
     Jetson to the rescue! I got a TX1 for free at SC15 because I was fanboying
     real hard, and it's saving my academic bacon.
@@ -108,20 +111,20 @@ First, we'll have to pin down the IP address assigned to the login-node in the
 DHCP server running on the router. Without doing this, a device could be
 reassigned a different address and no longer be properly forwarded ports.
 
-<img src="/images/jetson_at_home/advanced.PNG">
+<img src="/images/jetson_at_home/advanced.PNG" alt="advanced" />
 
 Head to [myfiosgateway.com](myfiosgateway.com), and login with the credentials
 on the side of your router. Click into Advanced, IP Address Distribution,
 Connection list to see the current DHCP leases.
 
-<img src="/images/jetson_at_home/connections.PNG">
+<img src="/images/jetson_at_home/connections.PNG" alt="connections" />
 
 Find your device, and click the pencil icon to edit it's lease. Find the
 checkbox labeled "Static Lease Type" and check it, which will pin that IP
 address in the local range to that MAC address. This permanently assigns that IP
 address to the device currently connected to it.
 
-<img src="/images/jetson_at_home/dns.PNG">
+<img src="/images/jetson_at_home/dns.PNG" alt="dns" />
 
 If when browsing for the device in the DHCP connections list you found that it
 had a name different from what you wanted it to be assigned in the DNS server,
@@ -130,11 +133,11 @@ next to the name you want to change (you'll notice a record must be statically
 assigned to modify it's name). From there, simply enter a new hostname and
 click apply.
 
-<img src="/images/jetson_at_home/main.PNG">
+<img src="/images/jetson_at_home/main.PNG" alt="main" />
 
 Click back to the main menu, then into port forwarding under quick links.
 
-<Image src={ports} />
+<Image src={ports} alt="ports" />
 
 Select the login node from the 'Select IP from menu' dropdown and 'Custom Ports'
 from the 'Application to forward' menu. In the new context that appears, select
