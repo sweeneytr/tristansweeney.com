@@ -49,9 +49,11 @@ const fonts = [
 {
   fonts.map(({ name, selector, about, url }) => (
     <>
-      <a href={url} class="underline underline-4">
-        <h3 class:list={[selector.substring(1), "text-4xl"]}>{name}</h3>
-      </a>
+      <h3 class:list={[selector.substring(1), "text-4xl"]}>
+        <a href={url} class="hover:underline hover:underline-4">
+          {name}
+        </a>
+      </h3>
       <p>{about}</p>
     </>
   ))
