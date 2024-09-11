@@ -9,6 +9,25 @@ import Fullstack from "@components/home/Fullstack.astro";
 import { Card } from "@eliancodes/brutal-ui";
 import Tools from "@components/home/Tools.astro";
 import Fonts from "@components/home/Fonts.astro";
+
+const colors = [
+  "#c084fc",
+  "#f472b6",
+  "#fb7185",
+  "#e879f9",
+  "#a78bfa",
+  "#818cf8",
+  "#60a5fa",
+  "#38bdf8",
+  "#22d3ee",
+  "#2dd4bf",
+  "#34d399",
+  "#4ade80",
+  "#a3e635",
+  "#facc15",
+  "#fb923c",
+  "#f87171",
+];
 ---
 
 <Layout
@@ -51,13 +70,30 @@ import Fonts from "@components/home/Fonts.astro";
       </div>
 
       <div class="brick md:w-3/4 p-4">
-        <Card>
+        <Card color="#a78bfa">
           <AboutMe />
         </Card>
       </div>
       <div class="brick md:w-2/4 p-4">
-        <Card>
+        <Card color="#a3e635">
           <Fonts />
+        </Card>
+      </div>
+      <div class="brick md:w-1/4 p-4">
+        <Card color="#e879f9">
+          <h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 sanchez">Colors</h2>
+          <div class="flex flex-row flex-wrap gap-4">
+            {
+              colors.map((color) => (
+                <div
+                  class="w-20 h-20 items-center justify-center rounded-full flex border-2 border-black"
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </div>
+              ))
+            }
+          </div>
         </Card>
       </div>
     </section>

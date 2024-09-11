@@ -2,7 +2,6 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import UnoCSS from "unocss/astro";
 import mdx from "@astrojs/mdx";
-// @ts-ignore
 import arraybuffer from "./plugin";
 
 import expressiveCode from "astro-expressive-code";
