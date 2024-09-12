@@ -51,5 +51,21 @@ const { title, description, ogImage } = Astro.props;
 
   <ViewTransitions />
 
+  <script>
+    // https://stackoverflow.com/questions/260857/changing-website-favicon-dynamically/260876%23260876
+    const icon = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
+
+    if (icon) {
+      window.onblur = () => {
+        icon.type = "image/png";
+        icon.href = "/sauron.png";
+      };
+      window.onfocus = () => {
+        icon.type = "image/x-icon";
+        icon.href = "/favicon.ico";
+      };
+    }
+  </script>
+
   <slot />
 </head>
