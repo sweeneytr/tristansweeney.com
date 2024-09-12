@@ -9,7 +9,7 @@ const tools = {
     },
   ],
   "Web Dev": [{ name: "Open Graph", url: "https://opengraph.dev/" }],
-  Design: [
+  Assets: [
     { name: "Favicon.cc", url: "https://www.favicon.cc/" },
     { name: "PixelArt.com", url: "https://www.pixilart.com" },
   ],
@@ -18,27 +18,29 @@ const tools = {
 ---
 
 <h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 poppins">Useful Tools</h2>
-<ul class="flex gap-4 flex-wrap">
+<ul class="flex flex-col gap-4">
   {
     Object.entries(tools).map(([title, entries]) => {
       return (
-        <div>
+        <li>
           <h3 class="text-xl md:text-2xl lg:text-4xl">{title}</h3>
-          {entries.map((item) => (
-            <li>
-              <Pill>
-                <a
-                  class="sanchez"
-                  href={item.url}
-                  target="_blank"
-                  title={`Go to ${item.name}`}
-                >
-                  {item.name}
-                </a>
-              </Pill>
-            </li>
-          ))}
-        </div>
+          <ul class="flex flex-wrap gap-2">
+            {entries.map((item) => (
+              <li>
+                <Pill>
+                  <a
+                    class="sanchez"
+                    href={item.url}
+                    target="_blank"
+                    title={`Go to ${item.name}`}
+                  >
+                    {item.name}
+                  </a>
+                </Pill>
+              </li>
+            ))}
+          </ul>
+        </li>
       );
     })
   }
