@@ -15,7 +15,7 @@ const { color, ...rest } = Astro.props;
 
 <style define:vars={{ color: color }}>
   a.brutal-btn {
-    filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
+    filter: drop-shadow(3px 3px 0 rgb(0 0 0 / 1));
     background-color: white;
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -26,7 +26,7 @@ const { color, ...rest } = Astro.props;
     font-family: "Sanchez", serif;
   }
   a.brutal-btn:hover {
-    filter: drop-shadow(3px 3px 0 rgb(0 0 0 / 1));
+    filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
     background-color: var(--color);
   }
 </style>
