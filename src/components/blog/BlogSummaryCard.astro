@@ -16,6 +16,7 @@ interface Props {
       | "draft"
       | "credit"
       | "pubDate"
+      | "image"
     >;
   };
   baseUrl: string;
@@ -31,6 +32,7 @@ const { baseUrl, post } = Astro.props;
   credit={post.data.credit}
   date={post.data.pubDate}
   description={post.data.description}
+  image={post.data.image}
 >
   <div class="flex justify-end my-4">
     <Button href={`${baseUrl}/${post.slug}/`}>Read post &rarr;</Button>

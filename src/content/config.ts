@@ -9,6 +9,11 @@ const schema = ({ image }: { image: ImageFunction }) =>
     description: z.string(),
     pubDate: z.string().transform((str) => new Date(str)),
     imgUrl: image(),
+    image: z
+      .object({
+        style: z.object({}).passthrough(),
+      })
+      .optional(),
     credit: credit.optional(),
     draft: z.boolean().optional().default(false),
   });

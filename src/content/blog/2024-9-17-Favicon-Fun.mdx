@@ -1,0 +1,39 @@
+---
+title: "Favicon Fun"
+pubDate: "2024-9-17"
+author: "Tristan Sweeney"
+tags:
+  - Web
+imgUrl: "../../assets/astro-logo-light-gradient.svg"
+image:
+  style:
+    object-fit: contain
+    background-color: "#333"
+credit:
+  author: Astro
+  url: https://docs.astro.build/
+description: |
+  I love the Astro homepage favicon effect, and replicated it on my site.
+layout: "../../layouts/BlogPost.astro"
+---
+
+I love the Astro homepage favicon effect, and replicated it on my site. It's
+very simple to set up:
+
+```html
+<script>
+  // https://stackoverflow.com/questions/260857/changing-website-favicon-dynamically/260876%23260876
+  const icon = document.querySelector < HTMLLinkElement > "link[rel~='icon']";
+
+  if (icon) {
+    window.onblur = () => {
+      icon.type = "image/png";
+      icon.href = "/sauron.png";
+    };
+    window.onfocus = () => {
+      icon.type = "image/x-icon";
+      icon.href = "/favicon.ico";
+    };
+  }
+</script>
+```

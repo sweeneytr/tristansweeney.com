@@ -12,9 +12,20 @@ interface Props {
   description: string;
   date: Date;
   credit?: ComponentProps<typeof ImageCredit>;
+  image: {
+    style: any;
+  };
 }
 
-const { title, imgAlt, imgSrc, description, credit, date } = Astro.props;
+const {
+  title,
+  imgAlt,
+  imgSrc,
+  description,
+  credit,
+  date,
+  image: { style } = {},
+} = Astro.props;
 ---
 
 <Card color="white" class="flex flex-col h-full">
@@ -28,6 +39,7 @@ const { title, imgAlt, imgSrc, description, credit, date } = Astro.props;
         width={800}
         height={400}
         class="rounded h-full w-full object-cover"
+        style={style}
       />
     </div>
     {
