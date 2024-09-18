@@ -9,14 +9,7 @@ interface Props {
     slug: string;
     data: Pick<
       CollectionEntry<"blog">["data"],
-      | "title"
-      | "imgUrl"
-      | "description"
-      | "tags"
-      | "draft"
-      | "credit"
-      | "pubDate"
-      | "image"
+      "title" | "description" | "tags" | "draft" | "pubDate" | "image"
     >;
   };
   baseUrl: string;
@@ -28,8 +21,6 @@ const { baseUrl, post } = Astro.props;
 <SummaryCard
   title={post.data.title}
   imgAlt={post.data.title}
-  imgSrc={post.data.imgUrl}
-  credit={post.data.credit}
   date={post.data.pubDate}
   description={post.data.description}
   image={post.data.image}

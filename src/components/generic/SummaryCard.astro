@@ -7,12 +7,12 @@ import Card from "@components/atoms/Card.astro";
 
 interface Props {
   title: string;
-  imgSrc: ImageMetadata;
   imgAlt: string;
   description: string;
   date: Date;
-  credit?: ComponentProps<typeof ImageCredit>;
   image: {
+    url: ImageMetadata;
+    credit?: ComponentProps<typeof ImageCredit>;
     style: any;
   };
 }
@@ -20,11 +20,9 @@ interface Props {
 const {
   title,
   imgAlt,
-  imgSrc,
   description,
-  credit,
   date,
-  image: { style } = {},
+  image: { url: imgSrc, credit, style } = {},
 } = Astro.props;
 ---
 

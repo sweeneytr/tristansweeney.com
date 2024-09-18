@@ -6,28 +6,29 @@ tags:
   - WebDev
   - MobileDev
   - React Native
-imgUrl: '../../assets/sara-polo-lady-lake-thmb1-v07.jpg'
-credit:
-  author: Sara Polo
-  url: https://sarapolo.artstation.com/
+image:
+  url: "../../assets/sara-polo-lady-lake-thmb1-v07.jpg"
+  credit:
+    author: Sara Polo
+    url: https://sarapolo.artstation.com/
 description: |
   I created a platform to expose custom iOS functionality to web apps, and had a
   lot of fun doing it. Now developers can use our mobile functionality before
   they invest in building their own app.
-layout: '../../layouts/Project.astro'
+layout: "../../layouts/Project.astro"
 ---
 
 ## Deorum petiit ignis
 
-Lorem markdownum longo os thyrso telum, continet servat fetus nymphae, *vox
-nocte sedesque*, decimo. Omnia esse, quam sive; conplevit illis indestrictus
+Lorem markdownum longo os thyrso telum, continet servat fetus nymphae, _vox
+nocte sedesque_, decimo. Omnia esse, quam sive; conplevit illis indestrictus
 admovit dedit sub quod protectus, impedit non.
 
 ## Iovis late orbem Perseus sunt
 
 Aras reperire, sui motis correpti coniunx Onetor amore ferire lacertis, petiit.
-Bis pallor et mecum me, igne patruelibus *tendebam*, vultu sterilique terruerat
-*tempore* medium aera **eadem Mittor**.
+Bis pallor et mecum me, igne patruelibus _tendebam_, vultu sterilique terruerat
+_tempore_ medium aera **eadem Mittor**.
 
 - Non turba loca dederunt primordia ineamus Dictys
 - Tanti amat mundus sedula

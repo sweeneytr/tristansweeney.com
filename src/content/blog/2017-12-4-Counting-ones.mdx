@@ -4,7 +4,8 @@ pubDate: "2017-12-4"
 author: "Tristan Sweeney"
 tags:
   - Algorithms
-imgUrl: "../../assets/count.webp"
+image:
+  url: "../../assets/count.webp"
 description: |
   So, say you have a bitstring, `11010110`, and you want to count how many
   ones are in it.
@@ -59,38 +60,62 @@ Let us look at the values in `n`, `n-1`, and `n & (n-1)` for each iteration, to 
     <th>count++</th>
   </tr>
   <tr>
-    <td>1101 011<b>1</b></td>
-    <td>1101 011<b>0</b></td>
+    <td>
+      1101 011<b>1</b>
+    </td>
+    <td>
+      1101 011<b>0</b>
+    </td>
     <td>1101 0110</td>
     <td>1</td>
   </tr>
   <tr>
-    <td>1101 01<b>1</b>0</td>
-    <td>1101 01<b>0</b>1</td>
+    <td>
+      1101 01<b>1</b>0
+    </td>
+    <td>
+      1101 01<b>0</b>1
+    </td>
     <td>1101 0100</td>
     <td>2</td>
   </tr>
   <tr>
-    <td>1101 0<b>1</b>00</td>
-    <td>1101 0<b>0</b>11</td>
+    <td>
+      1101 0<b>1</b>00
+    </td>
+    <td>
+      1101 0<b>0</b>11
+    </td>
     <td>1101 0000</td>
     <td>3</td>
   </tr>
   <tr>
-    <td>110<b>1</b> 0000</td>
-    <td>110<b>0</b> 1111</td>
+    <td>
+      110<b>1</b> 0000
+    </td>
+    <td>
+      110<b>0</b> 1111
+    </td>
     <td>1100 0000</td>
     <td>4</td>
   </tr>
   <tr>
-    <td>1<b>1</b>00 0000</td>
-    <td>1<b>0</b>11 1111</td>
+    <td>
+      1<b>1</b>00 0000
+    </td>
+    <td>
+      1<b>0</b>11 1111
+    </td>
     <td>1000 0000</td>
     <td>5</td>
   </tr>
   <tr>
-    <td><b>1</b>000 0000</td>
-    <td><b>0</b>111 1111</td>
+    <td>
+      <b>1</b>000 0000
+    </td>
+    <td>
+      <b>0</b>111 1111
+    </td>
     <td>0000 0000</td>
     <td>6</td>
   </tr>
