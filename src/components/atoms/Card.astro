@@ -2,13 +2,16 @@
 interface Props {
   color?: string | undefined;
 }
+import type { HTMLAttributes } from "astro/types";
 import { colors } from "../../colors";
 
 if (Astro.props.color === undefined) {
   Astro.props.color = colors[Math.floor(Math.random() * colors.length)];
 }
 
-const { color } = Astro.props;
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, color } = Astro.props;
 ---
 
 <style define:vars={{ color: color }}>
@@ -27,6 +30,6 @@ const { color } = Astro.props;
   }
 </style>
 
-<div class="brutal-card">
+<div class:list={["brutal-card", className]}>
   <slot />
 </div>

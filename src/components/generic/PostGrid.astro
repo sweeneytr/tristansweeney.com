@@ -2,18 +2,6 @@
 
 ---
 
-<ul
-  class="flex flex-row flex-wrap"
-  data-masonry={JSON.stringify({
-    itemSelector: ".brick",
-    columnWidth: ".brick-sizer",
-    percentPosition: true,
-    horizontalOrder: true,
-  })}
->
+<ul class="flex flex-row flex-wrap items-stretch">
   <slot />
 </ul>
-
-<script>
-  import "masonry-layout";
-</script>
