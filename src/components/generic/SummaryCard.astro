@@ -10,10 +10,10 @@ interface Props {
   imgAlt: string;
   description: string;
   date: Date;
-  image: {
+  image?: {
     url: ImageMetadata;
     credit?: ComponentProps<typeof ImageCredit>;
-    style: any;
+    style?: ComponentProps<typeof Image>["style"];
   };
 }
 
@@ -31,14 +31,18 @@ const {
   <span class="text-gray-500">{date.toLocaleDateString()}</span>
   <div class="my-4">
     <div class="rounded-lg border-3 border-black h-56">
-      <Image
-        src={imgSrc}
-        alt={imgAlt}
-        width={800}
-        height={400}
-        class="rounded h-full w-full object-cover"
-        style={style}
-      />
+      {
+        imgSrc && (
+          <Image
+            src={imgSrc}
+            alt={imgAlt}
+            width={800}
+            height={400}
+            class="rounded h-full w-full object-cover"
+            style={style}
+          />
+        )
+      }
     </div>
     {
       credit && (

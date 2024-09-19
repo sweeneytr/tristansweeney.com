@@ -6,7 +6,12 @@ const schema = ({ image }: { image: ImageFunction }) => {
   const imageSchema = z.object({
     url: image(),
     credit: credit.optional(),
-    style: z.object({}).passthrough().optional(),
+    style: z
+      .object({
+        "object-fit": z.string().optional(),
+        "background-color": z.string().optional(),
+      })
+      .optional(),
   });
 
   return z.object({
