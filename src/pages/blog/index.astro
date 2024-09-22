@@ -18,7 +18,7 @@ const posts = await getCollection("blog").then((collection) =>
       {
         posts.map((post) => (
           <PostItem>
-            <BlogSummaryCard post={post} baseUrl="/blog" />
+            <BlogSummaryCard post={post} context={{ baseUrl: "/blog" }} />
           </PostItem>
         ))
       }

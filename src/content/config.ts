@@ -25,6 +25,8 @@ const schema = ({ image }: { image: ImageFunction }) => {
   });
 };
 
+export type PostSchema = z.infer<ReturnType<typeof schema>>;
+
 const blog = defineCollection({ schema });
 
 const projects = defineCollection({ schema });

@@ -1,21 +1,23 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import Button from "@components/atoms/Button.astro";
 import Pill from "@components/atoms/Pill.astro";
 import SummaryCard from "../generic/SummaryCard.astro";
+import type { PostSchema } from "src/content/config";
 
 interface Props {
   post: {
     slug: string;
-    data: Pick<
-      CollectionEntry<"blog">["data"],
-      "title" | "description" | "tags" | "draft" | "pubDate" | "image"
-    >;
+    data: PostSchema;
   };
-  baseUrl: string;
+  context: {
+    baseUrl: string;
+  };
 }
 
-const { baseUrl, post } = Astro.props;
+const {
+  context: { baseUrl },
+  post,
+} = Astro.props;
 ---
 
 <SummaryCard
