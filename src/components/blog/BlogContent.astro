@@ -3,6 +3,8 @@ interface Props {
   content: {
     pubDate: string;
     author: string;
+    title: string;
+    image: { url: string; credit?: { author: string; url?: string } };
   };
   context: {
     collection: keyof ContentEntryMap;
@@ -12,6 +14,8 @@ interface Props {
 
 import type { ContentEntryMap } from "astro:content";
 import "./content.css";
+import Image from "astro/components/Image.astro";
+import ImageCredit from "@components/generic/ImageCredit.astro";
 const {
   content,
   context: { collection, baseUrl },
@@ -21,9 +25,25 @@ const {
 <article class="prose-slate w-sm md:w-prose md:prose poppins">
   <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
   >
+  <h2>{content.title}</h2>
   <p class="text-slate text-sm md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
+  <Image
+    src={import(content.image.url)}
+    style={{ backgroundColor: "#222", borderRadius: "1em", width: "100%" }}
+    alt="image"
+  />
+  {
+    content.image.credit && (
+      <div class="flex justify-end p-4">
+        <ImageCredit
+          author={content.image.credit.author}
+          url={content.image.credit.url}
+        />
+      </div>
+    )
+  }
   <div id="blog-content">
     <slot />
   </div>
