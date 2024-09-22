@@ -44,13 +44,10 @@ const {
         )
       }
     </div>
-    {
-      credit && (
-        <div class="flex flex-justify-end">
-          <ImageCredit {...credit} />
-        </div>
-      )
-    }
+
+    <div class="flex flex-justify-end">
+      {credit ? <ImageCredit {...credit} /> : <span>Unknown creator</span>}
+    </div>
   </div>
 
   <p class="poppins flex-1">{description}</p>
