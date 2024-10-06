@@ -1,5 +1,12 @@
 import React from "react";
-import { Document, Page, Text, View, Link } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Link,
+  type TextProps,
+} from "@react-pdf/renderer";
 import { Email, Home, Phone } from "./icons";
 import { content } from "./content";
 
@@ -106,25 +113,19 @@ Company.Header = ({
   ...rest
 }: React.ComponentProps<typeof View>) => (
   <View
-    style={[
-      {
-        flexDirection: "row",
-        alignItems: "flex-end",
-        justifyContent: "space-between",
-      },
-      style,
-    ]}
+    style={{
+      flexDirection: "row",
+      alignItems: "flex-end",
+      justifyContent: "space-between",
+      ...style,
+    }}
     {...rest}
   >
     {children}
   </View>
 );
 
-Company.Name = ({
-  style,
-  children,
-  ...rest
-}: React.ComponentProps<typeof Text>) => (
+Company.Name = ({ style, children, ...rest }: TextProps & Props) => (
   <Text
     style={{
       fontSize: "12",
@@ -138,16 +139,14 @@ Company.Name = ({
   </Text>
 );
 
-Company.Location = ({
-  children,
-  ...rest
-}: React.ComponentProps<typeof Text>) => (
+Company.Location = ({ children, style, ...rest }: TextProps & Props) => (
   <Text
     style={{
       fontSize: "10",
       fontFamily: "Poppins",
       fontStyle: "italic",
       fontWeight: "light",
+      ...style,
     }}
     {...rest}
   >
@@ -155,7 +154,7 @@ Company.Location = ({
   </Text>
 );
 
-Company.Role = ({
+const Role = ({
   children,
   style,
   ...rest
@@ -165,35 +164,31 @@ Company.Role = ({
   </View>
 );
 
-Company.Role.Header = ({
+Role.Header = ({
   style,
   children,
   ...rest
 }: React.ComponentProps<typeof View>) => (
   <View
-    style={[
-      {
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-      },
-      style,
-    ]}
+    style={{
+      flexDirection: "row",
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+      ...style,
+    }}
     {...rest}
   >
     {children}
   </View>
 );
 
-Company.Role.Name = ({
-  children,
-  ...rest
-}: React.ComponentProps<typeof Text>) => (
+Role.Name = ({ children, style, ...rest }: TextProps & Props) => (
   <Text
     style={{
       fontSize: "10",
       textTransform: "uppercase",
       fontFamily: "Poppins",
+      ...style,
     }}
     {...rest}
   >
@@ -201,10 +196,7 @@ Company.Role.Name = ({
   </Text>
 );
 
-Company.Role.Duration = ({
-  children,
-  ...rest
-}: React.ComponentProps<typeof Text>) => (
+Role.Duration = ({ children, ...rest }: TextProps & Props) => (
   <Text
     style={{
       fontSize: "10",
@@ -234,7 +226,7 @@ const Point = ({ children, ...rest }: React.ComponentProps<typeof View>) => (
   </View>
 );
 
-const Body = ({ children, ...rest }: React.ComponentProps<typeof Text>) => (
+const Body = ({ children, ...rest }: TextProps & Props) => (
   <Text
     style={{
       fontSize: "10",
@@ -256,13 +248,13 @@ export const Resume = () => (
             fontSize: "22px",
           }}
         >
-          Tristan A. Sweeney
+          {content.name}
         </Text>
         <Row>
           <Row style={{ gap: "2" }}>
             <Phone />
             <Link
-              href="tel:+17323202075"
+              href={content.phone.link}
               style={{
                 color: "black",
                 textDecoration: "none",
@@ -270,7 +262,7 @@ export const Resume = () => (
                 fontFamily: "Poppins",
               }}
             >
-              (732)-320-2075
+              {content.phone.text}
             </Link>
           </Row>
 
@@ -279,7 +271,7 @@ export const Resume = () => (
           <Row style={{ gap: "2" }}>
             <Email />
             <Link
-              href="mailto:sweeneytri@gmail.com?subject=(From your resume)&body=Hi Tristan,\n\nI was interested by your resume, and wanted to have a conversation."
+              href={content.email.link}
               style={{
                 color: "black",
                 textDecoration: "none",
@@ -287,7 +279,7 @@ export const Resume = () => (
                 fontFamily: "Poppins",
               }}
             >
-              sweeneytri@gmail.com
+              {content.email.text}
             </Link>
           </Row>
 
@@ -296,7 +288,7 @@ export const Resume = () => (
           <Row style={{ gap: "2" }}>
             <Home />
             <Link
-              href="https://tristansweeney.com"
+              href={content.web.link}
               style={{
                 color: "black",
                 textDecoration: "none",
@@ -304,7 +296,7 @@ export const Resume = () => (
                 fontFamily: "Poppins",
               }}
             >
-              tristansweeney.com
+              {content.web.text}
             </Link>
           </Row>
         </Row>
@@ -319,17 +311,17 @@ export const Resume = () => (
               <Company.Location>{location}</Company.Location>
             </Company.Header>
             {roles.map(({ name, start, end, points }) => (
-              <Company.Role key={name}>
-                <Company.Role.Header>
-                  <Company.Role.Name>{name}</Company.Role.Name>
-                  <Company.Role.Duration>
+              <Role key={name}>
+                <Role.Header>
+                  <Role.Name>{name}</Role.Name>
+                  <Role.Duration>
                     {start} — {end ?? "Present"}
-                  </Company.Role.Duration>
-                </Company.Role.Header>
+                  </Role.Duration>
+                </Role.Header>
                 {points.map((point) => (
                   <Point key={point}>{point}</Point>
                 ))}
-              </Company.Role>
+              </Role>
             ))}
           </Company>
         ))}
@@ -347,12 +339,12 @@ export const Resume = () => (
             </Company.Header>
 
             {degrees.map(({ name, start, end }) => (
-              <Company.Role.Header key={name}>
-                <Company.Role.Name>{name}</Company.Role.Name>
-                <Company.Role.Duration>
+              <Role.Header key={name}>
+                <Role.Name>{name}</Role.Name>
+                <Role.Duration>
                   {start} — {end ?? "Present"}
-                </Company.Role.Duration>
-              </Company.Role.Header>
+                </Role.Duration>
+              </Role.Header>
             ))}
           </>
         ))}
