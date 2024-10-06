@@ -38,7 +38,7 @@ export default defineConfig({
     mdx(),
   ],
   vite: {
-    plugins: [arraybuffer({ include: "public/fonts/*.ttf" })],
+    plugins: [arraybuffer({ include: "**/*.ttf" })],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
