@@ -6,6 +6,7 @@ import {
   View,
   Link,
   type TextProps,
+  type LinkProps,
 } from "@react-pdf/renderer";
 import { Email, Home, Phone } from "./icons";
 import { content } from "./content";
@@ -63,7 +64,6 @@ const Section = ({ children }: Props) => (
     style={{
       flexDirection: "column",
       justifyContent: "center",
-      gap: "2",
     }}
   >
     {children}
@@ -159,7 +159,7 @@ const Role = ({
   style,
   ...rest
 }: React.ComponentProps<typeof View>) => (
-  <View style={{ marginBottom: "11px", ...style }} {...rest}>
+  <View style={{ marginBottom: "6", ...style }} {...rest}>
     {children}
   </View>
 );
@@ -237,6 +237,20 @@ const Body = ({ children, ...rest }: TextProps & Props) => (
   </Text>
 );
 
+const SneakyLink = ({ children, ...rest }: LinkProps & Props) => (
+  <Link
+    style={{
+      color: "black",
+      textDecoration: "none",
+      fontSize: "10pt",
+      fontFamily: "Poppins",
+    }}
+    {...rest}
+  >
+    {children}
+  </Link>
+);
+
 export const Resume = () => (
   <Document>
     <ResumePage>
@@ -250,55 +264,21 @@ export const Resume = () => (
         >
           {content.name}
         </Text>
+
         <Row>
-          <Row style={{ gap: "2" }}>
-            <Phone />
-            <Link
-              href={content.phone.link}
-              style={{
-                color: "black",
-                textDecoration: "none",
-                fontSize: "10pt",
-                fontFamily: "Poppins",
-              }}
-            >
-              {content.phone.text}
-            </Link>
-          </Row>
-
-          <Seperator />
-
-          <Row style={{ gap: "2" }}>
-            <Email />
-            <Link
-              href={content.email.link}
-              style={{
-                color: "black",
-                textDecoration: "none",
-                fontSize: "10pt",
-                fontFamily: "Poppins",
-              }}
-            >
-              {content.email.text}
-            </Link>
-          </Row>
-
-          <Seperator />
-
-          <Row style={{ gap: "2" }}>
-            <Home />
-            <Link
-              href={content.web.link}
-              style={{
-                color: "black",
-                textDecoration: "none",
-                fontSize: "10pt",
-                fontFamily: "Poppins",
-              }}
-            >
-              {content.web.text}
-            </Link>
-          </Row>
+          {[
+            { icon: <Phone />, ...content.phone },
+            { icon: <Email />, ...content.email },
+            { icon: <Home />, ...content.web },
+          ].map(({ icon, text, link }, index, row) => (
+            <>
+              <Row style={{ gap: "2" }}>
+                {icon}
+                <SneakyLink href={link}>{text}</SneakyLink>
+              </Row>
+              {index + 1 !== row.length && <Seperator />}
+            </>
+          ))}
         </Row>
       </Header>
 
@@ -326,9 +306,7 @@ export const Resume = () => (
           </Company>
         ))}
       </Section>
-    </ResumePage>
 
-    <ResumePage>
       <Section>
         <Section.Header>Education</Section.Header>
         {content.education.map(({ name, location, degrees }) => (
@@ -349,6 +327,36 @@ export const Resume = () => (
           </>
         ))}
       </Section>
+    </ResumePage>
+    {/*
+    <ResumePage>
+      <Header>
+        <Text
+          style={{
+            fontFamily: "Poppins",
+            fontWeight: "bold",
+            fontSize: "22px",
+          }}
+        >
+          {content.name}
+        </Text>
+
+        <Row>
+          {[
+            { icon: <Phone />, ...content.phone },
+            { icon: <Email />, ...content.email },
+            { icon: <Home />, ...content.web },
+          ].map(({ icon, text, link }, index, row) => (
+            <>
+              <Row style={{ gap: "2" }}>
+                {icon}
+                <SneakyLink href={link}>{text}</SneakyLink>
+              </Row>
+              {index + 1 !== row.length && <Seperator />}
+            </>
+          ))}
+        </Row>
+      </Header>
 
       <Section>
         <Section.Header>Expertise</Section.Header>
@@ -359,6 +367,6 @@ export const Resume = () => (
           </Row>
         ))}
       </Section>
-    </ResumePage>
+    </ResumePage> */}
   </Document>
 );

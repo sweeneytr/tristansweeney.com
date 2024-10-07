@@ -1,11 +1,11 @@
 export const content = {
   name: "Tristan A. Sweeney",
   phone: {
-    link: "+17323202075",
+    link: "tel:+17323202075",
     text: "(732) 320-2075",
   },
   email: {
-    link: "mailto:sweeneytri@gmail.com?subject=(From your resume)&body=Hi Tristan,\n\nI was interested by your resume, and wanted to have a conversation.",
+    link: "mailto:sweeneytri@gmail.com?subject=(From your Resume)&body=Hi Tristan,%0A%0AI was interested by your resume, and wanted to have a conversation.",
     text: "sweeneytri@gmail.com",
   },
   web: {
@@ -21,8 +21,8 @@ export const content = {
           name: "Staff Software Engineer",
           start: "Oct 2023",
           points: [
-            "Enabled customers to use DUST in mobile webapps by creating a customized mobile browser that extends the web environment with controls for DUST's mobile hardware",
-            "Reduced developer lock-in by migrating mobile codebase from Swift to React Native, enabling code and developer sharing across web and mobile projects",
+            "Enabled customers to create DUST mobile apps with an SDK for DUST's custom scanner",
+            "Improved developer mobility across web and mobile by migrating apps from Swift to React Native",
             "Derived real-time events from legacy applications with Kafka, Debezium CDC, and KSQL ETL",
             'Demonstrated "verified delivery with DUST" concept by developing Shopify App integration',
           ],
@@ -32,7 +32,7 @@ export const content = {
           start: "Aug 2022",
           end: "Oct 2023",
           points: [
-            "Reduced scope by replacing in-house auth with standardized OAuth2 & OIDC IAM Infrastructure",
+            "Reduced scope by replacing in-house auth with standardized OAuth2 and OIDC IAM Infrastructure",
             `Accelerated development by rearchitecting legacy monolithic codebase into well-defined services`,
             `Migrated authorization and business rules from in-code to OPA (Open Policy Agent) documents`,
             `Eliminated deployment mishaps by migrating applications to be deployed and managed in Kubernetes`,
@@ -116,7 +116,7 @@ export const content = {
       location: "Boston, Massachusetts",
       degrees: [
         {
-          name: "M.S. in Computer Engineering (Systems & Software)",
+          name: "M.S. in Computer Engineering (Systems and Software)",
           start: "Sep 2017",
           end: "May 2019",
         },
@@ -129,16 +129,16 @@ export const content = {
     },
   ],
   expertise: {
-    programming:
-      "Python, JavaScript / TypeScript, C / C++, Rust, Assembly, Bash, Go, Haskell",
-    web: "React, Vite, Remix, NextJS, React Router, React Admin, Prisma, HTML / CSS",
-    mobile: "React Native, Expo, Tamagui",
-    cloud: "AWS, AWS CDK, Docker, Kubernetes, Ansible",
-    fundamentals:
-      "Git, Linux CLI, systemd, Data Structures & Algorithms, Package Management",
-    networking:
-      "TCP / UDP / IP, HTTP, RAFT consensus, IEC 61784 safety communication",
-    embedded:
+    Programming:
+      "Python, JavaScript, TypeScript, C, C++, Rust, Assembly, Bash, Go, Haskell",
+    Web: "React, Vite, Remix, NextJS, React Router, React Admin, Prisma, HTML, CSS",
+    Mobile: "React Native, Expo, Tamagui",
+    Cloud: "AWS, AWS CDK, Docker, Kubernetes, Ansible",
+    Fundamentals:
+      "Git, Linux CLI, systemd, Data Structures and Algorithms, Package Management",
+    Networking:
+      "TCP, UDP, IP, HTTP, RAFT consensus, IEC 61784 safety communication",
+    Embedded:
       "IEC 61508 safety compliance, peripheral drivers, RTOS, libC, POSIX",
   },
 };
