@@ -12,13 +12,38 @@ image:
     author: Sara Polo
     url: https://sarapolo.artstation.com/
 description: |
-  I created a platform to expose custom iOS functionality to web apps, and had a
-  lot of fun doing it. Now developers can use our mobile functionality before
-  they invest in building their own app.
+  I created a custom browser to allow web apps to use custom iOS functionality.
+  Now developers can use our mobile functionality without investing in
+  building an mobile app of their own.
 layout: "../../layouts/Project.astro"
 ---
 
-## Deorum petiit ignis
+## TL;DR - What's The stack?
+
+### React-Native
+
+React-Native lets you develop native apps from JS, and leverage the entire
+ecosystem of UI/UX goodness. It's incredible for teams as they can flex
+engineers between web and mobile, but even for personal use the developer
+experience is fantastic. I'd not make a mobile app without it.
+
+### Expo
+
+The best toolchain + SDK for React-Native. You _can_ use React-Native without
+it, but Expo provides some amazing features at no downside:
+
+- web-like hot reloading of files
+
+### React-Native WebView
+
+- React-Native Vision Camera: Driver for native camera configurations
+- React-Native MMKV: Super fast key-value store
+- React-Native WebView
+
+### UI
+
+- Tamagui
+- Picsum
 
 Lorem markdownum longo os thyrso telum, continet servat fetus nymphae, _vox
 nocte sedesque_, decimo. Omnia esse, quam sive; conplevit illis indestrictus

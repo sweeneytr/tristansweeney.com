@@ -2,11 +2,11 @@
 import type { ContentEntryMap } from "astro:content";
 import Image from "astro/components/Image.astro";
 import ImageCredit from "@components/generic/ImageCredit.astro";
-import type { PostSchema } from "../../content/config";
+import type { PostData } from "../../content/config";
 import chromeDino from "@assets/chrome-dino-hero.avif";
 
 interface Props {
-  content: PostSchema;
+  content: PostData;
   context: {
     collection: keyof ContentEntryMap;
     baseUrl: string;
@@ -26,11 +26,13 @@ const {
   <p class="text-slate text-sm md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
-  <Image
+  {
+    /* <Image
     src={content.image ? import(content.image.url) : chromeDino}
     class="w-full rounded-2xl bg-gray-700"
     alt="image"
-  />
+  />*/
+  }
 
   <div class="flex justify-end p-4">
     {
