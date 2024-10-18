@@ -39,9 +39,8 @@ export const loadFonts = async (site: URL) => {
       ).map(async ({ family, src, ...rest }) => {
         const path = `${os.tmpdir()}/${src}.ttf`;
         const module = await import(`../../assets/fonts/${family}/${src}.ttf`);
-        console.log(module);
 
-        await fs.writeFile(path, Buffer.from(module.default));
+        await fs.writeFile(path, module.default);
 
         return { family, src: path, ...rest };
       })
