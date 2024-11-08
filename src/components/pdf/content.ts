@@ -129,16 +129,14 @@ export const content = {
     },
   ],
   expertise: {
-    Programming:
-      "Python, JavaScript, TypeScript, C, C++, Rust, Assembly, Bash, Go, Haskell",
-    Web: "React, Vite, Remix, NextJS, React Router, React Admin, Prisma, HTML, CSS",
-    Mobile: "React Native, Expo, Tamagui",
-    Cloud: "AWS, AWS CDK, Docker, Kubernetes, Ansible",
+    Programming: "Python, JavaScript, TypeScript, C, C++, Rust, Assembly, Bash",
+    Web: "React, ReactPDF, Vite, Remix, React Router, React Admin, Prisma, Figma",
+    Mobile: "React Native, Expo, Tamagui, Capacitor",
+    Cloud: "AWS, CDK, Docker, Kubernetes, ArgoCD, Ansible",
     Fundamentals:
-      "Git, Linux CLI, systemd, Data Structures and Algorithms, Package Management",
+      "Git, Linux, CI/CD, Data Structures and Algorithms, Package Distribution",
     Networking:
       "TCP, UDP, IP, HTTP, RAFT consensus, IEC 61784 safety communication",
-    Embedded:
-      "IEC 61508 safety compliance, peripheral drivers, RTOS, libC, POSIX",
+    Embedded: "IEC 61508 safety compliance, I/O drivers, RTOS, libC, POSIX",
   },
 };

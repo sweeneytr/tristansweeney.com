@@ -328,7 +328,7 @@ export const Resume = () => (
         ))}
       </Section>
     </ResumePage>
-    {/*
+
     <ResumePage>
       <Header>
         <Text
@@ -367,6 +367,6 @@ export const Resume = () => (
           </Row>
         ))}
       </Section>
-    </ResumePage> */}
+    </ResumePage>
   </Document>
 );
