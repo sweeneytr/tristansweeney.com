@@ -15,27 +15,29 @@ import { content } from "@components/pdf/content";
 >
   <main class="bg-pink grow">
     <section id="about" class="pt-4 flex flex-col items-center">
-      <h1 class="text-2xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
+      <h1 class="text-3xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
         Professional Experience
       </h1>
       {
         content.professional.map(({ name, location, roles }) => (
           <div class="md:w-3/4 p-4 ">
             <Card class="p-4">
-              <div class="text-4xl flex flex-row justify-between">
-                <h1 class="inline-block font-bold">{name}</h1>
-                <h2 class="inline-block italic font-light">{location}</h2>
+              <div class="text-2xl md:text-4xl lg:text-6xl flex flex-row justify-between">
+                <h1 class="inline-block font-bold text-start">{name}</h1>
+                <h2 class="inline-block italic font-light text-end">
+                  {location}
+                </h2>
               </div>
               <div class="flex flex-col gap-4">
                 {roles.map(({ name, start, end, points }) => (
                   <div>
-                    <div class="text-2xl flex flex-row justify-between">
-                      <h1 class="inline-block uppercase">{name}</h1>
-                      <h1 class="inline-block italic font-light">
+                    <div class="text-lg md:text-2xl flex flex-row justify-between">
+                      <h1 class="inline-block uppercase text-start">{name}</h1>
+                      <h1 class="inline-block italic font-light text-end">
                         {start} — {end ?? "Present"}
                       </h1>
                     </div>
-                    <ul class="list-disc text-lg pl-8 poppins">
+                    <ul class="list-disc text-sm md:text-lg pl-8 poppins">
                       {points.map((point) => (
                         <li>{point}</li>
                       ))}
@@ -48,23 +50,25 @@ import { content } from "@components/pdf/content";
         ))
       }
 
-      <h1 class="text-2xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
+      <h1 class="text-3xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
         Education
       </h1>
       {
         content.education.map(({ name, location, degrees }) => (
           <div class="md:w-3/4 p-4 ">
             <Card class="p-4">
-              <div class="text-4xl flex flex-row justify-between">
-                <h1 class="inline-block font-bold">{name}</h1>
-                <h2 class="inline-block italic font-light">{location}</h2>
+              <div class="text-2xl md:text-4xl lg:text-6xl flex flex-row justify-between">
+                <h1 class="inline-block font-bold text-start">{name}</h1>
+                <h2 class="inline-block italic font-light text-end">
+                  {location}
+                </h2>
               </div>
               <div class="flex flex-col gap-4">
                 {degrees.map(({ name, start, end }) => (
                   <div>
-                    <div class="text-2xl flex flex-row justify-between">
-                      <h1 class="inline-block uppercase">{name}</h1>
-                      <h1 class="inline-block italic font-light">
+                    <div class="text-lg md:text-2xl flex flex-row justify-between">
+                      <h1 class="inline-block uppercase text-start">{name}</h1>
+                      <h1 class="inline-block italic font-light text-end">
                         {start} — {end ?? "Present"}
                       </h1>
                     </div>
@@ -76,19 +80,21 @@ import { content } from "@components/pdf/content";
         ))
       }
 
-      <h1 class="text-2xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
+      <h1 class="text-3xl md:text-4xl lg:text-6xl mt-8 dm-serif case-capital">
         Expertise
       </h1>
 
-      <Card class="flex flex-col gap-4 p-4">
-        {
-          Object.entries(content.expertise).map(([name, value]) => (
-            <div>
-              <h1 class="font-bold text-xl">{name}</h1> {value}
-            </div>
-          ))
-        }
-      </Card>
+      <div class="p-4">
+        <Card class="flex flex-col gap-4 p-4">
+          {
+            Object.entries(content.expertise).map(([name, value]) => (
+              <div>
+                <h1 class="font-bold text-xl">{name}</h1> {value}
+              </div>
+            ))
+          }
+        </Card>
+      </div>
 
       <div class="sticky bottom-0">
         <Card class="m-4">
@@ -104,8 +110,9 @@ import { content } from "@components/pdf/content";
                 ?.addEventListener("click", copyResume);
             </script>
             <ActualButton id="copyResume">
-              <div class="flex flex-row items-center gap-2">
-                Copy PDF Link<div class="i-uil-link"></div>
+              <div class="flex flex-row items-center">
+                <div class="text-sm">Copy PDF Link</div>
+                <div class="i-uil-link w-8 h-8"></div>
               </div>
             </ActualButton>
 
@@ -113,8 +120,9 @@ import { content } from "@components/pdf/content";
               href="/v1/generate/resume.pdf"
               download="TristanSweeneyResume.pdf"
             >
-              <div class="flex flex-row items-center gap-2">
-                Download PDF<div class="i-uil-file-download inline-block"></div>
+              <div class="flex flex-row items-center">
+                <div class="text-sm">Download PDF</div>
+                <div class="i-uil-file-download w-8 h-8"></div>
               </div>
             </Button>
           </div>
