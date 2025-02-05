@@ -21,8 +21,8 @@ import { content } from "@components/pdf/content";
       {
         content.professional.map(({ name, location, roles }) => (
           <div class="md:w-3/4 p-4 ">
-            <Card class="p-4">
-              <div class="text-2xl md:text-4xl lg:text-6xl flex flex-row justify-between">
+            <Card>
+              <div class="text-2xl md:text-3xl lg:text-4xl flex flex-row justify-between">
                 <h1 class="inline-block font-bold text-start">{name}</h1>
                 <h2 class="inline-block italic font-light text-end">
                   {location}
@@ -57,13 +57,13 @@ import { content } from "@components/pdf/content";
         content.education.map(({ name, location, degrees }) => (
           <div class="md:w-3/4 p-4 ">
             <Card class="p-4">
-              <div class="text-2xl md:text-4xl lg:text-6xl flex flex-row justify-between">
+              <div class="text-2xl md:text-3xl lg:text-4xl flex flex-row justify-between">
                 <h1 class="inline-block font-bold text-start">{name}</h1>
                 <h2 class="inline-block italic font-light text-end">
                   {location}
                 </h2>
               </div>
-              <div class="flex flex-col gap-4">
+              <div class="flex flex-col">
                 {degrees.map(({ name, start, end }) => (
                   <div>
                     <div class="text-lg md:text-2xl flex flex-row justify-between">
