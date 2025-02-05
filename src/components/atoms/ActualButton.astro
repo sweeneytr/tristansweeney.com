@@ -29,6 +29,10 @@ const { color, ...rest } = Astro.props;
     filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
     background-color: var(--color);
   }
+  button.brutal-btn:active {
+    filter: drop-shadow(0px 0px 0 rgb(0 0 0 / 1));
+    background-color: white;
+  }
 </style>
 
 <button {...rest} class="brutal-btn">
