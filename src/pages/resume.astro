@@ -80,46 +80,44 @@ import { content } from "@components/pdf/content";
         Expertise
       </h1>
 
-      <div class="p-4">
-        <Card class="flex flex-col gap-4 p-4">
-          {
-            Object.entries(content.expertise).map(([name, value]) => (
-              <div>
-                <h1 class="font-bold text-xl">{name}</h1> {value}
+      <Card class="flex flex-col gap-4 p-4">
+        {
+          Object.entries(content.expertise).map(([name, value]) => (
+            <div>
+              <h1 class="font-bold text-xl">{name}</h1> {value}
+            </div>
+          ))
+        }
+      </Card>
+
+      <div class="sticky bottom-0">
+        <Card class="m-4">
+          <div class="px-8 flex flex-row items-center justify-center gap-8">
+            <script>
+              function copyResume() {
+                navigator.clipboard.writeText(
+                  new URL("/v1/generate/resume.pdf", window.location.href).href
+                );
+              }
+              document
+                .getElementById("copyResume")
+                ?.addEventListener("click", copyResume);
+            </script>
+            <ActualButton id="copyResume">
+              <div class="flex flex-row items-center gap-2">
+                Copy PDF Link<div class="i-uil-link"></div>
               </div>
-            ))
-          }
-        </Card>
-      </div>
+            </ActualButton>
 
-      <div class="sticky bottom-0 w-1/2">
-        <Card
-          class="bg-white m-4 p-4 border-2 border-black flex flex-row items-center justify-center gap-4"
-        >
-          <script>
-            function copyResume() {
-              navigator.clipboard.writeText(
-                new URL("/v1/generate/resume.pdf", window.location.href).href
-              );
-            }
-            document
-              .getElementById("copyResume")
-              ?.addEventListener("click", copyResume);
-          </script>
-          <ActualButton id="copyResume" class="brutal-btn active:bg-opacity-50">
-            <div class="flex flex-row items-center gap-2">
-              Copy PDF Link<div class="i-uil-link"></div>
-            </div>
-          </ActualButton>
-
-          <Button
-            href="/v1/generate/resume.pdf"
-            download="TristanSweeneyResume.pdf"
-          >
-            <div class="flex flex-row items-center gap-2">
-              Download PDF<div class="i-uil-file-download inline-block"></div>
-            </div>
-          </Button>
+            <Button
+              href="/v1/generate/resume.pdf"
+              download="TristanSweeneyResume.pdf"
+            >
+              <div class="flex flex-row items-center gap-2">
+                Download PDF<div class="i-uil-file-download inline-block"></div>
+              </div>
+            </Button>
+          </div>
         </Card>
       </div>
     </section>
