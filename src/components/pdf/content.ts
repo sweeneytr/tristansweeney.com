@@ -15,7 +15,7 @@ export const content = {
   professional: [
     {
       name: "DUST Identity",
-      location: "Newton, Massachusetts",
+      location: "Newton, MA",
       roles: [
         {
           name: "Staff Software Engineer",
@@ -53,7 +53,7 @@ export const content = {
     },
     {
       name: "Amazon",
-      location: "North Reading, Massachusetts",
+      location: "North Reading, MA",
       roles: [
         {
           name: "Software Development Engineer",
@@ -80,7 +80,7 @@ export const content = {
     },
     {
       name: "Cambridge Consultants",
-      location: "Boston, Massachusetts",
+      location: "Boston, MA",
       roles: [
         {
           name: "Software Engineer (co-op)",
@@ -96,7 +96,7 @@ export const content = {
     },
     {
       name: "NVIDIA",
-      location: "Santa Clara, California",
+      location: "Santa Clara, CA",
       roles: [
         {
           name: "Compute Architecture Engineer (co-op)",
@@ -113,7 +113,7 @@ export const content = {
   education: [
     {
       name: "Northeastern University",
-      location: "Boston, Massachusetts",
+      location: "Boston, MA",
       degrees: [
         {
           name: "M.S. in Computer Engineering (Systems and Software)",
