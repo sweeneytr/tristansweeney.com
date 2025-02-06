@@ -1,35 +1,37 @@
 ---
-interface Props {
-  color?: string | undefined;
-}
 import type { HTMLAttributes } from "astro/types";
 import { colors } from "../../colors";
+import { twMerge } from "tailwind-merge";
 
-if (Astro.props.color === undefined) {
-  Astro.props.color = colors[Math.floor(Math.random() * colors.length)];
+interface Props extends HTMLAttributes<"div"> {
+  color?: string;
 }
 
-interface Props extends HTMLAttributes<"div"> {}
-
-const { class: className, color } = Astro.props;
+const {
+  class: className,
+  color = colors[Math.floor(Math.random() * colors.length)],
+  ...rest
+} = Astro.props;
 ---
 
-<style define:vars={{ color: color }}>
+<style>
   div.brutal-card {
-    background-color: var(--color);
-    border-radius: 0.5rem;
-    border: 3px solid black;
     filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
-    transition: all;
-    padding: 1rem;
-    transition-duration: 0.5s;
-    animation: ease-in-out;
   }
   div.brutal-card:hover {
     filter: drop-shadow(7px 7px 0 rgb(0 0 0 / 1));
   }
 </style>
 
-<div class:list={["brutal-card", className]}>
+<div
+  class:list={[
+    "brutal-card",
+    twMerge(
+      "p-4 border-3 border-black rounded-xl transition-filter ease-in-out duration-500",
+      className
+    ),
+  ]}
+  {...rest}
+>
   <slot />
 </div>

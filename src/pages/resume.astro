@@ -23,7 +23,7 @@ const colors = ["#facc15", "#22d3ee", "#a3e635", "#fb923c", "#e879f9"];
       {
         content.professional.map(({ name, location, roles }, i) => (
           <div class="md:w-3/4 p-4">
-            <Card color={colors.at(i)}>
+            <Card class={`bg-[${colors.at(i)}]`}>
               <div class="p-4">
                 <div class="text-2xl md:text-3xl lg:text-4xl flex flex-row justify-between items-start">
                   <h1 class="inline-block font-bold text-start">{name}</h1>
@@ -65,7 +65,7 @@ const colors = ["#facc15", "#22d3ee", "#a3e635", "#fb923c", "#e879f9"];
       {
         content.education.map(({ name, location, degrees }) => (
           <div class="md:w-3/4 p-4">
-            <Card class="p-4" color="#c084fc">
+            <Card class="p-4" class="bg-[#c084fc]">
               <div class="p-4">
                 <div class="text-2xl md:text-3xl lg:text-4xl flex flex-row justify-between">
                   <h1 class="inline-block font-bold text-start">{name}</h1>
@@ -101,7 +101,7 @@ const colors = ["#facc15", "#22d3ee", "#a3e635", "#fb923c", "#e879f9"];
       </h1>
 
       <div class="p-4">
-        <Card color="#fb7185">
+        <Card class="bg-[#fb7185]">
           <div class="flex flex-col gap-4 p-4 poppins">
             {
               Object.entries(content.expertise).map(([name, value]) => (
@@ -115,7 +115,7 @@ const colors = ["#facc15", "#22d3ee", "#a3e635", "#fb923c", "#e879f9"];
       </div>
 
       <div class="sticky bottom-0">
-        <Card class="m-4" color="#4ade80">
+        <Card class="bg-[#4ade80] m-4">
           <div class="px-8 flex flex-row items-center justify-center gap-8">
             <script>
               function copyResume() {
