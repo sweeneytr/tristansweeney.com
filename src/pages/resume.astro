@@ -5,6 +5,8 @@ import ActualButton from "@components/atoms/ActualButton.astro";
 import Button from "@components/atoms/Button.astro";
 import Card from "@components/atoms/Card.astro";
 import { content } from "@components/pdf/content";
+
+const colors = ["#facc15", "#60a5fa", "#a3e635", "#fb923c", "#e879f9"];
 ---
 
 <Layout
@@ -19,9 +21,9 @@ import { content } from "@components/pdf/content";
         Professional Experience
       </h1>
       {
-        content.professional.map(({ name, location, roles }) => (
+        content.professional.map(({ name, location, roles }, i) => (
           <div class="md:w-3/4 p-4 ">
-            <Card>
+            <Card color={colors.at(i)}>
               <div class="text-2xl md:text-3xl lg:text-4xl flex flex-row justify-between">
                 <h1 class="inline-block font-bold text-start">{name}</h1>
                 <h2 class="inline-block italic font-light text-end">
@@ -97,7 +99,7 @@ import { content } from "@components/pdf/content";
       </div>
 
       <div class="sticky bottom-0">
-        <Card class="m-4">
+        <Card class="m-4" color="#4ade80">
           <div class="px-8 flex flex-row items-center justify-center gap-8">
             <script>
               function copyResume() {
