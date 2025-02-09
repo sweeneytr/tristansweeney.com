@@ -1,0 +1,24 @@
+---
+import Card from "@components/atoms/Card.astro";
+import { content } from "@components/pdf/content";
+---
+
+<div class="flex flex-col items-center">
+  <h1 class="dm-serif case-capital mt-8 text-3xl md:text-4xl lg:text-6xl">
+    Expertise
+  </h1>
+
+  <div class="w-full p-4">
+    <Card class="bg-[#fb7185]">
+      <div class="poppins flex flex-col gap-6 p-4">
+        {
+          Object.entries(content.expertise).map(([name, value]) => (
+            <div>
+              <h1 class="text-lg font-bold md:text-3xl">{name}</h1> {value}
+            </div>
+          ))
+        }
+      </div>
+    </Card>
+  </div>
+</div>
