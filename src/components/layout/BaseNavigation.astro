@@ -27,7 +27,7 @@ const socialIcons = [
 const { pageTitle } = Astro.props;
 ---
 
-<header class="border-b-4 border-black flex justify-between p-6 items-center">
+<header class="flex items-center justify-between border-b-4 border-black p-6">
   {pageTitle && <h1 class="hidden">{pageTitle}</h1>}
   <a href="/" title="Back to Home" class="flex flex-row items-center gap-2"
     ><svg
@@ -78,12 +78,12 @@ const { pageTitle } = Astro.props;
   </a>
   <nav class="hidden md:inline-block">
     <h2 class="hidden">Navigation</h2>
-    <ul class="flex gap-8 poppins">
+    <ul class="poppins flex gap-8">
       {
         navigationItems.map((item) => (
           <li>
             <a
-              class="text-lg font-medium hover:text-green hover:underline transition-all duration-150 ease-in-out"
+              class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline"
               href={item.url}
               title={`Go to ${item.name}`}
             >
@@ -97,18 +97,18 @@ const { pageTitle } = Astro.props;
           <li>
             <a
               href={item.url}
-              class="hover:text-green hover:underline transition-all duration-150 ease-in-out"
+              class="hover:text-green transition-all duration-150 ease-in-out hover:underline"
               target="_blank"
               title={`${item.name}`}
             >
-              <div class:list={[item.icon, "w-6 h-6"]} />
+              <div class:list={[item.icon, "h-6 w-6"]} />
             </a>
           </li>
         ))
       }
     </ul>
   </nav>
-  <nav class="md:hidden flex">
+  <nav class="flex md:hidden">
     <h2 class="hidden">Mobile Navigation</h2>
     <ul>
       <li><a href="/blog/">Blog</a></li>

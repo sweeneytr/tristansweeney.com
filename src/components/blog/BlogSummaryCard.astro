@@ -27,14 +27,14 @@ const {
   description={post.data.description}
   image={post.data.image}
 >
-  <div class="flex justify-end my-4">
+  <div class="my-4 flex justify-end">
     <Button href={`${baseUrl}/${post.slug}/`}>Read post &rarr;</Button>
   </div>
 
   <div class="hidden sm:inline-block">
     <p class="poppins mt-2">tags:</p>
-    <div class="flex justify-between items-center">
-      <ul class="flex gap-4 mt-2">
+    <div class="flex items-center justify-between">
+      <ul class="mt-2 flex gap-4">
         {
           post.data.tags.map((tag) => {
             return (
@@ -52,7 +52,7 @@ const {
       </ul>
       {
         post.data.draft && (
-          <span class="bg-green rounded-full border-2 py-1 px-4 text-sm border-black card-shadow">
+          <span class="bg-green card-shadow rounded-full border-2 border-black px-4 py-1 text-sm">
             Draft
           </span>
         )

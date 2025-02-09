@@ -26,11 +26,11 @@ const {
 } = Astro.props;
 ---
 
-<Card class="bg-white flex flex-col h-full">
+<Card class="flex h-full flex-col bg-white">
   <h3 class="poppins text-lg md:text-xl">{title}</h3>
-  <div class="flex flex-col mb-4 gap-1">
+  <div class="mb-4 flex flex-col gap-1">
     <span class="text-gray-500">{date.toLocaleDateString()}</span>
-    <div class="rounded-lg border-3 border-black h-56">
+    <div class="border-3 h-56 rounded-lg border-black">
       {
         imgSrc && (
           <Image
@@ -38,14 +38,14 @@ const {
             alt={imgAlt}
             width={800}
             height={400}
-            class="rounded h-full w-full object-cover"
+            class="h-full w-full rounded object-cover"
             style={style}
           />
         )
       }
     </div>
 
-    <div class="flex flex-justify-end">
+    <div class="flex-justify-end flex">
       {credit ? <ImageCredit {...credit} /> : <span>Unknown creator</span>}
     </div>
   </div>

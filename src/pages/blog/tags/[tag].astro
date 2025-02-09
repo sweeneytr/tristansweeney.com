@@ -9,7 +9,7 @@ import BlogSummaryCard from "@components/blog/BlogSummaryCard.astro";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("blog").then((collection) =>
-    collection.reverse()
+    collection.reverse(),
   );
 
   const tags: string[] = [];
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
       props: {
         tag,
         blogposts: allPosts.filter((post) =>
-          post.data.tags.map((tag) => tag.toLowerCase()).includes(tag)
+          post.data.tags.map((tag) => tag.toLowerCase()).includes(tag),
         ),
       },
     };
@@ -46,7 +46,7 @@ const { tag, blogposts } = Astro.props;
   description={`Blog | All posts tagged with ${tag}`}
   pageTitle={`Blog | Blogposts tagged with ${tag}`}
 >
-  <main class="p-6 bg-green grid gap-4">
+  <main class="bg-green grid gap-4 p-6">
     <div>
       <Button href="/blog/">&larr; Back to blog</Button>
     </div>

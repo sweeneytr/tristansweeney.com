@@ -24,7 +24,7 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
     <MobileSocials />
     <section
       id="about"
-      class="pt-4 flex flex-row flex-wrap"
+      class="flex flex-row flex-wrap pt-4"
       data-masonry={JSON.stringify({
         itemSelector: ".brick",
         columnWidth: ".brick-sizer",
@@ -33,47 +33,47 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
       })}
     >
       <h2 class="hidden">About Me</h2>
-      <div class="brick md:w-1/2 p-4">
+      <div class="brick p-4 md:w-1/2">
         <Card class="bg-[#c084fc]">
           <Hero />
         </Card>
       </div>
-      <div class="brick-sizer brick md:w-1/4 p-4">
+      <div class="brick-sizer brick p-4 md:w-1/4">
         <Card class="bg-[#fb923c]">
           <Tech />
         </Card>
       </div>
-      <div class="brick md:w-1/4 p-4">
+      <div class="brick p-4 md:w-1/4">
         <Card class="bg-[#facc15]">
           <Fullstack />
         </Card>
       </div>
-      <div class="brick md:w-1/4 p-4">
+      <div class="brick p-4 md:w-1/4">
         <Card class="bg-[#facc15]">
           <Tools />
         </Card>
       </div>
-      <div class="brick md:w-3/4 p-4">
+      <div class="brick p-4 md:w-3/4">
         <Card class="bg-[#60a5fa]">
           <AboutMe />
         </Card>
       </div>
-      <div class="brick md:w-1/4 p-4">
+      <div class="brick p-4 md:w-1/4">
         <Card class="bg-[#fb7185]">
           <BuiltWith />
         </Card>
       </div>
-      <div class="brick md:w-2/4 p-4">
+      <div class="brick p-4 md:w-2/4">
         <Card class="bg-[#a3e635]">
           <Fonts />
         </Card>
       </div>
-      <div class="brick md:w-1/4 p-4">
+      <div class="brick p-4 md:w-1/4">
         <Card class="bg-[#e879f9]">
           <Colors />
         </Card>
       </div>
-      <div class="brick md:w-1/4 p-4">
+      <div class="brick p-4 md:w-1/4">
         <Card class="bg-[#22d3ee]">
           <PeanutGallery />
         </Card>

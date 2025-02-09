@@ -19,12 +19,12 @@ const colors = [
 ];
 ---
 
-<h2 class="text-2xl md:text-4xl lg:text-6xl mb-8 sanchez">Colors</h2>
+<h2 class="sanchez mb-8 text-2xl md:text-4xl lg:text-6xl">Colors</h2>
 <div class="flex flex-row flex-wrap gap-4">
   {
     colors.map((color) => (
       <div
-        class="w-20 h-20 items-center justify-center rounded-full flex border-3 border-black"
+        class="border-3 flex h-20 w-20 items-center justify-center rounded-full border-black"
         style={{ backgroundColor: color }}
       >
         {color}

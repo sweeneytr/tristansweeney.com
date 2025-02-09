@@ -7,8 +7,8 @@ import PostItem from "@components/generic/PostItem.astro";
 
 const posts = await getCollection("projects").then((collection) =>
   collection.toSorted(
-    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
-  )
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+  ),
 );
 ---
 
