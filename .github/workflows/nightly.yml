@@ -2,13 +2,13 @@ name: nightly
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   upgrade:
     runs-on: ubuntu-latest
     env:
-      NODE_OPTIONS: '--max_old_space_size=4096'
+      NODE_OPTIONS: "--max_old_space_size=4096"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,8 +34,8 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           branch: ci/update-astro
-          commit-message: 'ci: update Astro'
+          commit-message: "ci: update Astro"
           assignees: eliancodes
-          title: 'ci: update Astro'
+          title: "ci: update Astro"
           body: Update Astro and packages to latest version
           labels: ci

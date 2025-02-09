@@ -43,7 +43,7 @@ export const loadFonts = async (site: URL) => {
         await fs.writeFile(path, module.default);
 
         return { family, src: path, ...rest };
-      })
+      }),
     )
   ).forEach((font) => Font.register(font));
 };

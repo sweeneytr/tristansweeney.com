@@ -20,7 +20,7 @@ const fonts: Font[] = [
   {
     name: "Inter Latin",
     data: await loadFont(
-      "https://og-playground.vercel.app/inter-latin-ext-700-normal.woff"
+      "https://og-playground.vercel.app/inter-latin-ext-700-normal.woff",
     ),
     style: "normal",
   },
