@@ -14,7 +14,10 @@ import { content } from "@components/pdf/content";
         {
           Object.entries(content.expertise).map(([name, value]) => (
             <div>
-              <h1 class="text-lg font-bold md:text-3xl">{name}</h1> {value}
+              <h1 class="poppins text-2xl font-bold md:text-3xl lg:text-4xl">
+                {name}
+              </h1>
+              {value}
             </div>
           ))
         }
