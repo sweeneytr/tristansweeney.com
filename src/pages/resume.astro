@@ -1,12 +1,12 @@
 ---
 import Layout from "@layouts/Default.astro";
 
-import ActualButton from "@components/atoms/ActualButton.astro";
-import Button from "@components/atoms/Button.astro";
 import Card from "@components/atoms/Card.astro";
 import Education from "@components/resume/education.astro";
 import Experience from "@components/resume/experience.astro";
 import Expertise from "@components/resume/expertise.astro";
+import CopyResumeLinkButton from "@components/resume/copyResumeLinkButton.astro";
+import DownloadResumeButton from "@components/resume/downloadResumeButton.astro";
 ---
 
 <Layout
@@ -16,48 +16,20 @@ import Expertise from "@components/resume/expertise.astro";
   classList="flex flex-col min-h-screen"
 >
   <main class="grow bg-[#818cf8]">
-    <section id="about" class="flex flex-col items-center pt-4">
+    <section id="resume" class="flex flex-col items-center">
       <div class="sm:w-3/4">
         <Experience />
         <div class="block grid-cols-3 gap-4 sm:grid">
-          <div>
-            <Education />
-          </div>
-          <div class="col-span-2">
-            <Expertise />
-          </div>
+          <Education />
+          <Expertise class="col-span-2" />
         </div>
       </div>
 
       <div class="sticky bottom-0">
         <Card class="m-4 bg-[#4ade80]">
           <div class="flex flex-row items-center justify-center gap-8 px-8">
-            <script>
-              function copyResume() {
-                navigator.clipboard.writeText(
-                  new URL("/v1/generate/resume.pdf", window.location.href).href,
-                );
-              }
-              document
-                .getElementById("copyResume")
-                ?.addEventListener("click", copyResume);
-            </script>
-            <ActualButton id="copyResume">
-              <div class="flex flex-row items-center">
-                <div class="text-sm">Copy PDF Link</div>
-                <div class="i-uil-link h-8 w-8"></div>
-              </div>
-            </ActualButton>
-
-            <Button
-              href="/v1/generate/resume.pdf"
-              download="TristanSweeneyResume.pdf"
-            >
-              <div class="flex flex-row items-center">
-                <div class="text-sm">Download PDF</div>
-                <div class="i-uil-file-download h-8 w-8"></div>
-              </div>
-            </Button>
+            <CopyResumeLinkButton />
+            <DownloadResumeButton />
           </div>
         </Card>
       </div>

@@ -1,0 +1,18 @@
+---
+import ActualButton from "@components/atoms/ActualButton.astro";
+---
+
+<script>
+  function copyResume() {
+    navigator.clipboard.writeText(
+      new URL("/v1/generate/resume.pdf", window.location.href).href
+    );
+  }
+  document.getElementById("copyResume")?.addEventListener("click", copyResume);
+</script>
+<ActualButton id="copyResume">
+  <div class="flex flex-row items-center">
+    <div class="text-sm">Copy PDF Link</div>
+    <div class="i-uil-link h-8 w-8"></div>
+  </div>
+</ActualButton>
