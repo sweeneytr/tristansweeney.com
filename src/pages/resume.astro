@@ -17,20 +17,20 @@ import DownloadResumeButton from "@components/resume/downloadResumeButton.astro"
 >
   <main class="grow bg-[#818cf8]">
     <section id="resume" class="flex flex-col items-center">
-      <div class="sm:w-3/4">
+      <div class="my-8 flex flex-col items-center gap-8 sm:w-3/4">
         <Experience />
-        <div class="block grid-cols-3 gap-4 sm:grid">
+        <div class="flex grid-cols-3 flex-col items-start gap-8 sm:grid">
           <Education />
           <Expertise class="col-span-2" />
         </div>
       </div>
 
       <div class="sticky bottom-0">
-        <Card class="m-4 bg-[#4ade80]">
-          <div class="flex flex-row items-center justify-center gap-8 px-8">
-            <CopyResumeLinkButton />
-            <DownloadResumeButton />
-          </div>
+        <Card
+          class="sticky bottom-0 mb-4 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
+        >
+          <CopyResumeLinkButton />
+          <DownloadResumeButton />
         </Card>
       </div>
     </section>
