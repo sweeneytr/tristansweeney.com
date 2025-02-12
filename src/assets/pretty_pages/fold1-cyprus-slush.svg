@@ -1,0 +1,61 @@
+<svg width="1728" height="2688" viewBox="0 0 1800 4200" xmlns="http://www.w3.org/2000/svg"><script xmlns=""/>
+
+	<defs>
+
+		<style>
+			.svg-paper { 
+				fill:#214A54;
+			}
+
+			.svg-paper-backup { 
+				fill:url(#gradient-paper);
+			}
+
+			.svg-fold { 
+				fill:url(#gradient-fold);
+			}
+
+			.drop-shadow { 
+				fill:url(#drop-shadow);
+			}
+		</style>
+
+		<clipPath id="paper">
+			<path d="M1801.5,2175.95L1314.79,268.77l-.02,.14c-13.15-41.8-68.83-62.64-136.07-82.64C970.78,124.42,354.73,0,354.73,0L0,2800l1801.5-624.05"/>
+		</clipPath>
+
+		<clipPath id="fold">
+			<path d="M1801.5,2175.95S737.27,858.32,737.27,858.32c0,0,363.8-275.55,491.69-415.98,71.36-78.36,94.65-130.07,87.54-166.63"/>
+		</clipPath>
+
+		<filter id="noise-filter" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%">
+			<feTurbulence baseFrequency=".75" numOctaves="1" stitchTiles="stitch" result="noisy-result"/>
+			<feColorMatrix type="saturate" values="0"/>
+			<feBlend in="SourceGraphic" in2="noisy-result" mode="overlay"/>
+		</filter>
+
+		<filter id="noise-filter-dark" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%">
+			<feTurbulence type="turbulence" baseFrequency=".5" numOctaves="3" stitchTiles="stitch" result="noisy-result"/>
+			<feColorMatrix type="saturate" values="0"/>
+			<feBlend in="SourceGraphic" in2="noisy-result" mode="multiply"/>
+		</filter>
+
+		<linearGradient id="gradient-paper" x1="-217.67" y1="1124.8" x2="1379.06" y2="479.68" gradientTransform="translate(119.91 329.76) rotate(7)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#161d23"/><stop offset="1" stop-color="#20575e"/></linearGradient>
+
+		<linearGradient id="drop-shadow" x1="0" y1="1145" x2="900" y2="1145" gradientTransform="translate(119.91 329.76) rotate(7)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#000" stop-opacity="0.8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+
+		<linearGradient id="gradient-fold" x1="1028.49" y1="1510.89" x2="2002.85" y2="263.76" gradientTransform="translate(145.97 -96.3) rotate(7)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a0e4e2"/><stop offset="1" stop-color="#79bebb"/></linearGradient>
+
+	</defs>
+
+	<g>
+		<path class="svg-paper-backup" clip-path="url(#paper)" d="M1801.5,2175.95L1314.79,268.77l-.02,.14c-13.15-41.8-68.83-62.64-136.07-82.64C970.78,124.42,354.73,0,354.73,0L0,2800l1801.5-624.05"/>
+
+		<path class="svg-paper" filter="url(#noise-filter-dark)" clip-path="url(#paper)" d="M1801.5,2175.95L1314.79,268.77l-.02,.14c-13.15-41.8-68.83-62.64-136.07-82.64C970.78,124.42,354.73,0,354.73,0L0,2800l1801.5-624.05"/>
+
+		<path class="drop-shadow" clip-path="url(#paper)" d="M1801.5,2175.95L1314.79,268.77l-.02,.14c-13.15-41.8-68.83-62.64-136.07-82.64C970.78,124.42,354.73,0,354.73,0L0,2800l1801.5-624.05"/>
+		
+		<path class="svg-fold" filter="url(#noise-filter)" clip-path="url(#fold)" d="M1801.5,2175.95S737.27,858.32,737.27,858.32c0,0,363.8-275.55,491.69-415.98,71.36-78.36,94.65-130.07,87.54-166.63"/>
+	</g>
+
+</svg>
