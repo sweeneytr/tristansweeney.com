@@ -1,165 +1,23 @@
 ---
-import TheRing from "@components/atoms/TheRing.astro";
+import SiteCredits from "@components/molecules/SiteCredits.astro";
+import SiteNav from "@components/molecules/SiteNav.astro";
+import SiteTitle from "@components/molecules/SiteTitle.astro";
+import ToTopButton from "@components/atoms/ToTopButton.astro";
 
 interface Props {
   backToTop?: boolean;
 }
 
-const navigationItems = [
-  { name: "Home", url: "/", predicate: Astro.url.pathname === "/" },
-  {
-    name: "Resume",
-    url: "/resume/",
-    predicate: Astro.url.pathname.includes("/resume"),
-  },
-  {
-    name: "Blog",
-    url: "/blog/",
-    predicate: Astro.url.pathname.includes("/blog"),
-  },
-  {
-    name: "Projects",
-    url: "/projects/",
-    predicate: Astro.url.pathname.includes("/projects"),
-  },
-];
-
-const socialIcons = [
-  {
-    name: "GitHub",
-    url: "https://github.com/sweeneytr",
-    icon: "i-uil-github",
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/tristansweeney",
-    icon: "i-uil-linkedin",
-  },
-  { name: "RSS", url: "/feed.xml", icon: "i-uil-rss" },
-];
-
 const { backToTop = false } = Astro.props;
 ---
 
-{
-  backToTop && (
-    <button
-      class:list={[
-        backToTop ? `backToTop` : null,
-        "transition-300 card-shadow fixed bottom-[10px] right-[30px] z-50 flex h-10 w-10 border border-black bg-white opacity-0",
-      ]}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        height="100%"
-        width="100%"
-        stroke-width="1.5"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m4.5 15.75 7.5-7.5 7.5 7.5"
-        />
-      </svg>
-    </button>
-  )
-}
+{backToTop && <ToTopButton />}
 
 <footer class="outfit bg-black p-6">
   <div class="flex flex-row items-center justify-between">
     <h2 class="hidden">Footer</h2>
-    <a href="/" title="Back to Home" class="flex flex-row items-center gap-2"
-      ><TheRing />
-      <p class="righteous text-3xl text-white md:text-5xl">Tristan Sweeney</p>
-    </a>
-
-    <nav class="hidden md:inline-block">
-      <h2 class="hidden">Navigation</h2>
-      <ul class="poppins flex gap-8">
-        {
-          navigationItems.map((item) => (
-            <li>
-              <a
-                class:list={[
-                  "hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline",
-                  {
-                    "text-green font-bold underline": item.predicate,
-                    "text-white": !item.predicate,
-                  },
-                ]}
-                href={item.url}
-                title={`Go to ${item.name}`}
-              >
-                {item.name}
-              </a>
-            </li>
-          ))
-        }
-        {
-          socialIcons.map((item) => (
-            <li>
-              <a
-                href={item.url}
-                class="hover:text-green text-white transition-all duration-150 ease-in-out hover:underline"
-                target="_blank"
-                title={`${item.name}`}
-              >
-                <div class:list={[item.icon, "h-6 w-6"]} />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-    <nav class="flex md:hidden">
-      <h2 class="hidden">Mobile Navigation</h2>
-      <ul>
-        <li><a href="/blog/">Blog</a></li>
-      </ul>
-    </nav>
+    <SiteTitle class="text-white" />
+    <SiteNav class="text-white" />
   </div>
-
-  <p>
-    <span class="outfit text-white"
-      >© 2017-{new Date().getFullYear()} by Tristan Sweeney</span
-    >
-  </p>
-  <p class="text-slate outfit">
-    <a href="https://github.com/eliancodes/brutal" class="underline">Brutal</a>
-    by <a href="https://www.elian.codes/" class="underline">Elian Codes</a>
-    - Icons by <a href="https://icons8.com/" class="underline">Icons8</a>
-    - Built with <a href="https://astro.build/" class="underline">Astro</a>
-  </p>
+  <SiteCredits class="text-white" />
 </footer>
-
-<style>
-  .backToTop.active {
-    opacity: 1;
-  }
-</style>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const backToTop = document.querySelector(".backToTop");
-
-    const toggleBackToTopButton = () => {
-      if (window.scrollY > 250) {
-        backToTop?.classList.add("active");
-      } else {
-        backToTop?.classList.remove("active");
-      }
-    };
-
-    backToTop?.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    });
-
-    window.addEventListener("scroll", toggleBackToTopButton);
-  });
-</script>

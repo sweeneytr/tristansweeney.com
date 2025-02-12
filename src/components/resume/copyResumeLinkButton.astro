@@ -5,7 +5,7 @@ import ActualButton from "@components/atoms/ActualButton.astro";
 <script>
   function copyResume() {
     navigator.clipboard.writeText(
-      new URL("/v1/generate/resume.pdf", window.location.href).href
+      new URL("/v1/generate/resume.pdf", window.location.href).href,
     );
   }
   document.getElementById("copyResume")?.addEventListener("click", copyResume);

@@ -1,0 +1,50 @@
+<button
+  class:list={[
+    `backToTop`,
+    "transition-300 card-shadow fixed bottom-[10px] right-[30px] z-50 flex h-10 w-10 border border-black bg-white opacity-0",
+  ]}
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    height="100%"
+    width="100%"
+    stroke-width="1.5"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m4.5 15.75 7.5-7.5 7.5 7.5"></path>
+  </svg>
+</button>
+
+<style>
+  .backToTop.active {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const backToTop = document.querySelector(".backToTop");
+
+    const toggleBackToTopButton = () => {
+      if (window.scrollY > 250) {
+        backToTop?.classList.add("active");
+      } else {
+        backToTop?.classList.remove("active");
+      }
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+
+    window.addEventListener("scroll", toggleBackToTopButton);
+  });
+</script>

@@ -1,0 +1,14 @@
+---
+import TheRing from "@components/atoms/TheRing.astro";
+import { twMerge } from "tailwind-merge";
+
+const { class: className } = Astro.props;
+---
+
+<a
+  href="/"
+  title="Back to Home"
+  class={twMerge("flex flex-row items-center gap-2", className)}
+  ><TheRing />
+  <p class="righteous text-3xl md:text-5xl">Tristan Sweeney</p>
+</a>
