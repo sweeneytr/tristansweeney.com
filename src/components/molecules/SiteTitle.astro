@@ -1,14 +1,21 @@
 ---
 import TheRing from "@components/atoms/TheRing.astro";
+import TheTower from "@components/atoms/TheTower.astro";
+import type { HTMLAttributes } from "astro/types";
 import { twMerge } from "tailwind-merge";
 
-const { class: className } = Astro.props;
+interface Props extends HTMLAttributes<"a"> {
+  evil?: boolean;
+}
+
+const { class: className, evil = false, ...rest} = Astro.props;
 ---
 
 <a
   href="/"
   title="Back to Home"
   class={twMerge("flex flex-row items-center gap-2", className)}
-  ><TheRing />
+  {...rest}
+  >{evil ? <TheTower /> : <TheRing/>}
   <p class="righteous text-3xl md:text-5xl">Tristan Sweeney</p>
 </a>

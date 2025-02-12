@@ -64,6 +64,8 @@ const { title, description, ogImage } = Astro.props;
         icon.type = "image/x-icon";
         icon.href = "/favicon.ico";
       };
+    } else {
+      console.error("Couldn't setup blur icon")
     }
   </script>
 
