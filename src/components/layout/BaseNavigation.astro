@@ -9,7 +9,9 @@ interface Props {
 const { pageTitle } = Astro.props;
 ---
 
-<header class="flex items-center justify-between border-b-4 border-black p-6">
+<header
+  class="flex items-center justify-between border-b-4 border-black bg-white p-6"
+>
   {pageTitle && <h1 class="hidden">{pageTitle}</h1>}
   <SiteTitle />
   <SiteNav />

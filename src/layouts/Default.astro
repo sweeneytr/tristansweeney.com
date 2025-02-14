@@ -22,5 +22,29 @@ const { title, description, classList, pageTitle, ogImage } = Astro.props;
     <BaseNavigation {pageTitle} />
     <slot />
     <BaseFooter />
+    <style>
+      body:before {
+        content: "";
+        position: fixed;
+        top: -50%;
+        right: -50%;
+        bottom: 50%;
+        left: -50%;
+        z-index: -1;
+        background: white;
+      }
+    </style>
+    <style>
+      body:after {
+        content: "";
+        position: fixed;
+        top: 50%;
+        right: -50%;
+        bottom: -50%;
+        left: -50%;
+        z-index: -1;
+        background: black;
+      }
+    </style>
   </body>
 </html>

@@ -8,7 +8,7 @@ interface Props extends HTMLAttributes<"a"> {
   evil?: boolean;
 }
 
-const { class: className, evil = false, ...rest} = Astro.props;
+const { class: className, evil = false, ...rest } = Astro.props;
 ---
 
 <a
@@ -16,6 +16,6 @@ const { class: className, evil = false, ...rest} = Astro.props;
   title="Back to Home"
   class={twMerge("flex flex-row items-center gap-2", className)}
   {...rest}
-  >{evil ? <TheTower /> : <TheRing/>}
+  >{evil ? <TheTower /> : <TheRing />}
   <p class="righteous text-3xl md:text-5xl">Tristan Sweeney</p>
 </a>
