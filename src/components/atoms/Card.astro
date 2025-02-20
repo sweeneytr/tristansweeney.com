@@ -18,8 +18,11 @@ const {
   div.brutal-card {
     filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
   }
-  div.brutal-card:hover {
-    filter: drop-shadow(7px 7px 0 rgb(0 0 0 / 1));
+
+  @media (width >= 40rem) {
+    div.brutal-card:hover {
+      filter: drop-shadow(10px 10px 0 rgb(0 0 0 / 1));
+    }
   }
 </style>
 
