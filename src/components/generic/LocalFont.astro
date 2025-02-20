@@ -15,6 +15,7 @@ const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
       fallback: "sans-serif",
       src: [
         {
+          preload: true,
           style: "normal",
           path: getFontPath("outfit.ttf"),
         },
@@ -27,7 +28,7 @@ const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
       fallback: "sans-serif",
       src: [
         {
-          preload: false,
+          preload: true,
           style: "normal",
           path: getFontPath("poppins.ttf"),
         },
@@ -40,7 +41,7 @@ const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
       selector: ".righteous",
       src: [
         {
-          preload: false,
+          preload: true,
           style: "normal",
           path: getFontPath("righteous.ttf"),
         },
@@ -53,7 +54,7 @@ const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
       selector: ".sanchez",
       src: [
         {
-          preload: false,
+          preload: true,
           style: "normal",
           path: getFontPath("sanchez.ttf"),
         },
@@ -66,7 +67,7 @@ const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
       name: "DM Serif Text",
       src: [
         {
-          preload: false,
+          preload: true,
           style: "normal",
           path: getFontPath("dm-serif.ttf"),
         },
