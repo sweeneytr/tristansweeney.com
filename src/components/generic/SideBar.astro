@@ -6,8 +6,21 @@ interface Props {
 const { headings } = Astro.props;
 ---
 
+<style>
+  nav.brutal-card {
+    filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
+  }
+
+  @media (width >= 40rem) {
+    nav.brutal-card:hover {
+      filter: drop-shadow(10px 10px 0 rgb(0 0 0 / 1));
+    }
+  }
+</style>
 <aside>
-  <nav class="sticky top-6 hidden lg:block">
+  <nav
+    class="transition-filter border-3 brutal-card sticky top-6 hidden w-fit rounded-xl border-black bg-white p-4 duration-500 ease-in-out lg:block"
+  >
     <ul>
       {
         headings.map((heading: any) => (

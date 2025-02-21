@@ -19,7 +19,21 @@ const {
 } = Astro.props;
 ---
 
-<article class="prose-slate w-sm md:w-prose md:prose poppins">
+<style>
+  article.brutal-card {
+    filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
+  }
+
+  @media (width >= 40rem) {
+    article.brutal-card:hover {
+      filter: drop-shadow(10px 10px 0 rgb(0 0 0 / 1));
+    }
+  }
+</style>
+
+<article
+  class="prose-slate w-sm md:w-prose md:prose poppins border-3 brutal-card transition-filter rounded-xl border-black bg-white p-4 duration-500 ease-in-out"
+>
   <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
   >
   <h2>{content.title}</h2>

@@ -20,11 +20,11 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
   pageTitle="Tristan Sweeney | Home"
   description="Hi! I'm Tristan. I write software for fun, and also to get paid"
 >
-  <main class="bg-pink">
+  <main class="bg-pink p-4">
     <MobileSocials />
     <section
       id="about"
-      class="flex flex-row flex-wrap pt-4"
+      class="flex flex-row flex-wrap"
       data-masonry={JSON.stringify({
         itemSelector: ".brick",
         columnWidth: ".brick-sizer",
@@ -79,7 +79,7 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
         </Card>
       </div>
     </section>
-    <div class="p-4">
+    <div class="px-4 pb-4">
       <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
       <RecentBlogPosts
         baseUrl="/projects"
