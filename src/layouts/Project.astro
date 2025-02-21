@@ -15,21 +15,23 @@ const { title, description } = content;
   description={description as string}
   ogImage={ogImage}
 >
-  <main class="flex justify-center p-6 lg:grid lg:grid-cols-3">
-    <BlogSideBar headings={headings} />
-    <BlogContent
-      content={content}
-      context={{ baseUrl: "/projects", collection: "projects" }}
-    >
-      <slot />
-    </BlogContent>
-  </main>
-  <section class="p-6">
-    <RecentBlogPosts
-      count={6}
-      baseUrl="/projects"
-      plural="projects"
-      collection="projects"
-    />
-  </section>
+  <div class="bg-[#fb923c]">
+    <main class="flex justify-center p-6 lg:grid lg:grid-cols-3">
+      <BlogSideBar headings={headings} />
+      <BlogContent
+        content={content}
+        context={{ baseUrl: "/projects", collection: "projects" }}
+      >
+        <slot />
+      </BlogContent>
+    </main>
+    <section class="p-6">
+      <RecentBlogPosts
+        count={6}
+        baseUrl="/projects"
+        plural="projects"
+        collection="projects"
+      />
+    </section>
+  </div>
 </Layout>
