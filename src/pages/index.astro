@@ -22,16 +22,7 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
 >
   <main class="bg-pink p-4">
     <MobileSocials />
-    <section
-      id="about"
-      class="flex flex-row flex-wrap"
-      data-masonry={JSON.stringify({
-        itemSelector: ".brick",
-        columnWidth: ".brick-sizer",
-        percentPosition: true,
-        horizontalOrder: true,
-      })}
-    >
+    <section id="about" class="flex flex-row flex-wrap">
       <h2 class="hidden">About Me</h2>
       <div class="brick p-4 md:w-1/2">
         <Card class="bg-[#c084fc]">
@@ -88,7 +79,16 @@ import PeanutGallery from "@components/home/PeanutGallery.astro";
       />
     </div>
     <script>
-      import "masonry-layout";
+      import Masonry from "masonry-layout";
+
+      document.addEventListener("astro:page-load", () => {
+        new Masonry("#about", {
+          itemSelector: ".brick",
+          columnWidth: ".brick-sizer",
+          percentPosition: true,
+          horizontalOrder: true,
+        });
+      });
     </script>
   </main>
 </Layout>
