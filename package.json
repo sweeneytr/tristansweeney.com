@@ -22,6 +22,7 @@
     "@astrojs/rss": "^4.0.9",
     "@astrojs/sitemap": "^3.2.1",
     "@react-pdf/renderer": "^4.0.0",
+    "@types/masonry-layout": "^4.2.8",
     "@unocss/astro": "^0.57.7",
     "astro": "^4.16.6",
     "astro-expressive-code": "^0.36.1",
