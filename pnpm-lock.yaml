@@ -20,9 +20,6 @@ dependencies:
   '@react-pdf/renderer':
     specifier: ^4.0.0
     version: 4.0.0(react@18.3.1)
-  '@types/masonry-layout':
-    specifier: ^4.2.8
-    version: 4.2.8
   '@unocss/astro':
     specifier: ^0.57.7
     version: 0.57.7(vite@5.4.9)
@@ -70,6 +67,9 @@ devDependencies:
   '@rollup/pluginutils':
     specifier: ^5.1.2
     version: 5.1.2
+  '@types/masonry-layout':
+    specifier: ^4.2.8
+    version: 4.2.8
   '@types/react':
     specifier: ^18.3.11
     version: 18.3.11
@@ -1722,13 +1722,13 @@ packages:
     resolution: {integrity: sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ==}
     dependencies:
       '@types/sizzle': 2.3.9
-    dev: false
+    dev: true
 
   /@types/masonry-layout@4.2.8:
     resolution: {integrity: sha512-Et2to22C31FG1UFaHRBL6BznMOhrur3Ckr9gvR7fRVmPgxqiwCEKZtV8GpFscHyNAKhZ0QlkwXJRPnJvxZUKQw==}
     dependencies:
       '@types/jquery': 3.5.32
-    dev: false
+    dev: true
 
   /@types/mdast@4.0.4:
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -1773,7 +1773,7 @@ packages:
 
   /@types/sizzle@2.3.9:
     resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
-    dev: false
+    dev: true
 
   /@types/unist@2.0.11:
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
