@@ -271,13 +271,13 @@ export const Resume = () => (
             { icon: <Email />, ...content.email },
             { icon: <Home />, ...content.web },
           ].map(({ icon, text, link }, index, row) => (
-            <>
+            <React.Fragment key={link}>
               <Row style={{ gap: "2" }}>
                 {icon}
                 <SneakyLink href={link}>{text}</SneakyLink>
               </Row>
               {index + 1 !== row.length && <Seperator />}
-            </>
+            </React.Fragment>
           ))}
         </Row>
       </Header>
@@ -310,7 +310,7 @@ export const Resume = () => (
       <Section>
         <Section.Header>Education</Section.Header>
         {content.education.map(({ name, location, degrees }) => (
-          <>
+          <React.Fragment key={name}>
             <Company.Header key={name}>
               <Company.Name>{name}</Company.Name>
               <Company.Location>{location}</Company.Location>
@@ -324,7 +324,7 @@ export const Resume = () => (
                 </Role.Duration>
               </Role.Header>
             ))}
-          </>
+          </React.Fragment>
         ))}
       </Section>
     </ResumePage>
@@ -347,13 +347,13 @@ export const Resume = () => (
             { icon: <Email />, ...content.email },
             { icon: <Home />, ...content.web },
           ].map(({ icon, text, link }, index, row) => (
-            <>
+            <React.Fragment key={link}>
               <Row style={{ gap: "2" }}>
                 {icon}
                 <SneakyLink href={link}>{text}</SneakyLink>
               </Row>
               {index + 1 !== row.length && <Seperator />}
-            </>
+            </React.Fragment>
           ))}
         </Row>
       </Header>
