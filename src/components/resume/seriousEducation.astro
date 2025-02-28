@@ -1,0 +1,43 @@
+---
+import Card from "@components/atoms/Card.astro";
+import { content } from "@components/pdf/content";
+---
+
+<div class="flex w-full flex-col items-center">
+  {
+    content.education.map(({ name, location, degrees }) => (
+      <div class="w-full">
+        <Card class="bg-white p-4">
+          <h1 class="dm-serif case-capital m-2 text-center text-3xl md:text-4xl lg:text-6xl">
+            Education
+          </h1>
+          <div class="flex flex-col gap-2 p-4">
+            <div class="flex flex-col flex-wrap items-start justify-start gap-x-4 sm:flex-row sm:items-end">
+              <h1 class="inline-block text-start text-xl font-bold md:text-4xl">
+                {name}
+              </h1>
+              <h2 class="inline-block whitespace-nowrap text-end text-lg font-light italic md:text-xl">
+                {location}
+              </h2>
+            </div>
+            <div class="flex flex-col gap-2">
+              {degrees.map(({ name, start, end }) => (
+                <div>
+                  <div class="flex flex-col flex-wrap items-start justify-start gap-4 sm:flex-row">
+                    <h1 class="inline-block grow text-start text-lg uppercase md:text-xl">
+                      {name}
+                    </h1>
+                    <h1 class="text-md inline-block text-end font-light italic md:text-xl">
+                      <span class="whitespace-nowrap">{start} —</span>
+                      <span class="whitespace-nowrap">{end ?? "Present"}</span>
+                    </h1>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
+      </div>
+    ))
+  }
+</div>

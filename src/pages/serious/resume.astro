@@ -1,0 +1,36 @@
+---
+import Layout from "@layouts/Default.astro";
+
+import Card from "@components/atoms/Card.astro";
+import CopyResumeLinkButton from "@components/resume/copyResumeLinkButton.astro";
+import DownloadResumeButton from "@components/resume/downloadResumeButton.astro";
+import SeriousExperience from "@components/resume/seriousExperience.astro";
+import SeriousEducation from "@components/resume/seriousEducation.astro";
+import SeriousExpertise from "@components/resume/seriousExpertise.astro";
+---
+
+<Layout
+  title="Tristan Sweeney"
+  pageTitle="Tristan Sweeney | Home"
+  description="Hi! I'm Tristan. I write software for fun, and also to get paid"
+  classList="flex flex-col min-h-screen"
+>
+  <main class="flex grow flex-col items-center bg-gray-300">
+    <section id="resume" class="mx-4 flex flex-col items-center sm:mx-8">
+      <div class="w-4xl my-8 flex flex-col items-center gap-8">
+        <SeriousExperience />
+        <SeriousEducation />
+        <SeriousExpertise class="col-span-2" />
+      </div>
+
+      <div class="sticky bottom-0">
+        <Card
+          class="sticky bottom-0 mb-4 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
+        >
+          <CopyResumeLinkButton />
+          <DownloadResumeButton />
+        </Card>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -4,7 +4,7 @@ import { content } from "@components/pdf/content";
 ---
 
 <div class="flex flex-col items-center">
-  <h1 class="dm-serif case-capital text-3xl md:text-4xl lg:text-6xl m-2">
+  <h1 class="dm-serif case-capital m-2 text-3xl md:text-4xl lg:text-6xl">
     Education
   </h1>
   {
@@ -21,7 +21,7 @@ import { content } from "@components/pdf/content";
             <div class="flex flex-col gap-6">
               {degrees.map(({ name, start, end }) => (
                 <div>
-                  <div class="flex flex-col flex-wrap items-start justify-start text-lg sm:flex-row md:text-2xl">
+                  <div class="flex flex-col flex-wrap items-start justify-start gap-x-4 text-lg sm:flex-row md:text-2xl">
                     <h1 class="inline-block text-start uppercase">{name}</h1>
                     <h1 class="text-md inline-block text-end font-light italic md:text-xl">
                       <span class="whitespace-nowrap">{start} —</span>
