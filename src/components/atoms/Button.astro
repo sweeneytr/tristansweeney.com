@@ -5,12 +5,13 @@ interface Props extends HTMLAttributes<"a"> {
 
 import type { HTMLAttributes } from "astro/types";
 import { colors } from "../../colors";
+import { twMerge } from "tailwind-merge";
 
 if (Astro.props.color === undefined) {
   Astro.props.color = colors[Math.floor(Math.random() * colors.length)];
 }
 
-const { color, ...rest } = Astro.props;
+const { color, class: className, ...rest } = Astro.props;
 ---
 
 <style define:vars={{ color: color }}>
@@ -35,6 +36,6 @@ const { color, ...rest } = Astro.props;
   }
 </style>
 
-<a {...rest} class="brutal-btn">
+<a {...rest} class:list={["brutal-btn", className]}>
   <slot />
 </a>

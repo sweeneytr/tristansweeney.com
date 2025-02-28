@@ -7,6 +7,7 @@ import Experience from "@components/resume/experience.astro";
 import Expertise from "@components/resume/expertise.astro";
 import CopyResumeLinkButton from "@components/resume/copyResumeLinkButton.astro";
 import DownloadResumeButton from "@components/resume/downloadResumeButton.astro";
+import Button from "@components/atoms/Button.astro";
 ---
 
 <Layout
@@ -15,24 +16,37 @@ import DownloadResumeButton from "@components/resume/downloadResumeButton.astro"
   description="Hi! I'm Tristan. I write software for fun, and also to get paid"
   classList="flex flex-col min-h-screen"
 >
-  <main class="grow bg-[#818cf8] flex flex-col items-center">
-    <section id="resume" class="flex flex-col items-center mx-4 sm:mx-0 sm:w-3/4">
-      <div class="my-8 flex flex-col items-center gap-8">
+  <main class="flex grow flex-col items-center bg-[#818cf8]">
+    <Button class="my-4 bg-[#4ade80] p-4" href="/resume">
+      <div class="flex flex-row items-center gap-2">
+        <div class="i-uil-info-circle h-8 w-8"></div>
+        <div>
+          This is the fun version of my resume, click here for the serious
+          version.
+        </div>
+      </div>
+    </Button>
+
+    <section
+      id="resume"
+      class="mx-4 flex flex-col items-center sm:mx-0 sm:w-3/4"
+    >
+      <div class="mb-8 flex flex-col items-center gap-8">
         <Experience />
         <div class="flex grid-cols-3 flex-col items-start gap-8 sm:grid">
           <Education />
           <Expertise class="col-span-2" />
         </div>
       </div>
-
-      <div class="sticky bottom-0">
-        <Card
-          class="sticky bottom-0 mb-4 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
-        >
-          <CopyResumeLinkButton />
-          <DownloadResumeButton />
-        </Card>
-      </div>
     </section>
+
+    <div class="sticky bottom-0">
+      <Card
+        class="mb-4 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
+      >
+        <CopyResumeLinkButton />
+        <DownloadResumeButton />
+      </Card>
+    </div>
   </main>
 </Layout>

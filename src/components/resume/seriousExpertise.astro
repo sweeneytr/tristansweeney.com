@@ -1,35 +1,39 @@
 ---
-import Card from "@components/atoms/Card.astro";
 import { content } from "@components/pdf/content";
 import { twMerge } from "tailwind-merge";
 
 const { class: className } = Astro.props;
+
+const cls =
+  "dm-serif case-capital m-2 trailing-underline overflow-x-clip text-nowrap text-3xl underline md:text-4xl lg:text-6xl";
 ---
+
+<style>
+  .trailing-underline::after {
+    content: " ";
+    white-space: pre;
+    letter-spacing: 100vw;
+  }
+</style>
 
 <div class={twMerge("flex flex-col items-center w-full", className)}>
   <div class="w-full">
-    <Card class="bg-white p-4">
-      <h1
-        class="dm-serif case-capital m-2 text-center text-3xl md:text-4xl lg:text-6xl"
-      >
-        Expertise
-      </h1>
-      <div class="poppins flex flex-col gap-6 p-4">
-        <table>
-          {
-            Object.entries(content.expertise).map(([name, value]) => (
-              <tr>
-                <th>
-                  <h1 class="sanchez text-start text-xl font-bold md:text-2xl">
-                    {name}
-                  </h1>
-                </th>
-                <td> {value}</td>
-              </tr>
-            ))
-          }
-        </table>
-      </div>
-    </Card>
+    <h1 class={cls}>Expertise</h1>
+    <div class="poppins flex flex-col gap-6 p-4">
+      <table>
+        {
+          Object.entries(content.expertise).map(([name, value]) => (
+            <tr>
+              <th>
+                <h1 class="sanchez text-start text-xl font-bold md:text-2xl">
+                  {name}
+                </h1>
+              </th>
+              <td> {value}</td>
+            </tr>
+          ))
+        }
+      </table>
+    </div>
   </div>
 </div>

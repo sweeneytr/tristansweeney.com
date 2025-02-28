@@ -1,54 +1,54 @@
 ---
-import Card from "@components/atoms/Card.astro";
 import { content } from "@components/pdf/content";
+
+const cls =
+  "dm-serif case-capital m-2 trailing-underline inline-block flex flex-row overflow-x-clip text-nowrap text-3xl underline md:text-4xl lg:text-6xl";
 ---
 
+<style>
+  .trailing-underline::after {
+    content: " ";
+    white-space: pre;
+    letter-spacing: 100vw;
+  }
+</style>
+
 <div class="flex w-full flex-col items-center">
-  <div class="flex flex-col items-center gap-8">
-    <div class="w-full">
-      <Card class="bg-white p-4">
-        <h1
-          class="dm-serif case-capital m-2 text-center text-3xl md:text-4xl lg:text-6xl"
-        >
-          Professional Experience
-        </h1>
-        {
-          content.professional.map(({ name, location, roles }) => (
-            <div class="flex flex-col gap-2 p-4">
-              <div class="flex flex-col flex-wrap items-start justify-start gap-x-2 sm:flex-row sm:items-end">
-                <h1 class="inline-block text-start text-xl font-bold md:text-4xl">
-                  {name}
-                </h1>
-                <h2 class="inline-block whitespace-nowrap text-end text-lg font-light italic md:text-xl">
-                  {location}
-                </h2>
+  <div class="w-full">
+    <h1 class={cls}>Professional Experience</h1>
+    {
+      content.professional.map(({ name, location, roles }) => (
+        <div class="flex flex-col gap-2 p-4">
+          <div class="flex flex-col flex-wrap items-start justify-start gap-x-2 sm:flex-row sm:items-end">
+            <h1 class="inline-block text-start text-xl font-bold md:text-4xl">
+              {name}
+            </h1>
+            <h2 class="inline-block whitespace-nowrap text-end text-lg font-light italic md:text-xl">
+              {location}
+            </h2>
+          </div>
+          <div class="flex flex-col gap-4">
+            {roles.map(({ name, start, end, points }) => (
+              <div>
+                <div class="flex flex-col flex-wrap items-start justify-start gap-x-4 sm:flex-row sm:items-end">
+                  <h1 class="inline-block text-start text-lg uppercase md:text-xl">
+                    {name}
+                  </h1>
+                  <h1 class="text-md inline-block text-end font-light italic md:text-lg">
+                    <span class="whitespace-nowrap">{start} —</span>
+                    <span class="whitespace-nowrap">{end ?? "Present"}</span>
+                  </h1>
+                </div>
+                <ul class="poppins md:text-md list-disc pl-8 text-sm">
+                  {points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
               </div>
-              <div class="flex flex-col gap-4">
-                {roles.map(({ name, start, end, points }) => (
-                  <div>
-                    <div class="flex flex-col flex-wrap items-start justify-start gap-x-4 sm:flex-row sm:items-end">
-                      <h1 class="inline-block text-start text-lg uppercase md:text-xl">
-                        {name}
-                      </h1>
-                      <h1 class="text-md inline-block text-end font-light italic md:text-lg">
-                        <span class="whitespace-nowrap">{start} —</span>
-                        <span class="whitespace-nowrap">
-                          {end ?? "Present"}
-                        </span>
-                      </h1>
-                    </div>
-                    <ul class="poppins md:text-md list-disc pl-8 text-sm">
-                      {points.map((point) => (
-                        <li>{point}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </Card>
-    </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
   </div>
 </div>
