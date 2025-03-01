@@ -17,7 +17,7 @@ import Button from "@components/atoms/Button.astro";
   classList="flex flex-col min-h-screen"
 >
   <main class="flex grow flex-col items-center bg-[#818cf8]">
-    <Button class="my-4 bg-[#4ade80] p-4" href="/resume">
+    <Button class="m-4 bg-[#4ade80] p-4" href="/resume">
       <div class="flex flex-row items-center gap-2">
         <div class="i-uil-info-circle h-8 w-8"></div>
         <div>
@@ -29,7 +29,7 @@ import Button from "@components/atoms/Button.astro";
 
     <section
       id="resume"
-      class="mx-4 flex flex-col items-center sm:mx-0 sm:w-3/4"
+      class="mx-4 flex w-full flex-col items-stretch px-4 sm:mx-0 sm:w-3/4"
     >
       <div class="mb-8 flex flex-col items-center gap-8">
         <Experience />
@@ -42,7 +42,7 @@ import Button from "@components/atoms/Button.astro";
 
     <div class="sticky bottom-0">
       <Card
-        class="mb-4 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
+        class="m-4 mt-0 flex flex-row items-center justify-center gap-8 bg-[#4ade80] px-8"
       >
         <CopyResumeLinkButton />
         <DownloadResumeButton />
