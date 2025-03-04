@@ -2,11 +2,11 @@
 import Button from "@components/atoms/Button.astro";
 import Pill from "@components/atoms/Pill.astro";
 import SummaryCard from "../generic/SummaryCard.astro";
-import type { PostData } from "src/content/config";
+import type { PostData } from "src/content.config";
 
 interface Props {
   post: {
-    slug: string;
+    id: string;
     data: PostData;
   };
   context: {
@@ -28,7 +28,7 @@ const {
   image={post.data.image}
 >
   <div class="my-4 flex justify-end">
-    <Button href={`${baseUrl}/${post.slug}/`}>Read post &rarr;</Button>
+    <Button href={`${baseUrl}/${post.id}/`}>Read post &rarr;</Button>
   </div>
 
   <div class="hidden sm:inline-block">

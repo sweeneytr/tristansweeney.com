@@ -1,4 +1,5 @@
 import { z, defineCollection, type ImageFunction } from "astro:content";
+import { glob } from 'astro/loaders';
 
 const credit = z.object({ author: z.string(), url: z.string() });
 
@@ -27,9 +28,9 @@ const schema = ({ image }: { image: ImageFunction }) => {
 
 export type PostData = z.infer<ReturnType<typeof schema>>;
 
-const blog = defineCollection({ schema });
+const blog = defineCollection({ schema, loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog" }), });
 
-const projects = defineCollection({ schema });
+const projects = defineCollection({ schema, loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/projects" }), });
 
 export const collections = {
   blog,

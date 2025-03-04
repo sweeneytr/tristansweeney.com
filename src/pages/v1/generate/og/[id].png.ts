@@ -8,7 +8,7 @@ const posts = await getCollection("blog");
 
 export function getStaticPaths() {
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { id: post.id },
     props: { title: post.data.title, description: post.data.description },
   }));
 }
