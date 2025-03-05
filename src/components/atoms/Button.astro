@@ -5,7 +5,6 @@ interface Props extends HTMLAttributes<"a"> {
 
 import type { HTMLAttributes } from "astro/types";
 import { colors } from "../../colors";
-import { twMerge } from "tailwind-merge";
 
 if (Astro.props.color === undefined) {
   Astro.props.color = colors[Math.floor(Math.random() * colors.length)];
