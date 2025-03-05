@@ -16,8 +16,9 @@ const posts = await getCollection("projects").then((collection) =>
   title="Projects"
   description="Projects | Here's some fun things I've worked on!"
   pageTitle="My Projects"
+  class={'flex flex-col items-stretch h-full'}
 >
-  <main class="bg-purple p-6">
+  <main class="bg-purple p-6 grow">
     <PostGrid>
       {
         posts.map((post) => (
