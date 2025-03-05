@@ -161,7 +161,7 @@ export const OpenGraphCard = ({
               {link}
             </p>
             <img
-              src="https://media.licdn.com/dms/image/v2/D4E03AQEaDQ0_v3CrDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1681700280055?e=1730937600&v=beta&t=NGnuiydWpJLNhqQNs_n-EHzhU0lGqr7srokC6Bcapw4"
+              src={`${link}/profile.jpg`}
               alt="Profile"
               width="200"
               height="200"
