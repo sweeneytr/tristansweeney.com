@@ -1,6 +1,8 @@
-## Brutal Theme ##
+## TristanSweeney.com ##
 
-All development & Content by Elian Van Cutsem
+New development & Content by Tristan Sweeney
 
-- email: hello@elian.codes
-- website: www.elian.codes
+Original development & Content by Elian Van Cutsem
+
+- email: sweeneytri@gmail.com
+- website: tristansweeney.com
