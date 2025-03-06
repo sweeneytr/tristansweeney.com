@@ -6,7 +6,7 @@ import arraybuffer from "./plugin";
 
 import expressiveCode from "astro-expressive-code";
 
-const prodUrl = "https://sweeneytr-github-io.vercel.app/";
+const prodUrl = "https://tristansweeney.com";
 
 // https://astro.build/config
 export default defineConfig({
