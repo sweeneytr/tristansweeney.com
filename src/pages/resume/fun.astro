@@ -8,6 +8,7 @@ import Expertise from "@components/resume/expertise.astro";
 import CopyResumeLinkButton from "@components/resume/copyResumeLinkButton.astro";
 import DownloadResumeButton from "@components/resume/downloadResumeButton.astro";
 import Button from "@components/atoms/Button.astro";
+import InfoIcon from "../../components/atoms/icons/InfoIcon.astro";
 ---
 
 <Layout
@@ -19,7 +20,7 @@ import Button from "@components/atoms/Button.astro";
   <main class="flex grow flex-col items-center bg-[#818cf8]">
     <Button class="m-4 bg-[#4ade80] p-4" href="/resume">
       <div class="flex flex-row items-center gap-2">
-        <div class="i-uil-info-circle h-8 w-8"></div>
+        <InfoIcon class="h-8 w-8" />
         <div>
           This is the fun version of my resume, click here for the serious
           version.

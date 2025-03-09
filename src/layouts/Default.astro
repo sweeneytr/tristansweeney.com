@@ -5,14 +5,20 @@ import BaseHead from "../components/layout/BaseHead.astro";
 import "../styles/global.css";
 import { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<'body'> {
+interface Props extends HTMLAttributes<"body"> {
   title: string;
   description: string;
   pageTitle?: string;
   ogImage?: URL;
 }
 
-const { title, description, "class": className, pageTitle, ogImage } = Astro.props;
+const {
+  title,
+  description,
+  class: className,
+  pageTitle,
+  ogImage,
+} = Astro.props;
 ---
 
 <html lang="en" class="h-full">

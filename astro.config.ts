@@ -1,10 +1,11 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import UnoCSS from "unocss/astro";
 import mdx from "@astrojs/mdx";
 import arraybuffer from "./plugin";
 
 import expressiveCode from "astro-expressive-code";
+
+import tailwind from "@astrojs/tailwind";
 
 const prodUrl = "https://tristansweeney.com";
 
@@ -20,9 +21,6 @@ export default defineConfig({
   trailingSlash: "ignore",
   integrations: [
     sitemap(),
-    UnoCSS({
-      injectReset: true,
-    }),
     expressiveCode({
       themes: ["github-light-high-contrast"],
       styleOverrides: {
@@ -36,6 +34,7 @@ export default defineConfig({
       },
     }),
     mdx(),
+    tailwind(),
   ],
   vite: {
     plugins: [arraybuffer({ include: "**/*.ttf" })],

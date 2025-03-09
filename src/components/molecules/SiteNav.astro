@@ -1,5 +1,9 @@
 ---
 import { twMerge } from "tailwind-merge";
+import RssIcon from "../atoms/icons/RssIcon.astro";
+import LinkedInIcon from "../atoms/icons/LinkedInIcon.astro";
+import GithubIcon from "../atoms/icons/GithubIcon.astro";
+
 const navigationItems = [
   { name: "Home", url: "/", predicate: Astro.url.pathname === "/" },
   {
@@ -23,14 +27,14 @@ const socialIcons = [
   {
     name: "GitHub",
     url: "https://github.com/sweeneytr",
-    icon: "i-uil-github",
+    Icon: GithubIcon,
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/tristansweeney",
-    icon: "i-uil-linkedin",
+    Icon: LinkedInIcon,
   },
-  { name: "RSS", url: "/feed.xml", icon: "i-uil-rss" },
+  { name: "RSS", url: "/feed.xml", Icon: RssIcon },
 ];
 const { class: className } = Astro.props;
 ---
@@ -65,7 +69,7 @@ const { class: className } = Astro.props;
             target="_blank"
             title={`${item.name}`}
           >
-            <div class:list={[item.icon, "h-6 w-6"]} />
+            {<item.Icon class="h-6 w-6" />}
           </a>
         </li>
       ))

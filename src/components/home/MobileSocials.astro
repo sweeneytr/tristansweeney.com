@@ -1,14 +1,17 @@
 ---
+import GithubIcon from "../atoms/icons/GithubIcon.astro";
+import LinkedInIcon from "../atoms/icons/LinkedInIcon.astro";
+
 const socials = [
   {
     name: "GitHub",
     url: "https://github.com/sweeneytr",
-    icon: "i-uil-github",
+    Icon: GithubIcon,
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/tristansweeney",
-    icon: "i-uil-linkedin",
+    Icon: LinkedInIcon,
   },
 ];
 ---
@@ -20,7 +23,7 @@ const socials = [
       socials.map((item) => (
         <li class="text-green card-shadow rounded border-2 border-black bg-white px-4 py-2">
           <a href={item.url} target="_blank" title={`Go to ${item.name}`}>
-            <div class:list={[item.icon, "p-6"]} />
+            {<item.Icon class="p-6" />}
           </a>
         </li>
       ))

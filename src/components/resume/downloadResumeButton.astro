@@ -1,10 +1,11 @@
 ---
 import Button from "@components/atoms/Button.astro";
+import FileDownloadIcon from "../atoms/icons/FileDownloadIcon.astro";
 ---
 
 <Button href="/v1/generate/resume.pdf" download="TristanSweeneyResume.pdf">
   <div class="flex flex-row items-center">
     <div class="text-sm">Download PDF</div>
-    <div class="i-uil-file-download h-8 w-8"></div>
+    <FileDownloadIcon class="h-8 w-8" />
   </div>
 </Button>

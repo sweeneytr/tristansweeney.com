@@ -8,6 +8,7 @@ import SeriousExperience from "@components/resume/seriousExperience.astro";
 import SeriousEducation from "@components/resume/seriousEducation.astro";
 import SeriousExpertise from "@components/resume/seriousExpertise.astro";
 import Button from "@components/atoms/Button.astro";
+import InfoIcon from "../../components/atoms/icons/InfoIcon.astro";
 ---
 
 <Layout
@@ -19,7 +20,7 @@ import Button from "@components/atoms/Button.astro";
   <main class="flex grow flex-col items-center bg-gray-300">
     <Button class="m-4 bg-[#4ade80] p-4" href="/resume/fun">
       <div class="flex flex-row items-center gap-2">
-        <div class="i-uil-info-circle h-8 w-8"></div>
+        <InfoIcon class="h-8 w-8" />
         <div>
           This is the serious version of my resume, click here for the fun
           version.
