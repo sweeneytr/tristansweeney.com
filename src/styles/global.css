@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --color-pink: #f472b6;
+  --color-green: #34d399;
+  --color-purple: #c084fc;
+}
+
 .card-shadow {
   filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
   transition: all;
