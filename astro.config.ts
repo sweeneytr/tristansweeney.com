@@ -5,7 +5,7 @@ import arraybuffer from "./plugin";
 
 import expressiveCode from "astro-expressive-code";
 
-import tailwind from "@astrojs/tailwind";
+import tailwind from "@tailwindcss/vite";
 
 const prodUrl = "https://tristansweeney.com";
 
@@ -34,10 +34,9 @@ export default defineConfig({
       },
     }),
     mdx(),
-    tailwind(),
   ],
   vite: {
-    plugins: [arraybuffer({ include: "**/*.ttf" })],
+    plugins: [arraybuffer({ include: "**/*.ttf" }), tailwind()],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
