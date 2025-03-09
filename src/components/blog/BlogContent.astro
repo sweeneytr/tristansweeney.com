@@ -32,12 +32,12 @@ const {
 </style>
 
 <article
-  class="prose-slate w-sm md:w-prose md:prose poppins border-3 brutal-card transition-filter rounded-xl border-black bg-white p-4 duration-500 ease-in-out"
+  class="prose-slate md:w-prose md:prose poppins brutal-card transition-filter w-sm rounded-xl border-3 border-black bg-white p-4 duration-500 ease-in-out"
 >
   <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
   >
   <h2>{content.title}</h2>
-  <p class="text-slate text-sm md:text-base">
+  <p class="text-sm text-slate-400 md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
   {
@@ -69,7 +69,7 @@ const {
     <slot />
   </div>
 
-  <p class="text-slate">Written by {content.author}</p>
+  <p class="text-slate-400">Written by {content.author}</p>
   <a href={baseUrl} title=`Back to ${collection}`>&larr; Back to {collection}</a
   >
 </article>
