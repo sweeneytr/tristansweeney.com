@@ -7,12 +7,12 @@ const { class: className } = Astro.props;
 ---
 
 <div class={twMerge("flex flex-col items-center", className)}>
-  <h1 class="dm-serif case-capital text-3xl md:text-4xl lg:text-6xl m-2">
+  <h1 class="dm-serif case-capital m-2 text-3xl md:text-4xl lg:text-6xl">
     Expertise
   </h1>
 
   <div class="w-full">
-    <Card class="bg-[#fb7185]">
+    <Card class="bg-fuchsia">
       <div class="poppins flex flex-col gap-6 p-4">
         {
           Object.entries(content.expertise).map(([name, value]) => (

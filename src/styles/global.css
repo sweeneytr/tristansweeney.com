@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
 @theme {
+  --color-heliotrope: #e879f9;
   --color-pink: #f472b6;
   --color-green: #34d399;
+  --color-indigo: #818cf8;
   --color-purple: #c084fc;
+  --color-emerald: #4ade80;
+  --color-blue: #60a5fa;
+  --color-cyan: #22d3ee;
+  --color-yellow: #facc15;
+  --color-lime: #a3e635;
+  --color-orange: #fb923c;
+  --color-fuchsia: #fb7185;
 }
 
 .card-shadow {
