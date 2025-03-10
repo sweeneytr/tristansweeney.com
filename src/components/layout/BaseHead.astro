@@ -23,11 +23,8 @@ const { title, description, ogImage } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="generator" content={Astro.generator} />
 
-  <link
-    rel="alternate"
-    href="https://brutal.elian.codes/blog.xml"
-    type="application/rss+xml"
-  />
+  <link rel="alternate" href="/feed.xml" type="application/rss+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
 
   <meta name="title" content={`Tristan Sweeney | ${title}`} />
   <meta name="description" content={description} />
