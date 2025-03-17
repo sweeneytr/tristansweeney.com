@@ -4,9 +4,9 @@ import { getCollection } from "astro:content";
 export async function GET(context) {
   const blog = await getCollection("blog");
   return rss({
-    title: "Brutal Blog",
-    description: "Brutal is a theme for Astro",
-    stylesheet: false,
+    title: "Tristan Sweeney's Blog",
+    description: "I write code. Sometimes it's good.",
+    stylesheet: "/rss.xsl",
     site: context.site,
     items: blog.map((post) => ({
       title: post.data.title,
@@ -15,6 +15,6 @@ export async function GET(context) {
       link: `/blog/${post.id}/`,
     })),
     customData: "<language>en-us</language>",
-    canonicalUrl: "https://brutal.elian.codes",
+    canonicalUrl: "https://tristansweeney.com",
   });
 }
