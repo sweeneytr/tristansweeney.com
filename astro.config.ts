@@ -20,7 +20,7 @@ export default defineConfig({
         : "http://localhost:4321/",
   trailingSlash: "ignore",
   integrations: [
-    sitemap({xslURL: "https://raw.githubusercontent.com/pedroborges/xml-sitemap-stylesheet/refs/heads/master/sitemap.xsl"}),
+    sitemap({ xslURL: "/sitemap.xsl" }),
     expressiveCode({
       themes: ["github-light-high-contrast"],
       styleOverrides: {
