@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+import { experimental_AstroContainer } from "astro/container";
+import stylesheet from "../styles/global.css?url";
+import BaseNavigation from "../components/layout/BaseNavigation.astro";
+import BaseFooter from "../components/layout/BaseFooter.astro";
+
+const container = await experimental_AstroContainer.create();
+const header = await container.renderToString(BaseNavigation);
+const footer = await container.renderToString(BaseFooter);
+
+const xsl = `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Originally from https://github.com/pedroborges/xml-sitemap-stylesheet
      updated to use tailwind -->
 <xsl:stylesheet
@@ -16,12 +25,14 @@
             <head>
                 <title> Sitemap <xsl:if test="sitemap:sitemapindex">Index</xsl:if>
                 </title>
-                <link rel="stylesheet" href="https://unpkg.com/tachyons@4.6.1/css/tachyons.min.css" />
+                <link rel="stylesheet" href="${stylesheet}" />
             </head>
-            <body class="ph3 pb3 mid-gray">
-                <header class="mw8 pv4 center">
+            ${header}
+            <body class="bg-lime p-4">
+                <div class="bg-white w-fit mx-auto flex flex-col p-4 rounded-xl border-3 border-black">
+                <header class="py-2">
                     <div class="flex items-center">
-                        <h1 class="ma0 mr2 f2 blue">Sitemap</h1>
+                        <h1 class="ma0 mr2 f2 blue text-4xl text-lime">Sitemap</h1>
                         <xsl:if test="sitemap:sitemapindex">
                             <span class="dib mr2 ph3 pv1 f6 normal mid-gray bg-light-blue br-pill">
         Index</span>
@@ -66,8 +77,10 @@
                         href="https://pedroborg.es" title="Pedro Borges" class="link blue">
         pedroborg.es</a>
                 </footer>
+                </div>
 
             </body>
+            ${footer}
         </html>
     </xsl:template>
 
@@ -116,7 +129,7 @@
     </xsl:template>
 
     <xsl:template match="sitemap:urlset">
-        <div class="mw8 center">
+        <div class="max-w-3/4 mx-auto">
             <div class="overflow-auto">
                 <table class="w-100 f6 b--silver ba bw1" cellspacing="0">
                     <thead class="bg-silver">
@@ -269,4 +282,8 @@
         </p>
     </xsl:template>
 
-</xsl:stylesheet>
+</xsl:stylesheet>`;
+
+export async function GET(context) {
+  return new Response(xsl);
+}
