@@ -4,13 +4,24 @@ import BaseHead from "../components/layout/BaseHead.astro";
 import BaseNavigation from "../components/layout/BaseNavigation.astro";
 import BaseFooter from "../components/layout/BaseFooter.astro";
 import LocalFont from "../components/generic/LocalFont.astro";
+import prettier from "prettier";
+
+async function formatCode(code, options = {}) {
+  const formattedCode = await prettier.format(code, {
+    parser: "html", // Specify the parser (e.g., "babel", "typescript", "html")
+    plugins: [], // Add any plugins you need
+    ...options, // Spread any additional options
+  });
+  return formattedCode;
+}
 
 const container = await experimental_AstroContainer.create();
 const fonts = await container.renderToString(LocalFont);
 const header = await container.renderToString(BaseNavigation);
 const footer = await container.renderToString(BaseFooter);
 
-const xsl = `<?xml version="1.0" encoding="UTF-8"?>
+export async function GET(context) {
+  const xsl = `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Originally from https://github.com/pedroborges/xml-sitemap-stylesheet
      updated to use tailwind -->
 <xsl:stylesheet
@@ -28,6 +39,7 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
             <head>
                 <title> Sitemap <xsl:if test="sitemap:sitemapindex">Index</xsl:if>
                 </title>
+                ${await formatCode(fonts.replaceAll("crossorigin", 'crossorigin="true"'))}
                 <link rel="stylesheet" href="${stylesheet}" />
             </head>
             <body>
@@ -55,10 +67,10 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
                     }
                 </style>
                 <div class="bg-lime p-4">
-                <div class="bg-white w-fit mx-auto flex flex-col p-4 rounded-xl border-3 border-black">
+                <div class="bg-white w-fit outfit mx-auto flex flex-col p-4 rounded-xl border-3 border-black">
                 <header class="py-2">
                     <div class="flex items-center">
-                        <h1 class="ma0 mr2 f2 blue text-4xl text-lime">Sitemap</h1>
+                        <h1 class="text-4xl text-black">Sitemap</h1>
                         <xsl:if test="sitemap:sitemapindex">
                             <span class="dib mr2 ph3 pv1 f6 normal mid-gray bg-light-blue br-pill">
         Index</span>
@@ -76,7 +88,7 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
         Xhtml</span>
                         </xsl:if>
                     </div>
-                    <h2 class="ma0 mt4 f4 normal">
+                    <h2 class="mt-4 text-lg normal">
                         <xsl:choose>
                             <xsl:when test="sitemap:sitemapindex"> This index contains <strong
                                     class="blue">
@@ -84,15 +96,19 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
                                         select="count(sitemap:sitemapindex/sitemap:sitemap)" />
                                 </strong>
         sitemaps. </xsl:when>
-                            <xsl:otherwise> This index contains <strong class="blue">
+                            <xsl:otherwise> This index contains <strong class="text-emerald">
                                     <xsl:value-of select="count(sitemap:urlset/sitemap:url)" />
                                 </strong>
         URLs. </xsl:otherwise>
                         </xsl:choose>
                     </h2>
-                    <p> This is an XML sitemap, meant for consumption by search engines.<br /> You
+                    <p class="my-2 max-w-prose"> This is an XML sitemap, meant for consumption by search engines. You
         can find more information about XML sitemaps on <a href="https://sitemaps.org"
-                            class="link blue">sitemaps.org</a>. </p>
+                            class="link text-emerald underline">sitemaps.org</a>. </p>
+
+                    <p class="my-2 max-w-prose"> This XML file is being transformed into HTML in <b class="underline">your</b> browser,
+                    via XSL. Robots will see it as plain You can find more information about XSL on <a href="https://www.w3schools.com/xml/xsl_intro.asp"
+                            class="link text-emerald underline">www.w3schools.com</a>. </p>
                 </header>
 
                 <xsl:apply-templates />
@@ -156,37 +172,37 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
     </xsl:template>
 
     <xsl:template match="sitemap:urlset">
-        <div class="max-w-3/4 mx-auto">
+        <div class="max-w-4/5 mx-auto">
             <div class="overflow-auto">
-                <table class="w-100 f6 b--silver ba bw1" cellspacing="0">
-                    <thead class="bg-silver">
+                <table class="w-100  border-black border-3" cellspacing="0">
+                    <thead class=" text-2xl bg-silver">
                         <tr>
-                            <th class="pa3 fw6 tl dark-gray" style="width:60px"></th>
-                            <th class="pa3 fw6 tl dark-gray">URL</th>
+                            <th class="p-2 fw6 tl dark-gray" style="width:60px"></th>
+                            <th class="p-2 fw6 tl dark-gray">URL</th>
                             <xsl:if test="sitemap:url/sitemap:changefreq">
-                                <th class="pa3 fw6 tr dark-gray" style="width:130px">Change Freq.</th>
+                                <th class="p-2 fw6 tr dark-gray" style="width:130px">Change Freq.</th>
                             </xsl:if>
                             <xsl:if test="sitemap:url/sitemap:priority">
-                                <th class="pa3 fw6 tr dark-gray" style="width:90px">Priority</th>
+                                <th class="p-2 fw6 tr dark-gray" style="width:90px">Priority</th>
                             </xsl:if>
                             <xsl:if test="sitemap:url/sitemap:lastmod">
-                                <th class="pa3 fw6 tr dark-gray" style="width:200px">Last Modified</th>
+                                <th class="p-2 fw6 tr dark-gray" style="width:200px">Last Modified</th>
                             </xsl:if>
                         </tr>
                     </thead>
-                    <tbody class="lh-copy bg-near-white">
+                    <tbody class="lh-copy bg-slate-100">
                         <xsl:for-each select="sitemap:url">
-                            <tr class="hover-bg-white">
+                            <tr class="hover:bg-white">
                                 <xsl:variable name="loc">
                                     <xsl:value-of select="sitemap:loc" />
                                 </xsl:variable>
                                 <xsl:variable name="pno">
                                     <xsl:value-of select="position()" />
                                 </xsl:variable>
-                                <td class="pa3 tc b bb b--silver">
+                                <td class="p-2 tc b bb b--silver">
                                     <xsl:value-of select="$pno" />
                                 </td>
-                                <td class="pa3 bb b--silver">
+                                <td class="p-2 bb b--silver">
                                     <p>
                                         <a href="{$loc}" class="link blue">
                                             <xsl:value-of select="sitemap:loc" />
@@ -310,7 +326,5 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
     </xsl:template>
 
 </xsl:stylesheet>`;
-
-export async function GET(context) {
   return new Response(xsl);
 }
