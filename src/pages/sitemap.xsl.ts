@@ -175,22 +175,22 @@ export async function GET(context) {
         <div class="max-w-4/5 mx-auto">
             <div class="overflow-auto">
                 <table class="w-100  border-black border-3" cellspacing="0">
-                    <thead class=" text-2xl bg-silver">
+                    <thead class="text-2xl bg-slate-300">
                         <tr>
-                            <th class="p-2 fw6 tl dark-gray" style="width:60px"></th>
-                            <th class="p-2 fw6 tl dark-gray">URL</th>
+                            <th style="width:60px"></th>
+                            <th class="p-2 font-bold">URL</th>
                             <xsl:if test="sitemap:url/sitemap:changefreq">
-                                <th class="p-2 fw6 tr dark-gray" style="width:130px">Change Freq.</th>
+                                <th class="p-2 font-bold text-right" style="width:130px">Change Freq.</th>
                             </xsl:if>
                             <xsl:if test="sitemap:url/sitemap:priority">
-                                <th class="p-2 fw6 tr dark-gray" style="width:90px">Priority</th>
+                                <th class="p-2 font-bold text-right" style="width:90px">Priority</th>
                             </xsl:if>
                             <xsl:if test="sitemap:url/sitemap:lastmod">
-                                <th class="p-2 fw6 tr dark-gray" style="width:200px">Last Modified</th>
+                                <th class="p-2 font-bold text-right" style="width:200px">Last Modified</th>
                             </xsl:if>
                         </tr>
                     </thead>
-                    <tbody class="lh-copy bg-slate-100">
+                    <tbody class="leading-relaxed bg-slate-100">
                         <xsl:for-each select="sitemap:url">
                             <tr class="hover:bg-white">
                                 <xsl:variable name="loc">
@@ -199,12 +199,12 @@ export async function GET(context) {
                                 <xsl:variable name="pno">
                                     <xsl:value-of select="position()" />
                                 </xsl:variable>
-                                <td class="p-2 tc b bb b--silver">
+                                <td class="p-2 text-center font-bold border-b-3 border-black">
                                     <xsl:value-of select="$pno" />
                                 </td>
-                                <td class="p-2 bb b--silver">
+                                <td class="p-2 text-center font-bold border-b-3 border-black">
                                     <p>
-                                        <a href="{$loc}" class="link blue">
+                                        <a href="{$loc}" class="underline text-emerald">
                                             <xsl:value-of select="sitemap:loc" />
                                         </a>
                                     </p>
