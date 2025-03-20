@@ -1,9 +1,12 @@
 import { experimental_AstroContainer } from "astro/container";
 import stylesheet from "../styles/global.css?url";
+import BaseHead from "../components/layout/BaseHead.astro";
 import BaseNavigation from "../components/layout/BaseNavigation.astro";
 import BaseFooter from "../components/layout/BaseFooter.astro";
+import LocalFont from "../components/generic/LocalFont.astro";
 
 const container = await experimental_AstroContainer.create();
+const fonts = await container.renderToString(LocalFont);
 const header = await container.renderToString(BaseNavigation);
 const footer = await container.renderToString(BaseFooter);
 
@@ -27,8 +30,31 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
                 </title>
                 <link rel="stylesheet" href="${stylesheet}" />
             </head>
-            ${header}
-            <body class="bg-lime p-4">
+            <body>
+                ${header}
+                <style>
+                    body:before {
+                    content: "";
+                    position: fixed;
+                    top: -50%;
+                    right: -50%;
+                    bottom: 50%;
+                    left: -50%;
+                    z-index: -1;
+                    background: white;
+                    }
+                    body:after {
+                    content: "";
+                    position: fixed;
+                    top: 50%;
+                    right: -50%;
+                    bottom: -50%;
+                    left: -50%;
+                    z-index: -1;
+                    background: black;
+                    }
+                </style>
+                <div class="bg-lime p-4">
                 <div class="bg-white w-fit mx-auto flex flex-col p-4 rounded-xl border-3 border-black">
                 <header class="py-2">
                     <div class="flex items-center">
@@ -78,9 +104,10 @@ const xsl = `<?xml version="1.0" encoding="UTF-8"?>
         pedroborg.es</a>
                 </footer>
                 </div>
+                </div>
 
+                ${footer}
             </body>
-            ${footer}
         </html>
     </xsl:template>
 
