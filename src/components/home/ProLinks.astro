@@ -1,0 +1,166 @@
+---
+const data = [
+  {
+    category: "Accessibility",
+    links: [
+      {
+        href: "https://www.toptal.com/designers/colorfilter",
+        text: "Colorblind Web Page Filter - By Toptal",
+      },
+    ],
+  },
+  {
+    category: "Assets",
+    links: [
+      {
+        href: "https://www.toptal.com/designers/subtlepatterns/",
+        text: "Subtle Patterns - By Toptal",
+      },
+      {
+        href: "https://www.transparenttextures.com/",
+        text: "Transparent (tileable) Textures",
+      },
+      { href: "https://heropatterns.com/", text: "Hero Patterns" },
+      { href: "https://www.pexels.com/", text: "Pexels" },
+      { href: "https://unsplash.com/", text: "Unsplash" },
+      { href: "https://www.freepik.com/", text: "Freepik" },
+      { href: "https://picsum.photos/", text: "Picsum Photos" },
+      { href: "https://uiverse.io/", text: "UIverse" },
+      { href: "https://www.vantajs.com", text: "Vanta.js" },
+      { href: "https://kenney.nl", text: "Kenny.nl Assets" },
+      { href: "https://www.fffuel.co/", text: "FFFUEL - Free Assets" },
+      { href: "https://dribble.com/", text: "Dribbble" },
+      { href: "https://www.svgator.com/", text: "SVGator" },
+    ],
+  },
+  {
+    category: "FE blogs",
+    links: [
+      { href: "https://codepen.io/spark", text: "CodePen Spark" },
+      {
+        href: "https://www.toptal.com/designers/blog",
+        text: "Toptal Design Blog",
+      },
+    ],
+  },
+  {
+    category: "Low Quality Image Placeholders",
+    links: [
+      { href: "https://plaiceholder.co/docs", text: "Plaiceholder" },
+      { href: "https://evanw.github.io/thumbhash/", text: "ThumbHash" },
+      { href: "https://github.com/woltapp/blurhash", text: "Blurhash" },
+    ],
+  },
+  {
+    category: "FE Utilities",
+    links: [
+      { href: "https://github.com/lukeed/clsx", text: "clsx" },
+      {
+        href: "https://github.com/dcastil/tailwind-merge",
+        text: "tailwind-merge",
+      },
+      {
+        href: "https://github.com/joe-bell/cva",
+        text: "CVA - Class Variance Authority",
+      },
+    ],
+    note: "Note: I think the right move may be to make variants into data- tags and use selectors to target them...",
+  },
+  {
+    category: "UX Resources",
+    links: [
+      {
+        href: "https://www.nngroup.com/articles/definition-user-experience/",
+        text: "Nielsen Norman Group - Definition of User Experience",
+      },
+      {
+        href: "https://www.nngroup.com/courses/web-page-design/",
+        text: "Nielsen Norman Group - Web Page Design",
+      },
+      { href: "https://web.dev/patterns", text: "Web.dev - Patterns" },
+    ],
+  },
+  {
+    category: "Favicons, PWA, Metadata",
+    links: [
+      {
+        href: "https://vite-pwa-org.netlify.app/assets-generator/",
+        text: "Vite PWA - Asset Generator",
+      },
+      {
+        href: "https://dev.to/masakudamatsu/favicon-nightmare-how-to-maintain-sanity-3al7",
+        text: "Favicon Nightmare 2023",
+      },
+      {
+        href: "https://favicon.io/favicon-converter/",
+        text: "Favicon Converter",
+      },
+      {
+        href: "https://maskable.app/editor",
+        text: "Maskable - Check PWA Maskable icons",
+      },
+    ],
+  },
+  {
+    category: "CSS Gotchas",
+    links: [
+      {
+        href: "https://web.dev/blog/viewport-units",
+        text: "Mobile screen heights",
+      },
+      {
+        href: "https://www.w3schools.com/css/css_image_sprites.asp",
+        text: "(oldschool) CSS image sprites",
+      },
+    ],
+  },
+  {
+    category: "Software Engineering",
+    links: [
+      {
+        href: "https://www.alex-greco.dev/blog/remix-feature-flags",
+        text: "Feature flags in full stack apps",
+      },
+    ],
+  },
+  {
+    category: "Dev Blogs",
+    links: [{ href: "https://syntax.fm/", text: "Syntax.fm" }],
+  },
+  {
+    category: "Useful Libraries",
+    links: [
+      { href: "https://immutable-js.com/", text: "Immutable.JS" },
+      { href: "https://two.js.org/", text: "Two.JS" },
+    ],
+  },
+  {
+    category: "Platforms",
+    links: [
+      {
+        href: "https://discord.com/developers/docs/activities/overview",
+        text: "Discord Activities",
+      },
+    ],
+  },
+];
+---
+
+<div class="flex flex-row flex-wrap gap-4">
+  {
+    data.map((section) => (
+      <div>
+        <h3 class="outfit text-xl underline">{section.category}</h3>
+        <ul class="flex flex-col">
+          {section.links.map((link) => (
+            <li>
+              <a class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline",
+ href={link.href}>{link.text}</a>
+            </li>
+          ))}
+        </ul>
+        {section.note && <p>{section.note}</p>}
+      </div>
+    ))
+  }
+</div>
