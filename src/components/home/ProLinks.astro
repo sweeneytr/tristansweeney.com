@@ -72,8 +72,8 @@ const data = [
     note: "Note: I think the right move may be to make variants into data- tags and use selectors to target them...",
   },
   {
-    category: "UX Resources",
-    slug: "ux-resources",
+    category: "UX Blogs",
+    slug: "ux-blogs",
     links: [
       {
         href: "https://www.nngroup.com/articles/definition-user-experience/",
@@ -158,27 +158,30 @@ const data = [
 ];
 ---
 
-<div class="flex flex-row flex-wrap gap-4">
-  {
-    data.map((section) => (
-      <div>
-        <h3 class="outfit text-xl underline" id={section.slug}>
-          {section.category}
-        </h3>
-        <ul class="flex flex-col">
-          {section.links.map((link) => (
-            <li>
-              <a
-                class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline"
-                href={link.href}
-              >
-                {link.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-        {section.note && <p>{section.note}</p>}
-      </div>
-    ))
-  }
+<div>
+  <h2 class="sanchez text-4xl">Useful Links</h2>
+  <div class="flex flex-row flex-wrap gap-4">
+    {
+      data.map((section) => (
+        <div class="max-w-sm">
+          <h3 class="outfit text-2xl font-bold underline" id={section.slug}>
+            {section.category}
+          </h3>
+          <ul class="flex flex-col">
+            {section.links.map((link) => (
+              <li>
+                <a
+                  class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline"
+                  href={link.href}
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {section.note && <p>{section.note}</p>}
+        </div>
+      ))
+    }
+  </div>
 </div>
