@@ -2,6 +2,7 @@
 const data = [
   {
     category: "Accessibility",
+    slug: "accessibility",
     links: [
       {
         href: "https://www.toptal.com/designers/colorfilter",
@@ -11,6 +12,7 @@ const data = [
   },
   {
     category: "Assets",
+    slug: "assets",
     links: [
       {
         href: "https://www.toptal.com/designers/subtlepatterns/",
@@ -35,6 +37,7 @@ const data = [
   },
   {
     category: "FE blogs",
+    slug: "fe-blogs",
     links: [
       { href: "https://codepen.io/spark", text: "CodePen Spark" },
       {
@@ -45,6 +48,7 @@ const data = [
   },
   {
     category: "Low Quality Image Placeholders",
+    slug: "low-quality-image-placeholders",
     links: [
       { href: "https://plaiceholder.co/docs", text: "Plaiceholder" },
       { href: "https://evanw.github.io/thumbhash/", text: "ThumbHash" },
@@ -53,6 +57,7 @@ const data = [
   },
   {
     category: "FE Utilities",
+    slug: "fe-utilities",
     links: [
       { href: "https://github.com/lukeed/clsx", text: "clsx" },
       {
@@ -68,6 +73,7 @@ const data = [
   },
   {
     category: "UX Resources",
+    slug: "ux-resources",
     links: [
       {
         href: "https://www.nngroup.com/articles/definition-user-experience/",
@@ -82,6 +88,7 @@ const data = [
   },
   {
     category: "Favicons, PWA, Metadata",
+    slug: "favicons-pwa-metadata",
     links: [
       {
         href: "https://vite-pwa-org.netlify.app/assets-generator/",
@@ -103,6 +110,7 @@ const data = [
   },
   {
     category: "CSS Gotchas",
+    slug: "css-gotchas",
     links: [
       {
         href: "https://web.dev/blog/viewport-units",
@@ -116,6 +124,7 @@ const data = [
   },
   {
     category: "Software Engineering",
+    slug: "software-engineering",
     links: [
       {
         href: "https://www.alex-greco.dev/blog/remix-feature-flags",
@@ -125,10 +134,12 @@ const data = [
   },
   {
     category: "Dev Blogs",
+    slug: "dev-blogs",
     links: [{ href: "https://syntax.fm/", text: "Syntax.fm" }],
   },
   {
     category: "Useful Libraries",
+    slug: "useful-libraries",
     links: [
       { href: "https://immutable-js.com/", text: "Immutable.JS" },
       { href: "https://two.js.org/", text: "Two.JS" },
@@ -136,6 +147,7 @@ const data = [
   },
   {
     category: "Platforms",
+    slug: "platforms",
     links: [
       {
         href: "https://discord.com/developers/docs/activities/overview",
@@ -150,12 +162,18 @@ const data = [
   {
     data.map((section) => (
       <div>
-        <h3 class="outfit text-xl underline">{section.category}</h3>
+        <h3 class="outfit text-xl underline" id={section.slug}>
+          {section.category}
+        </h3>
         <ul class="flex flex-col">
           {section.links.map((link) => (
             <li>
-              <a class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline",
- href={link.href}>{link.text}</a>
+              <a
+                class="hover:text-green text-lg font-medium transition-all duration-150 ease-in-out hover:underline"
+                href={link.href}
+              >
+                {link.text}
+              </a>
             </li>
           ))}
         </ul>
