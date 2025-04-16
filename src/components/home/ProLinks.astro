@@ -13,8 +13,8 @@ const data = [
     ],
   },
   {
-    category: "Assets",
-    slug: "assets",
+    category: "Backgrounds",
+    slug: "background-patterns",
     links: [
       {
         href: "https://www.toptal.com/designers/subtlepatterns/",
@@ -37,62 +37,89 @@ const data = [
         summary: "Free generator for tileable SVG background textures",
       },
       {
+        href: "https://www.vantajs.com",
+        text: "Vanta.js",
+        summary: "3D animated backgrounds for websites using JavaScript",
+      },
+    ],
+  },
+  {
+    category: "Stock Photos",
+    slug: "stock-photos",
+    links: [
+      {
         href: "https://www.pexels.com/",
         text: "Pexels",
-        summary: "Free stock photos and videos shared by talented creators.",
+        summary: "Free stock photos and videos",
       },
       {
         href: "https://unsplash.com/",
         text: "Unsplash",
-        summary:
-          "Beautiful, free images and photos for personal and commercial use.",
+        summary: "Free stock photos and videos",
       },
       {
         href: "https://www.freepik.com/",
         text: "Freepik",
-        summary:
-          "Free vectors, stock photos, and PSD files for creative projects.",
+        summary: "Free stock photos, videos, vectors, and icons",
       },
+    ],
+  },
+  {
+    category: "Image Placeholders",
+    slug: "image-placeholders",
+    links: [
       {
         href: "https://picsum.photos/",
-        text: "Picsum Photos",
-        summary:
-          "Lorem Ipsum for photos: placeholder images for your projects.",
+        text: "Lorem Picsum",
+        summary: "Placeholder images, generated on-the-fly",
       },
-      {
-        href: "https://uiverse.io/",
-        text: "UIverse",
-        summary: "Free UI elements and animations for modern web design.",
-      },
-      {
-        href: "https://www.vantajs.com",
-        text: "Vanta.js",
-        summary: "3D animated backgrounds for websites using JavaScript.",
-      },
+    ],
+  },
+  {
+    category: "Assets",
+    slug: "assets",
+    links: [
       {
         href: "https://kenney.nl",
         text: "Kenny.nl Assets",
-        summary: "Free game assets for developers and designers.",
+        summary: "Free game assets",
       },
       {
         href: "https://www.fffuel.co/",
-        text: "FFFUEL - Free Assets",
-        summary: "A collection of free design assets for creative projects.",
+        text: "FFFUEL",
+        summary: "Simple tools for generating SVG design assets",
       },
       {
         href: "https://www.magicpattern.design",
         text: "Magic Pattern",
-        summary: "A collection of free, customizable patterns for web design.",
+        summary: "Tools for generating visual effects",
       },
-      {
-        href: "https://dribble.com/",
-        text: "Dribbble",
-        summary: "A platform to showcase and discover creative work.",
-      },
+    ],
+  },
+  {
+    category: "Image Tools",
+    slug: "image-tools",
+    links: [
       {
         href: "https://www.svgator.com/",
         text: "SVGator",
-        summary: "Create and animate SVG files without coding.",
+        summary: "No-code SVG creator and animator",
+      },
+    ],
+  },
+  {
+    category: "UI Inspiration",
+    slugs: "ui-inspo",
+    links: [
+      {
+        href: "https://dribble.com/",
+        text: "Dribbble",
+        summary: "Showcase and discover creative UI",
+      },
+      {
+        href: "https://uiverse.io/",
+        text: "UIverse",
+        summary: "Free HTML/CSS/JS for creative UI",
       },
     ],
   },
@@ -100,10 +127,15 @@ const data = [
     category: "FE blogs",
     slug: "fe-blogs",
     links: [
-      { href: "https://codepen.io/spark", text: "CodePen Spark" },
+      {
+        href: "https://codepen.io/spark",
+        text: "CodePen Spark",
+        summary: "Awesome weekly(ish) web hackathon digest",
+      },
       {
         href: "https://www.toptal.com/designers/blog",
         text: "Toptal Design Blog",
+        summary: "Professional design case studies",
       },
     ],
   },
@@ -111,23 +143,41 @@ const data = [
     category: "Low Quality Image Placeholders",
     slug: "low-quality-image-placeholders",
     links: [
-      { href: "https://plaiceholder.co/docs", text: "Plaiceholder" },
-      { href: "https://evanw.github.io/thumbhash/", text: "ThumbHash" },
-      { href: "https://github.com/woltapp/blurhash", text: "Blurhash" },
+      {
+        href: "https://plaiceholder.co/docs",
+        text: "Plaiceholder",
+        summary: "LQIP library w/ multiple algorithms",
+      },
+      {
+        href: "https://evanw.github.io/thumbhash/",
+        text: "ThumbHash",
+        summary: "Low (<40 byte) image preview",
+      },
+      {
+        href: "https://github.com/woltapp/blurhash",
+        text: "Blurhash",
+        summary: "Low (<40 byte) image preview",
+      },
     ],
   },
   {
     category: "FE Utilities",
     slug: "fe-utilities",
     links: [
-      { href: "https://github.com/lukeed/clsx", text: "clsx" },
+      {
+        href: "https://github.com/lukeed/clsx",
+        text: "clsx",
+        summary: "Simplify deriving DOM class from JS state",
+      },
       {
         href: "https://github.com/dcastil/tailwind-merge",
         text: "tailwind-merge",
+        summary: "Merge Tailwind classes, overriding conflicts",
       },
       {
         href: "https://github.com/joe-bell/cva",
         text: "CVA - Class Variance Authority",
+        summary: "Efficiently organize CSS variants",
       },
     ],
     note: "Note: I think the right move may be to make variants into data- tags and use selectors to target them...",
@@ -136,28 +186,54 @@ const data = [
     category: "JS Utilities",
     slug: "js-utilities",
     links: [
-      { href: "https://jwt.io/", text: "JWT.io" },
-      { href: "https://jsonlint.com/", text: "JSON Lint" },
+      {
+        href: "https://jwt.io/",
+        text: "JWT.io",
+        summary: "Debug + visualize JSON Web Tokens",
+      },
+      {
+        href: "https://jsonlint.com/",
+        text: "JSON Lint",
+        summary: "Check and format JSON",
+      },
     ],
   },
   {
     category: "Dev Utilities",
     slug: "dev-utilities",
-    links: [{ href: "https://regex101.com/", text: "Regex 101" }],
+    links: [
+      {
+        href: "https://regex101.com/",
+        text: "Regex 101",
+        summary: "Build, test, and debug RegExs'",
+      },
+    ],
   },
   {
     category: "UX Blogs",
     slug: "ux-blogs",
     links: [
       {
-        href: "https://www.nngroup.com/articles/definition-user-experience/",
-        text: "Nielsen Norman Group - Definition of User Experience",
+        href: "https://www.nngroup.com/",
+        text: "Nielsen Norman Group",
+        summary: "UX research, articles, and courses",
+      },
+
+      {
+        href: "https://www.smashingmagazine.com/",
+        text: "Smashing Magazine",
+        summary: "Web design and development articles",
       },
       {
-        href: "https://www.nngroup.com/courses/web-page-design/",
-        text: "Nielsen Norman Group - Web Page Design",
+        href: "https://www.uxmatters.com/",
+        text: "UX Matters",
+        summary: "UX design articles and resources",
       },
-      { href: "https://web.dev/patterns", text: "Web.dev - Patterns" },
+      {
+        href: "https://web.dev/patterns",
+        text: "Web.dev - Patterns",
+        summary: "Simple web component UX examples",
+      },
     ],
   },
   {
@@ -167,18 +243,22 @@ const data = [
       {
         href: "https://vite-pwa-org.netlify.app/assets-generator/",
         text: "Vite PWA - Asset Generator",
+        summary: "Library for generating PWA assets in Vite",
       },
       {
         href: "https://dev.to/masakudamatsu/favicon-nightmare-how-to-maintain-sanity-3al7",
         text: "Favicon Nightmare 2023",
+        summary: "Article about Favicon best practices as of 2023",
       },
       {
         href: "https://favicon.io/favicon-converter/",
         text: "Favicon Converter",
+        summary: "Convert images to favicons",
       },
       {
         href: "https://maskable.app/editor",
-        text: "Maskable - Check PWA Maskable icons",
+        text: "Maskable",
+        summary: "Check if your PWA maskable-icon looks good",
       },
     ],
   },
@@ -188,11 +268,13 @@ const data = [
     links: [
       {
         href: "https://web.dev/blog/viewport-units",
-        text: "Mobile screen heights",
+        text: "Viewport Units",
+        summary: "Mobile screen heights demystified",
       },
       {
         href: "https://www.w3schools.com/css/css_image_sprites.asp",
         text: "(oldschool) CSS image sprites",
+        summary: "Combining small icon images to load efficiently",
       },
     ],
   },
@@ -202,7 +284,8 @@ const data = [
     links: [
       {
         href: "https://www.alex-greco.dev/blog/remix-feature-flags",
-        text: "Feature flags in full stack apps",
+        text: "Alex Greco - Feature Flags",
+        summary: "Simplified feature-flags in full-stack apps",
       },
     ],
   },
