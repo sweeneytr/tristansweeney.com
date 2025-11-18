@@ -14,6 +14,19 @@ export const content = {
   },
   professional: [
     {
+      name: "P0 Security",
+      location: "San Francisco, CA",
+      roles: [
+        {
+          name: "Senior Software Engineer II",
+          start: "Jun 2025",
+          points: [
+            "Implemented JIT access control for private AWS RDS instances",
+          ],
+        },
+      ],
+    },
+    {
       name: "DUST Identity",
       location: "Newton, MA",
       roles: [
