@@ -18,10 +18,13 @@ export const content = {
       location: "San Francisco, CA",
       roles: [
         {
-          name: "Senior Software Engineer II",
+          name: "Lead Software Engineer",
           start: "Jun 2025",
           points: [
-            "Implemented JIT access control for private AWS RDS instances",
+            "Created frameworks to accelerate AI development of new integrations",
+            "Doubled team velocity by introducing modern TS tooling",
+            "Led rearchitecture to deliver self-hosting in FedRAMP environments",
+            "Implemented JIT PAM for private AWS RDS postgres & RDS Aurora",
           ],
         },
       ],
