@@ -3,7 +3,7 @@ import ReactPDF from "@react-pdf/renderer";
 import { Resume } from "@aelar/components/pdf/resume";
 import os from "os";
 import fs from "fs/promises";
-import { loadFonts } from "@aelar/components/pdf/fonts";
+import { loadFonts } from "@aelar/fonts";
 
 export const GET: APIRoute = async ({ site }) => {
   if (site) {

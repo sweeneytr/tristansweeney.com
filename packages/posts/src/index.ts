@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from "astro/zod";
 
-export const PostData = ({ image }: { image: () => z.ZodURL }) => {
+export const PostData = ({ image }: { image: () => unknown }) => {
   const imageSchema = z.object({
     url: image(),
     credit: z.object({ author: z.string(), url: z.string() }).optional(),

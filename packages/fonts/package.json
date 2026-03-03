@@ -1,9 +1,9 @@
 {
-  "name": "@aelar/posts",
+  "name": "@aelar/fonts",
   "version": "1.2.0",
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "astro": "^5.5.6"
+    "@react-pdf/renderer": "4.0.0"
   }
 }

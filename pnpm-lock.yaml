@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -126,8 +126,17 @@ importers:
         specifier: ^6.2.4
         version: 6.2.4
 
+  packages/fonts:
+    dependencies:
+      '@react-pdf/renderer':
+        specifier: 4.0.0
+        version: 4.0.0(react@18.3.1)
+
   packages/posts:
     dependencies:
+      astro:
+        specifier: ^5.5.6
+        version: 5.5.6(typescript@5.8.2)
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -137,6 +146,9 @@ importers:
       '@aelar/components':
         specifier: workspace:^
         version: link:../components
+      '@aelar/fonts':
+        specifier: workspace:^
+        version: link:../fonts
       '@aelar/posts':
         specifier: workspace:^
         version: link:../posts
