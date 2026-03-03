@@ -1,0 +1,10 @@
+{
+  "name": "@aelar/atoms",
+  "version": "1.2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "astro": "^5.5.6",
+    "tailwind-merge": "^3.1.0"
+  }
+}
