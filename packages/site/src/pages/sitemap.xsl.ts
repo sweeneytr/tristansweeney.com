@@ -1,9 +1,9 @@
 import { experimental_AstroContainer } from "astro/container";
 import stylesheet from "../styles/global.css?url";
-import BaseHead from "components/layout/BaseHead.astro";
-import BaseNavigation from "components/layout/BaseNavigation.astro";
-import BaseFooter from "components/layout/BaseFooter.astro";
-import LocalFont from "components/generic/LocalFont.astro";
+import BaseHead from "@aelar/components/layout/BaseHead.astro";
+import BaseNavigation from "@aelar/components/layout/BaseNavigation.astro";
+import BaseFooter from "@aelar/components/layout/BaseFooter.astro";
+import LocalFont from "@aelar/components/generic/LocalFont.astro";
 import prettier from "prettier";
 
 async function formatCode(code, options = {}) {

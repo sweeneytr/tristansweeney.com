@@ -1,6 +1,6 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { PostData } from "posts";
+import { PostData } from "@aelar/posts";
 
 const blog = defineCollection({
   schema: PostData,

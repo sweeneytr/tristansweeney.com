@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export const PostData = ({ image }: { image: z.ZodString }) => {
+export const PostData = ({ image }: { image: () => z.ZodURL }) => {
   const imageSchema = z.object({
-    url: z.string(),
+    url: image(),
     credit: z.object({ author: z.string(), url: z.string() }).optional(),
     style: z
       .object({

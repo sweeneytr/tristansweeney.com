@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Default.astro";
-import PostGrid from "components/generic/PostGrid.astro";
-import BlogSummaryCard from "components/blog/BlogSummaryCard.astro";
-import PostItem from "components/generic/PostItem.astro";
+import PostGrid from "@aelar/components/generic/PostGrid.astro";
+import BlogSummaryCard from "@aelar/components/blog/BlogSummaryCard.astro";
+import PostItem from "@aelar/components/generic/PostItem.astro";
 
 const posts = await getCollection("projects").then((collection) =>
   collection.toSorted(
@@ -16,9 +16,9 @@ const posts = await getCollection("projects").then((collection) =>
   title="Projects"
   description="Projects | Here's some fun things I've worked on!"
   pageTitle="My Projects"
-  class={'flex flex-col items-stretch h-full'}
+  class={"flex flex-col items-stretch h-full"}
 >
-  <main class="bg-purple p-6 grow">
+  <main class="bg-purple grow p-6">
     <PostGrid>
       {
         posts.map((post) => (

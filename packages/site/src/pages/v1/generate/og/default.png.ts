@@ -2,7 +2,7 @@ import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { APIRoute } from "astro";
 import satori, { type Font } from "satori";
 
-import { OpenGraphCard } from "components/opengraph/card";
+import { OpenGraphCard } from "@aelar/components/opengraph/card";
 
 import outfit from "@public/fonts/outfit.ttf";
 import poppins from "@public/fonts/poppins.ttf";

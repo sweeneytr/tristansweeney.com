@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-import { OpenGraphCard } from "components/opengraph/card";
+import { OpenGraphCard } from "@aelar/components/opengraph/card";
 import { render } from "./default.png";
 
 const posts = await getCollection("blog");
