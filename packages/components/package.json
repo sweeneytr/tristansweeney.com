@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@aelar/atoms": "workspace:^",
+    "@aelar/molecules": "workspace:^",
     "@react-pdf/font": "3.0.0",
     "@react-pdf/layout": "4.0.0",
     "@react-pdf/pdfkit": "4.0.0",
