@@ -1,0 +1,61 @@
+---
+import Button from "../atoms/Button.astro";
+import Pill from "../atoms/Pill.astro";
+import SummaryCard from "../generic/SummaryCard.astro";
+
+interface Props {
+  post: {
+    id: string;
+    data: any;
+  };
+  context: {
+    baseUrl: string;
+  };
+}
+
+const {
+  context: { baseUrl },
+  post,
+} = Astro.props;
+---
+
+<SummaryCard
+  title={post.data.title}
+  imgAlt={post.data.title}
+  date={post.data.pubDate}
+  description={post.data.description}
+  image={post.data.image}
+>
+  <div class="my-4 flex justify-end">
+    <Button href={`${baseUrl}/${post.id}/`}>Read post &rarr;</Button>
+  </div>
+
+  <div class="hidden sm:inline-block">
+    <p class="poppins mt-2">tags:</p>
+    <div class="flex items-center justify-between">
+      <ul class="mt-2 flex gap-4">
+        {
+          post.data.tags.map((tag) => {
+            return (
+              <li>
+                <a
+                  class="sanchez"
+                  href={`${baseUrl}/tags/${tag.toLowerCase()}/`}
+                >
+                  <Pill>{tag}</Pill>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      {
+        post.data.draft && (
+          <span class="bg-green card-shadow rounded-full border-2 border-black px-4 py-1 text-sm">
+            Draft
+          </span>
+        )
+      }
+    </div>
+  </div>
+</SummaryCard>

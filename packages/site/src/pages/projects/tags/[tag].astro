@@ -1,12 +1,12 @@
 ---
-import Pill from "@components/atoms/Pill.astro";
+import Pill from "components/atoms/Pill.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Default.astro";
-import Button from "@components/atoms/Button.astro";
-import PostGrid from "@components/generic/PostGrid.astro";
-import PostItem from "@components/generic/PostItem.astro";
-import BlogSummaryCard from "@components/blog/BlogSummaryCard.astro";
+import Button from "components/atoms/Button.astro";
+import PostGrid from "components/generic/PostGrid.astro";
+import PostItem from "components/generic/PostItem.astro";
+import BlogSummaryCard from "components/blog/BlogSummaryCard.astro";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("projects").then((collection) =>

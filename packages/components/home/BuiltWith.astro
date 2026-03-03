@@ -1,0 +1,41 @@
+---
+import Pill from "../atoms/Pill.astro";
+
+const builtWith = [
+  { name: "Masonry", url: "https://masonry.desandro.com/" },
+
+  { name: "Astro", url: "https://astro.build/" },
+  { name: "UnoCSS", url: "https://uno.antfu.me/" },
+  {
+    name: "Content Collections",
+    url: "https://docs.astro.build/en/guides/content-collections/",
+  },
+  { name: "RSS", url: "https://docs.astro.build/en/guides/rss/" },
+  {
+    name: "Sitemap",
+    url: "https://docs.astro.build/en/guides/integrations-guide/sitemap/",
+  },
+  { name: "Vercel", url: "https://vercel.com" },
+  { name: "TypeScript", url: "https://www.typescriptlang.org/" },
+];
+---
+
+<h2 class="sanchez mb-8 text-2xl md:text-4xl lg:text-6xl">Built with</h2>
+<ul class="flex flex-wrap gap-4">
+  {
+    builtWith.map((item) => (
+      <li>
+        <Pill>
+          <a
+            class="sanchez"
+            href={item.url}
+            target="_blank"
+            title={`Go to ${item.name}`}
+          >
+            {item.name}
+          </a>
+        </Pill>
+      </li>
+    ))
+  }
+</ul>
