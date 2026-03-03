@@ -2,6 +2,9 @@
   "name": "@aelar/components",
   "version": "1.2.0",
   "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.2.3",
