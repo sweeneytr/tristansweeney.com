@@ -29,13 +29,14 @@ jobs:
 
       - name: Upgrade Astro
         run: pnpm dlx @astrojs/upgrade --yes
+        working-directory: packages/site
 
       - name: PR Changes
         uses: peter-evans/create-pull-request@v4
         with:
           branch: ci/update-astro
           commit-message: "ci: update Astro"
-          assignees: eliancodes
+          assignees: sweeneytr
           title: "ci: update Astro"
           body: Update Astro and packages to latest version
           labels: ci
