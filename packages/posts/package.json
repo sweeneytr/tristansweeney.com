@@ -1,9 +1,8 @@
 {
-  "name": "posts",
+  "name": "@aelar/posts",
   "version": "1.2.0",
   "type": "module",
-  "packageManager": "pnpm@8.6.0",
-  "exports": "src/index.ts",
+  "exports": "./src/index.ts",
   "dependencies": {
     "zod": "^4.3.6"
   }

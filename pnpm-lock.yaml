@@ -52,9 +52,6 @@ importers:
       masonry-layout:
         specifier: ^4.2.2
         version: 4.2.2
-      posts:
-        specifier: workspace:^
-        version: link:../posts
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.11(prettier-plugin-astro@0.14.1)(prettier@3.5.3)
@@ -77,6 +74,9 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
     devDependencies:
+      '@aelar/posts':
+        specifier: workspace:^
+        version: link:../posts
       '@iconify-json/logos':
         specifier: ^1.2.4
         version: 1.2.4
@@ -134,6 +134,12 @@ importers:
 
   packages/site:
     dependencies:
+      '@aelar/components':
+        specifier: workspace:^
+        version: link:../components
+      '@aelar/posts':
+        specifier: workspace:^
+        version: link:../posts
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.5.3)(typescript@5.8.2)
@@ -173,9 +179,6 @@ importers:
       astro-font:
         specifier: ^1.0.0
         version: 1.0.0
-      components:
-        specifier: workspace:^
-        version: link:../components
       masonry-layout:
         specifier: ^4.2.2
         version: 4.2.2
