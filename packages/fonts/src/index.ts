@@ -1,6 +1,7 @@
 import { Font } from "@react-pdf/renderer";
 import os from "os";
 import fs from "fs/promises";
+export { default as LocalFont } from "./LocalFont.astro";
 
 export const loadFonts = async (site: URL) => {
   Font.clear();

@@ -95,6 +95,9 @@ importers:
       '@react-pdf/renderer':
         specifier: 4.0.0
         version: 4.0.0(react@18.3.1)
+      astro-font:
+        specifier: ^1.0.0
+        version: 1.0.0
 
   packages/molecules:
     dependencies:
@@ -107,6 +110,18 @@ importers:
       tailwind-merge:
         specifier: ^3.1.0
         version: 3.1.0
+
+  packages/organisms:
+    dependencies:
+      '@aelar/atoms':
+        specifier: workspace:^
+        version: link:../atoms
+      '@aelar/fonts':
+        specifier: workspace:^
+        version: link:../fonts
+      '@aelar/molecules':
+        specifier: workspace:^
+        version: link:../molecules
 
   packages/posts:
     dependencies:
@@ -125,6 +140,9 @@ importers:
       '@aelar/fonts':
         specifier: workspace:^
         version: link:../fonts
+      '@aelar/organisms':
+        specifier: workspace:^
+        version: link:../organisms
       '@aelar/posts':
         specifier: workspace:^
         version: link:../posts

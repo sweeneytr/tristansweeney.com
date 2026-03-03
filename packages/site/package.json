@@ -19,6 +19,7 @@
     "@aelar/atoms": "workspace:^",
     "@aelar/components": "workspace:^",
     "@aelar/fonts": "workspace:^",
+    "@aelar/organisms": "workspace:^",
     "@aelar/posts": "workspace:^",
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.2.3",

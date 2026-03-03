@@ -1,0 +1,11 @@
+{
+  "name": "@aelar/organisms",
+  "version": "1.2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@aelar/atoms": "workspace:^",
+    "@aelar/molecules": "workspace:^",
+    "@aelar/fonts": "workspace:^"
+  }
+}

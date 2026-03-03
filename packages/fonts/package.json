@@ -4,6 +4,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@react-pdf/renderer": "4.0.0"
+    "@react-pdf/renderer": "4.0.0",
+    "astro-font": "^1.0.0"
   }
 }
