@@ -2,11 +2,12 @@
 import Button from "../atoms/Button.astro";
 import Pill from "../atoms/Pill.astro";
 import SummaryCard from "../generic/SummaryCard.astro";
+import type {PostData} from "posts";
 
 interface Props {
   post: {
     id: string;
-    data: any;
+    data: PostData;
   };
   context: {
     baseUrl: string;

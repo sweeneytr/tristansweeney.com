@@ -52,6 +52,9 @@ importers:
       masonry-layout:
         specifier: ^4.2.2
         version: 4.2.2
+      posts:
+        specifier: workspace:^
+        version: link:../posts
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.11(prettier-plugin-astro@0.14.1)(prettier@3.5.3)
@@ -122,6 +125,12 @@ importers:
       vite:
         specifier: ^6.2.4
         version: 6.2.4
+
+  packages/posts:
+    dependencies:
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
 
   packages/site:
     dependencies:
@@ -6850,6 +6859,10 @@ packages:
 
   /zod@3.24.2:
     resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+    dev: false
+
+  /zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
     dev: false
 
   /zwitch@2.0.4:
