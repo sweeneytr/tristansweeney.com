@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@source "../../../*/src/**/*.{astro,tsx}";
+
 @theme {
   --color-heliotrope: #e879f9;
   --color-pink: #f472b6;
@@ -49,7 +51,8 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       45deg,
       var(--secondary) 25%,
       transparent 25%,
@@ -132,7 +135,8 @@ html {
   background-color: var(--primary);
 }
 .window-pane::-webkit-scrollbar-track {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       45deg,
       var(--secondary) 25%,
       transparent 25%,
