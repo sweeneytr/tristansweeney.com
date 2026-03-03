@@ -16,6 +16,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@aelar/atoms": "workspace:^",
     "@aelar/components": "workspace:^",
     "@aelar/fonts": "workspace:^",
     "@aelar/posts": "workspace:^",

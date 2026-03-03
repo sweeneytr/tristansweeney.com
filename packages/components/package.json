@@ -6,6 +6,7 @@
     "./*": "./src/*"
   },
   "dependencies": {
+    "@aelar/atoms": "workspace:^",
     "@react-pdf/font": "3.0.0",
     "@react-pdf/layout": "4.0.0",
     "@react-pdf/pdfkit": "4.0.0",

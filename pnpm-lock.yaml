@@ -19,6 +19,9 @@ importers:
 
   packages/components:
     dependencies:
+      '@aelar/atoms':
+        specifier: workspace:^
+        version: link:../atoms
       '@react-pdf/font':
         specifier: 3.0.0
         version: 3.0.0
@@ -98,6 +101,9 @@ importers:
 
   packages/site:
     dependencies:
+      '@aelar/atoms':
+        specifier: workspace:^
+        version: link:../atoms
       '@aelar/components':
         specifier: workspace:^
         version: link:../components

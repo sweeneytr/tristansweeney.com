@@ -1,8 +1,8 @@
 ---
 import { twMerge } from "tailwind-merge";
-import RssIcon from "../atoms/icons/RssIcon.astro";
-import LinkedInIcon from "../atoms/icons/LinkedInIcon.astro";
-import GithubIcon from "../atoms/icons/GithubIcon.astro";
+import { RssIcon } from "@aelar/atoms";
+import { LinkedInIcon } from "@aelar/atoms";
+import { GithubIcon } from "@aelar/atoms";
 
 const navigationItems = [
   { name: "Home", url: "/", predicate: Astro.url.pathname === "/" },
