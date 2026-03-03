@@ -46,9 +46,6 @@ importers:
       astro:
         specifier: ^5.5.6
         version: 5.5.6(typescript@5.8.2)
-      astro-font:
-        specifier: ^1.0.0
-        version: 1.0.0
       satori:
         specifier: ^0.12.2
         version: 0.12.2
