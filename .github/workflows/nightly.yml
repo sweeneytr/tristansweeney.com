@@ -33,7 +33,7 @@ jobs:
         working-directory: packages/site
 
       - name: PR Changes
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: ci/update-astro
           commit-message: "ci: update Astro"
