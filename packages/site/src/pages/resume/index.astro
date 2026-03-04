@@ -7,8 +7,6 @@ import DownloadResumeButton from "@aelar/components/resume/downloadResumeButton.
 import SeriousExperience from "@aelar/components/resume/seriousExperience.astro";
 import SeriousEducation from "@aelar/components/resume/seriousEducation.astro";
 import SeriousExpertise from "@aelar/components/resume/seriousExpertise.astro";
-import { Button } from "@aelar/atoms";
-import { InfoIcon } from "@aelar/atoms";
 ---
 
 <Layout
@@ -18,16 +16,9 @@ import { InfoIcon } from "@aelar/atoms";
   classList="flex flex-col min-h-screen"
 >
   <main class="flex grow flex-col items-center bg-gray-300">
-    <Button class="bg-emerald m-4 p-4" href="/resume/fun">
-      <div class="flex flex-row items-center gap-2">
-        <InfoIcon class="h-8 w-8" />
-        <div>Click here for the colorful version.</div>
-      </div>
-    </Button>
-
     <section
       id="resume"
-      class="flex w-full flex-col items-stretch px-4 sm:mx-8"
+      class="mt-4 flex w-full flex-col items-stretch px-4 sm:mx-8"
     >
       <div class="flex flex-col items-center">
         <Card
