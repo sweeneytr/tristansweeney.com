@@ -1,119 +1,43 @@
 ---
 import Layout from "@layouts/Default.astro";
-import RecentBlogPosts from "@aelar/components/generic/RecentBlogPosts.astro";
-import MobileSocials from "@aelar/components/home/MobileSocials.astro";
-import Tech from "@aelar/components/home/Tech.astro";
-import Hero from "@aelar/components/home/Hero.astro";
-import AboutMe from "@aelar/components/home/AboutMe.astro";
-import Fullstack from "@aelar/components/home/Fullstack.astro";
 
 import { Card } from "@aelar/atoms";
-import Tools from "@aelar/components/home/Tools.astro";
-import Fonts from "@aelar/components/home/Fonts.astro";
-import Colors from "@aelar/components/home/Colors.astro";
-import BuiltWith from "@aelar/components/home/BuiltWith.astro";
-import PeanutGallery from "@aelar/components/home/PeanutGallery.astro";
-import ProLinks from "@aelar/components/home/ProLinks.astro";
+import CopyResumeLinkButton from "@aelar/components/resume/copyResumeLinkButton.astro";
+import DownloadResumeButton from "@aelar/components/resume/downloadResumeButton.astro";
+import SeriousExperience from "@aelar/components/resume/seriousExperience.astro";
+import SeriousEducation from "@aelar/components/resume/seriousEducation.astro";
+import SeriousExpertise from "@aelar/components/resume/seriousExpertise.astro";
 ---
 
 <Layout
   title="Tristan Sweeney"
   pageTitle="Tristan Sweeney | Home"
   description="Hi! I'm Tristan. I write software for fun, and also to get paid"
+  classList="flex flex-col min-h-screen"
 >
-  <main class="bg-pink p-4">
-    <MobileSocials />
-    <section id="about" class="flex flex-row flex-wrap">
-      <h2 class="hidden">About Me</h2>
-      <div class="brick p-4 md:w-1/2">
-        <Card class="bg-purple">
-          <Hero />
-        </Card>
-      </div>
-      <div class="brick-sizer brick p-4 md:w-1/4">
-        <Card class="bg-orange">
-          <Tech />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-1/4">
-        <Card class="bg-yellow">
-          <Fullstack />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-1/4">
-        <Card class="bg-yellow">
-          <Tools />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-3/4">
-        <Card class="bg-blue">
-          <AboutMe />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-1/4">
-        <Card class="bg-fuchsia">
-          <BuiltWith />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-2/4">
-        <Card class="bg-lime">
-          <Fonts />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-1/4">
-        <Card class="bg-heliotrope">
-          <Colors />
-        </Card>
-      </div>
-      <div class="brick p-4 md:w-1/4">
-        <Card class="bg-cyan">
-          <PeanutGallery />
-        </Card>
-      </div>
-
-      <div class="brick md:-3/4 p-4">
-        <Card class="bg-fuchsia"><ProLinks /></Card>
-      </div>
-
-      <div class="brick p-4 md:w-1/2">
-        <Card class="bg-yellow h-96">
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8902921770361096"
-            crossorigin="anonymous"></script>
-          <!-- HomepageAd -->
-          <ins
-            class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-8902921770361096"
-            data-ad-slot="7831879240"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-          <script>
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
+  <main class="flex grow flex-col items-center bg-gray-300">
+    <section
+      id="resume"
+      class="mt-4 flex w-full flex-col items-stretch px-4 sm:mx-8"
+    >
+      <div class="flex flex-col items-center">
+        <Card
+          class="mb-8 flex w-full flex-col items-center gap-8 bg-white p-4 sm:w-4xl"
+        >
+          <SeriousExperience />
+          <SeriousEducation />
+          <SeriousExpertise />
         </Card>
       </div>
     </section>
-    <div class="px-4 pb-4">
-      <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
-      <RecentBlogPosts
-        baseUrl="/projects"
-        plural="projects"
-        collection="projects"
-      />
-    </div>
-    <script>
-      import Masonry from "masonry-layout";
 
-      document.addEventListener("astro:page-load", () => {
-        new Masonry("#about", {
-          itemSelector: ".brick",
-          columnWidth: ".brick-sizer",
-          percentPosition: true,
-          horizontalOrder: true,
-        });
-      });
-    </script>
+    <div class="sticky bottom-0">
+      <Card
+        class="bg-emerald m-4 mt-0 flex flex-row items-center justify-center gap-8 px-8"
+      >
+        <CopyResumeLinkButton />
+        <DownloadResumeButton />
+      </Card>
+    </div>
   </main>
 </Layout>
