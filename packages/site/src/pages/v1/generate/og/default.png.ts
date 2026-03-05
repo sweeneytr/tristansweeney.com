@@ -4,11 +4,7 @@ import satori, { type Font } from "satori";
 
 import { OpenGraphCard } from "@aelar/components/opengraph/card";
 
-import serif from "@public/fonts/dm-serif.ttf";
-import outfit from "@public/fonts/outfit.ttf";
-import poppins from "@public/fonts/poppins.ttf";
-import righteous from "@public/fonts/righteous.ttf";
-import sanchez from "@public/fonts/sanchez.ttf";
+import { outfit, sanchez, serif } from "@aelar/fonts";
 import type { ReactNode } from "react";
 
 const loadFont = async (url: string) => {
