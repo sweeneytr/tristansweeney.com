@@ -1,7 +1,7 @@
 ---
 import RecentBlogPosts from "@aelar/components/generic/RecentBlogPosts.astro";
 import Layout from "@layouts/Default.astro";
-import ErrorPage from "@aelar/components/errors/404.astro";
+import { Err404 } from "@aelar/atoms";
 ---
 
 <Layout
@@ -11,7 +11,7 @@ import ErrorPage from "@aelar/components/errors/404.astro";
   pageTitle="Page Not Found!"
 >
   <main class="bg-blue px-6 py-24">
-    <ErrorPage />
+    <Err404 />
     <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
   </main>
 </Layout>
