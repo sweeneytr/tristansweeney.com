@@ -1,10 +1,8 @@
-import { experimental_AstroContainer } from "astro/container";
-import stylesheet from "../styles/global.css?url";
-import { BaseHead } from "@aelar/organisms";
-import { BaseNavigation } from "@aelar/organisms";
-import { BaseFooter } from "@aelar/organisms";
 import { LocalFont } from "@aelar/fonts";
+import { BaseFooter, BaseNavigation } from "@aelar/organisms";
+import { experimental_AstroContainer } from "astro/container";
 import prettier from "prettier";
+import stylesheet from "../styles/global.css?url";
 
 async function formatCode(code, options = {}) {
   const formattedCode = await prettier.format(code, {

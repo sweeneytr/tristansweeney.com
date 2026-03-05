@@ -1,9 +1,9 @@
-import type { APIRoute } from "astro";
-import ReactPDF from "@react-pdf/renderer";
-import os from "os";
-import fs from "fs/promises";
-import { loadFonts } from "@aelar/fonts";
 import { CoverLetter } from "@aelar/components/pdf/coverletter";
+import { loadFonts } from "@aelar/fonts";
+import ReactPDF from "@react-pdf/renderer";
+import type { APIRoute } from "astro";
+import fs from "fs/promises";
+import os from "os";
 
 export const GET: APIRoute = async ({ site }) => {
   if (site) {

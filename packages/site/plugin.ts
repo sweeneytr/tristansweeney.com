@@ -1,5 +1,5 @@
-import { readFileSync } from "node:fs";
 import { createFilter, type FilterPattern } from "@rollup/pluginutils";
+import { readFileSync } from "node:fs";
 import type { Plugin } from "vite";
 
 const template = (base64: string) => `
