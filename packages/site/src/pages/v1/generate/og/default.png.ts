@@ -4,7 +4,7 @@ import satori, { type Font } from "satori";
 
 import { OpenGraphCard } from "@aelar/components/opengraph/card";
 
-import { outfit, sanchez, serif } from "@aelar/fonts";
+import { dmSerif, outfit, poppins, righteous, sanchez } from "@aelar/fonts";
 import type { ReactNode } from "react";
 
 const loadFont = async (url: string) => {
@@ -42,7 +42,7 @@ const fonts: Font[] = [
   },
   {
     name: "dm-serif",
-    data: serif,
+    data: dmSerif,
     style: "normal",
   },
 ];
