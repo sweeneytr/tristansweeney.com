@@ -3,12 +3,6 @@
   "include": ["./declarations.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "preserve",
-    "paths": {
-      "@public/*": ["public/*"],
-      "@assets/*": ["src/assets/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@pages/*": ["src/pages/*"]
-    }
+    "jsx": "preserve"
   }
 }

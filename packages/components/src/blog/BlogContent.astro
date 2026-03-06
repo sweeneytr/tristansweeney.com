@@ -2,7 +2,6 @@
 import type { ContentEntryMap } from "astro:content";
 import { ImageCredit } from "@aelar/atoms";
 import type { PostData } from "@aelar/posts";
-import chromeDino from "@assets/chrome-dino-hero.avif";
 
 interface Props {
   content: PostData;
@@ -39,14 +38,7 @@ const {
   <p class="text-sm text-slate-400 md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
-  {
-    /* <Image
-    src={content.image ? import(content.image.url) : chromeDino}
-    class="w-full rounded-2xl bg-gray-700"
-    alt="image"
-  />*/
-  }
-
+  
   <div class="flex justify-end p-4">
     {
       content.image?.credit ? (

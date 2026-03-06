@@ -7,6 +7,9 @@
     "email": "hello@elian.codes",
     "url": "https://www.elian.codes/"
   },
+  "imports": {
+    "#*": "./src/*"
+  },
   "homepage": "https://brutal.elian.codes",
   "scripts": {
     "dev": "astro dev",
