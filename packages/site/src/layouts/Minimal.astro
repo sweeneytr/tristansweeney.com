@@ -1,0 +1,28 @@
+---
+import { BaseNavigation } from "@aelar/organisms";
+import { BaseFooter } from "@aelar/organisms";
+import { BaseHead } from "@aelar/organisms";
+import "../styles/global.css";
+import { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"body"> {
+  title: string;
+  description: string;
+  pageTitle?: string;
+  ogImage?: URL;
+}
+
+const {
+  title,
+  description,
+  class: className,
+  pageTitle,
+  ogImage,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="h-full">
+  <BaseHead ogImage={ogImage} title={title} description={description} />
+  <slot />
+</html>

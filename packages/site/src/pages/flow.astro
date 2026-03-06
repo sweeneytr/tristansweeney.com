@@ -1,0 +1,14 @@
+---
+import Layout from "#layouts/Minimal.astro";
+import { App } from "@aelar/flowapp";
+---
+
+<Layout
+  title="Flow App"
+  pageTitle="Tristan Sweeney | Home"
+  description="This is a fun app playing with react-flow"
+>
+  <div class="h-screen w-screen">
+    <App client:load />
+  </div>
+</Layout>
