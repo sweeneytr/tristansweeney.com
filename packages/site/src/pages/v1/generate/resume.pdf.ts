@@ -1,4 +1,4 @@
-import { Resume } from "@aelar/components/pdf/resume";
+import { Resume } from "#components/pdf/resume";
 import { loadFonts } from "@aelar/fonts";
 import ReactPDF from "@react-pdf/renderer";
 import type { APIRoute } from "astro";
