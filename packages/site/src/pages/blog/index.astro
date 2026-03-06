@@ -1,9 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Default.astro";
-import PostGrid from "@aelar/components/generic/PostGrid.astro";
+import { PostGrid, PostItem } from "@aelar/atoms";
 import BlogSummaryCard from "@aelar/components/blog/BlogSummaryCard.astro";
-import PostItem from "@aelar/components/generic/PostItem.astro";
 
 const posts = await getCollection("blog").then((collection) =>
   collection.toSorted(
