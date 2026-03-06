@@ -1,6 +1,6 @@
 ---
 import Layout from "./Default.astro";
-import BlogSideBar from "@aelar/components/generic/SideBar.astro";
+import { Sidebar } from "@aelar/atoms";
 import BlogContent from "@aelar/components/blog/BlogContent.astro";
 import RecentBlogPosts from "@aelar/components/generic/RecentBlogPosts.astro";
 
@@ -17,7 +17,7 @@ const { title, description } = content;
 >
   <div class="bg-cyan">
     <main class="flex justify-center p-6 lg:grid lg:grid-cols-3">
-      <BlogSideBar headings={headings} />
+      <Sidebar headings={headings} />
       <BlogContent
         content={content}
         context={{ baseUrl: "/blog", collection: "blog" }}

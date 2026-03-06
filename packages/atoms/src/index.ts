@@ -9,6 +9,7 @@ export { default as ToTopButton } from "./ToTopButton.astro";
 export { default as ImageCredit } from "./ImageCredit.astro";
 export { default as PostGrid } from "./PostGrid.astro";
 export { default as PostItem } from "./PostItem.astro";
+export { default as Sidebar } from "./Sidebar.astro";
 
 export * from "./icons/index.ts";
 export * from "./errors/index.ts";
