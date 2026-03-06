@@ -1,7 +1,7 @@
 ---
 import type { ContentEntryMap } from "astro:content";
 import { ImageCredit } from "@aelar/atoms";
-import type { PostData } from "@aelar/posts";
+import type { PostData } from "#content.config.ts";
 
 interface Props {
   content: PostData;
@@ -38,7 +38,7 @@ const {
   <p class="text-sm text-slate-400 md:text-base">
     Published on {content.pubDate} by {content.author}
   </p>
-  
+
   <div class="flex justify-end p-4">
     {
       content.image?.credit ? (

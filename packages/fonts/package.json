@@ -5,7 +5,7 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "@react-pdf/renderer": "4.0.0",
-    "astro": "^5.18.0",
+    "astro": "catalog:",
     "astro-font": "^1.0.0"
   }
 }

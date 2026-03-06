@@ -1,9 +1,0 @@
-{
-  "name": "@aelar/posts",
-  "version": "1.2.0",
-  "type": "module",
-  "exports": "./src/index.ts",
-  "dependencies": {
-    "astro": "^5.5.6"
-  }
-}
