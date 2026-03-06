@@ -7,7 +7,7 @@ import os from "os";
 
 export const GET: APIRoute = async ({ site }) => {
   if (site) {
-    await loadFonts(site);
+    (await loadFonts()).forEach(ReactPDF.Font.register);
   }
 
   await ReactPDF.render(CoverLetter(), `${os.tmpdir()}/coverletter.pdf`);
