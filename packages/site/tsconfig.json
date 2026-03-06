@@ -1,6 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["./declarations.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "preserve"
