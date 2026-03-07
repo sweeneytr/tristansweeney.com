@@ -15,6 +15,8 @@ import {
   type OnNodesChange,
   type OnEdgesChange,
   type NodeProps,
+  useNodeConnections,
+  useNodesData,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "./index.css";
@@ -28,16 +30,14 @@ const initialEdges: Edge[] = [
     label: "connects with",
   },
 ];
+
+type TextUpdaterNode = Node<
+  { value: string | undefined; onChange(value: string): void },
+  "textUpdater"
+>;
+
 export const TextUpdaterNode = memo(
-  ({
-    data,
-    isConnectable,
-  }: NodeProps<
-    Node<
-      { value: string | undefined; onChange(value: string): void },
-      "textUpdater"
-    >
-  >) => {
+  ({ data, isConnectable }: NodeProps<TextUpdaterNode>) => {
     const onChange = useCallback(
       (evt: React.ChangeEvent<HTMLInputElement>) => {
         data.onChange(evt.target.value);
@@ -66,8 +66,51 @@ export const TextUpdaterNode = memo(
     );
   },
 );
+
+type TextDisplayerNode = Node<
+  { value: string | undefined; onChange(value: string): void },
+  "textDisplayer"
+>;
+
+export const TextDisplayerNode = memo(
+  ({ isConnectable, id }: NodeProps<TextDisplayerNode>) => {
+    const edges = useNodeConnections({ id, handleType: "target" });
+    const graph = useNodesData<
+      Node<
+        { value: string | undefined; onChange(value: string): void },
+        "textUpdater"
+      >
+    >(edges[0].source);
+    console.log(graph?.data);
+
+    return (
+      <div className="text-updater-node">
+        <div>
+          <div>{graph?.data.value}</div>
+        </div>
+        <Handle
+          position={Position.Top}
+          type="target"
+          isConnectable={isConnectable}
+        />
+      </div>
+    );
+  },
+);
+
+function isNode<T extends Node>(key: T["type"]) {
+  return function isNode(node: Node): node is T {
+    return node.type === key;
+  };
+}
+
+type CustomNodeType = TextUpdaterNode | TextDisplayerNode;
+const isTextUpdaterNode = isNode<TextDisplayerNode>("textDisplayer");
+const isTextDisplayerNode = isNode<TextDisplayerNode>("textDisplayer");
+
 const nodeTypes = {
   textUpdater: TextUpdaterNode,
+  textDisplayer: TextDisplayerNode,
 };
 
 export default function App() {
@@ -96,7 +139,12 @@ export default function App() {
           onChange,
         },
       },
-      { id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2" } },
+      {
+        id: "n2",
+        type: "textDisplayer",
+        position: { x: 0, y: 100 },
+        data: { label: "Node 2" },
+      },
     ]);
   }, []);
 
