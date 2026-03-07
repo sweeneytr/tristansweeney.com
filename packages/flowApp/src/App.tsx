@@ -1,4 +1,10 @@
-import { useState, useCallback, memo, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  memo,
+  useEffect,
+  type MemoExoticComponent,
+} from "react";
 import {
   ReactFlow,
   applyNodeChanges,
@@ -76,7 +82,7 @@ export const TextDisplayerNode = memo(
   ({ isConnectable, id }: NodeProps<TextDisplayerNode>) => {
     const edges = useNodeConnections({ id, handleType: "target" });
     const node = useNodesData(edges[0]?.source);
-    const value = isTextUpdaterNode(node) ? node.data.value : undefined;
+    const value = validators.textDisplayer(node) ? node.data.value : undefined;
 
     return (
       <div className="text-updater-node">
@@ -106,6 +112,11 @@ type NodeDataOf<T extends Node> = {
   type: T["type"];
   data: T["data"];
 };
+type NodeOf<T> = T extends (p: NodeProps<infer Node>) => any
+  ? Node
+  : T extends React.MemoExoticComponent<(p: NodeProps<infer Node>) => any>
+    ? Node
+    : never;
 
 function isNode<T extends Node>(key: T["type"]) {
   return function isNode(node: NodeDataOf<Node> | null): node is NodeDataOf<T> {
@@ -120,6 +131,19 @@ const nodeTypes = {
   textUpdater: TextUpdaterNode,
   textDisplayer: TextDisplayerNode,
 };
+
+const makeValidators = <
+  T extends Record<string, MemoExoticComponent<(props: NodeProps<any>) => any>>,
+>(
+  record: T,
+): {
+  [Prop in keyof T]: (
+    node: NodeDataOf<Node> | null,
+  ) => node is NodeDataOf<NodeOf<T[Prop]>>;
+  // @ts-expect-error requires human knowledge
+} => Object.fromEntries(Object.keys(record).map((key) => [key, isNode(key)]));
+
+const validators = makeValidators(nodeTypes);
 
 export default function App() {
   const [nodes, setNodes] = useState<Node[]>([]);
