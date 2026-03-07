@@ -75,37 +75,45 @@ type TextDisplayerNode = Node<
 export const TextDisplayerNode = memo(
   ({ isConnectable, id }: NodeProps<TextDisplayerNode>) => {
     const edges = useNodeConnections({ id, handleType: "target" });
-    const graph = useNodesData<
-      Node<
-        { value: string | undefined; onChange(value: string): void },
-        "textUpdater"
-      >
-    >(edges[0].source);
-    console.log(graph?.data);
+    const node = useNodesData(edges[0]?.source);
+    const value = isTextUpdaterNode(node) ? node.data.value : undefined;
 
     return (
       <div className="text-updater-node">
         <div>
-          <div>{graph?.data.value}</div>
+          <div>{value}</div>
         </div>
         <Handle
           position={Position.Top}
           type="target"
           isConnectable={isConnectable}
         />
+        <Handle
+          position={Position.Left}
+          type="target"
+          isConnectable={isConnectable}
+          id="b"
+        />
       </div>
     );
   },
 );
 
+type CustomNodeType = TextUpdaterNode | TextDisplayerNode;
+
+type NodeDataOf<T extends Node> = {
+  id: T["id"];
+  type: T["type"];
+  data: T["data"];
+};
+
 function isNode<T extends Node>(key: T["type"]) {
-  return function isNode(node: Node): node is T {
-    return node.type === key;
+  return function isNode(node: NodeDataOf<Node> | null): node is NodeDataOf<T> {
+    return node?.type === key;
   };
 }
 
-type CustomNodeType = TextUpdaterNode | TextDisplayerNode;
-const isTextUpdaterNode = isNode<TextDisplayerNode>("textDisplayer");
+const isTextUpdaterNode = isNode<TextUpdaterNode>("textUpdater");
 const isTextDisplayerNode = isNode<TextDisplayerNode>("textDisplayer");
 
 const nodeTypes = {
