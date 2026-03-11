@@ -37,6 +37,18 @@ const nodeTypes = {
   textDisplayer: TextDisplayerNode,
   colorInput: ColorInputNode,
 };
+const nodeColor = (node: Node) => {
+  switch (node.type) {
+    case "textUpdater":
+      return "#6ede87";
+    case "textDisplayer":
+      return "#6865A5";
+    case "colorInput":
+      return "#000";
+    default:
+      return "#ff0072";
+  }
+};
 
 const selector = (state: AppState) => ({
   nodes: state.nodes,
@@ -88,7 +100,7 @@ export default function App() {
     >
       <Background />
       <Controls />
-      <MiniMap />
+      <MiniMap nodeColor={nodeColor} />
     </ReactFlow>
   );
 }
