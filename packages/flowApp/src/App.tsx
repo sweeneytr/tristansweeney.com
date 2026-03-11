@@ -17,6 +17,10 @@ import "@xyflow/react/dist/style.css";
 import "./index.css";
 import { TextUpdaterNode } from "./nodes/textUpdater";
 import { TextDisplayerNode } from "./nodes/textDisplayer";
+import { ColorInputNode } from "./nodes/colorInput";
+import type { AppState } from "./types";
+import { useStore } from "./store";
+import { useShallow } from "zustand/shallow";
 
 const initialEdges: Edge[] = [
   {
@@ -31,24 +35,23 @@ const initialEdges: Edge[] = [
 const nodeTypes = {
   textUpdater: TextUpdaterNode,
   textDisplayer: TextDisplayerNode,
+  colorInput: ColorInputNode,
 };
 
+const selector = (state: AppState) => ({
+  nodes: state.nodes,
+  setNodes: state.setNodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
+});
+
 export default function App() {
-  const [nodes, setNodes] = useState<Node[]>([]);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const { nodes, setNodes, edges, onNodesChange, onEdgesChange, onConnect } =
+    useStore(useShallow(selector));
 
   useEffect(() => {
-    const onChange = (value: string) =>
-      setNodes((snap) =>
-        snap.map((node) => {
-          if (node.id != "n1") return node;
-          return {
-            ...node,
-            data: { ...node.data, value },
-          };
-        }),
-      );
-
     setNodes([
       {
         id: "n1",
@@ -56,7 +59,6 @@ export default function App() {
         position: { x: 0, y: 0 },
         data: {
           label: "Node 1",
-          onChange,
         },
       },
       {
@@ -65,23 +67,14 @@ export default function App() {
         position: { x: 0, y: 100 },
         data: { label: "Node 2" },
       },
+      {
+        id: "n3",
+        type: "colorInput",
+        position: { x: 0, y: 100 },
+        data: { label: "Node 3" },
+      },
     ]);
   }, []);
-
-  const onNodesChange: OnNodesChange = useCallback(
-    (changes) =>
-      setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
-    [],
-  );
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    [],
-  );
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    [],
-  );
 
   return (
     <ReactFlow

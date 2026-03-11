@@ -3,37 +3,36 @@ import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { isNode } from "./util";
 import { useStore } from "../store";
 
-export const isTextUpdaterNode = isNode<TextUpdaterNode>("textUpdater");
+export const isColorInputNode = isNode<ColorInputNode>("colorInput");
 
-export type TextUpdaterNode = Node<
-  { value: string | undefined },
-  "textUpdater"
+export type ColorInputNode = Node<
+  { color: string | undefined; onChange(value: string): void },
+  "colorInput"
 >;
 
-export const TextUpdaterNode = memo(
-  ({ id, data, isConnectable }: NodeProps<TextUpdaterNode>) => {
-    const updateNodeValue = useStore((state) => state.updateNodeValue);
+export const ColorInputNode = memo(
+  ({ id, data, isConnectable }: NodeProps<ColorInputNode>) => {
+    const updateNodeValue = useStore((state) => state.updateNodeColor);
     const onChange = useCallback(
       (evt: React.ChangeEvent<HTMLInputElement>) => {
         updateNodeValue(id, evt.target.value);
       },
       [updateNodeValue],
     );
-
     return (
-      <div className="text-updater-node">
+      <div className="color-input-node">
         <div>
-          <label htmlFor="text">Text:</label>
+          <label htmlFor="text">Color:</label>
           <input
-            id="text"
-            name="text"
-            value={data.value ?? ""}
+            name="color"
+            type="color"
+            value={data.color ?? ""}
             onChange={onChange}
             className="nodrag"
           />
         </div>
         <Handle
-          position={Position.Bottom}
+          position={Position.Right}
           type="source"
           isConnectable={isConnectable}
         />

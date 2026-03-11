@@ -32,12 +32,6 @@ export const TextDisplayerNode = memo(
           type="target"
           isConnectable={isConnectable}
         />
-        <Handle
-          position={Position.Left}
-          type="target"
-          isConnectable={isConnectable}
-          id="b"
-        />
       </div>
     );
   },
