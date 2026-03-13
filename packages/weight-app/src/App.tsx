@@ -1,8 +1,11 @@
-import "chart.js/auto";
 import "chartjs-adapter-date-fns";
 import { Chart } from "react-chartjs-2";
 import { addDays } from "date-fns";
+import { Chart as ChartJS, registerables } from "chart.js";
+import annotationPlugin from "chartjs-plugin-annotation";
 import "./index.css";
+
+ChartJS.register(...registerables, annotationPlugin);
 
 // Example timeseries-by-day dataset
 const timeseriesData = [
@@ -84,6 +87,22 @@ const chartOptions = {
     title: {
       display: true,
       text: "Weight Timeseries by Day",
+    },
+    annotation: {
+      annotations: {
+        targetLine: {
+          type: "line",
+          yMin: 180,
+          yMax: 180,
+          borderColor: "red",
+          borderWidth: 2,
+          label: {
+            content: "Target 180",
+            enabled: true,
+            position: "end",
+          },
+        },
+      },
     },
   },
   scales: {
