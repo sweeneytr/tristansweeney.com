@@ -45,26 +45,11 @@ const newWeightLoss = (
 
 const weightLoss = newWeightLoss(new Date(), 225, 180, 1.5);
 
-// Find min and max date from both datasets
-const allDates = [
-  ...timeseriesData.map((d) => d.date),
-  ...weightLoss.map((d) =>
-    d.date instanceof Date ? d.date.toISOString().slice(0, 10) : d.date,
-  ),
-];
-const minDate = allDates.reduce((min, d) => (d < min ? d : min), allDates[0]);
-const maxDate = allDates.reduce((max, d) => (d > max ? d : max), allDates[0]);
-const fullLabels = getDateRange(new Date(minDate), new Date(maxDate));
-
 const chartData = {
-  labels: fullLabels,
   datasets: [
     {
       label: "Weight (kg)",
-      data: fullLabels.map((date) => {
-        const found = timeseriesData.find((d) => d.date === date);
-        return found ? found.value : null;
-      }),
+      data: timeseriesData.map((d) => ({ x: d.date, y: d.value })),
       borderWidth: 2,
       fill: false,
       borderColor: "#3b82f6",
@@ -75,14 +60,10 @@ const chartData = {
     },
     {
       label: "Projection (kg)",
-      data: fullLabels.map((date) => {
-        const found = weightLoss.find((d) => {
-          const dDate =
-            d.date instanceof Date ? d.date.toISOString().slice(0, 10) : d.date;
-          return dDate === date;
-        });
-        return found ? found.value : null;
-      }),
+      data: weightLoss.map((d) => ({
+        x: d.date instanceof Date ? d.date.toISOString().slice(0, 10) : d.date,
+        y: d.value,
+      })),
       borderWidth: 2,
       fill: false,
       borderColor: "#000",
@@ -109,10 +90,10 @@ const chartOptions = {
     x: {
       type: "timeseries",
       time: {
-        unit: "day",
+        unit: "week",
         tooltipFormat: "yyyy-MM-dd",
         displayFormats: {
-          day: "yyyy-MM-dd",
+          week: "MM-dd",
         },
       },
       title: {
@@ -128,7 +109,7 @@ const chartOptions = {
       },
     },
   },
-};
+} as const;
 
 export default function App() {
   return (
