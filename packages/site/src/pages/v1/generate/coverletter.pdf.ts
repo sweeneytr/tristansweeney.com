@@ -1,4 +1,4 @@
-import { CoverLetter } from "#components/pdf/coverletter";
+import { CoverLetter } from "#components/pdf/coverletter.tsx";
 import { loadFonts } from "@aelar/fonts";
 import ReactPDF from "@react-pdf/renderer";
 import type { APIRoute } from "astro";

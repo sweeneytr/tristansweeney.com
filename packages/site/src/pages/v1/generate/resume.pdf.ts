@@ -1,4 +1,4 @@
-import { Resume } from "#components/pdf/resume";
+import { Resume } from "#components/pdf/resume.tsx";
 import { loadFonts } from "@aelar/fonts";
 import ReactPDF from "@react-pdf/renderer";
 import type { APIRoute } from "astro";
