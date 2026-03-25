@@ -15,12 +15,12 @@ import SeriousExpertise from "#components/resume/seriousExpertise.astro";
   classList="flex flex-col min-h-screen"
 >
   <main
-    class="relative flex grow flex-col items-center bg-white"
+    class="flex grow flex-col items-center bg-white"
     style="background-image: url('circuit-board.svg'); background-repeat: repeat;"
   >
     <section
       id="resume"
-      class="relative mt-4 flex w-full flex-col items-stretch px-4 sm:mx-8"
+      class="mt-4 flex w-full flex-col items-stretch px-4 sm:mx-8"
     >
       <div class="flex flex-col items-center">
         <Card
@@ -33,10 +33,8 @@ import SeriousExpertise from "#components/resume/seriousExpertise.astro";
       </div>
     </section>
 
-    <div class="absolute right-0 flex h-full flex-col">
-      <div class="sticky bottom-0 mt-auto mb-0 pr-8 pb-8">
-        <DownloadResumeButton class="rounded" />
-      </div>
+    <div class="sticky bottom-0 flex w-full flex-row-reverse md:justify-center">
+      <DownloadResumeButton class="m-8 mt-0 rounded" />
     </div>
   </main>
 </Layout>

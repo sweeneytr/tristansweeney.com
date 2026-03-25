@@ -6,6 +6,12 @@ import { GithubIcon } from "@aelar/atoms";
 
 const navigationItems = [
 ];
+const linkedIn = 
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/tristansweeney",
+    Icon: LinkedInIcon,
+  } as const;
 
 const socialIcons = [
   {
@@ -13,11 +19,7 @@ const socialIcons = [
     url: "https://github.com/sweeneytr",
     Icon: GithubIcon,
   },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/tristansweeney",
-    Icon: LinkedInIcon,
-  },
+  linkedIn,
   { name: "RSS", url: "/feed.xml", Icon: RssIcon },
 ];
 const { class: className } = Astro.props;
@@ -63,6 +65,17 @@ const { class: className } = Astro.props;
 <nav class={twMerge("flex md:hidden", className)}>
   <h2 class="hidden">Mobile Navigation</h2>
   <ul>
-    <li><a href="/blog/">Blog</a></li>
+    {((item) => (
+        <li>
+          <a
+            href={item.url}
+            class="hover:text-green transition-all duration-150 ease-in-out hover:underline"
+            target="_blank"
+            title={`${item.name}`}
+          >
+            {<item.Icon class="h-6 w-6" />}
+          </a>
+        </li>
+      ))(linkedIn)}
   </ul>
 </nav>
