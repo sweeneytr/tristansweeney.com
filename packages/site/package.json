@@ -44,7 +44,7 @@
     "react-dom": "^19.2.4",
     "rollup-plugin-string": "^3.0.0",
     "satori": "^0.12.2",
-    "sharp": "^0.33.5",
+    "sharp": "^0.34.0",
     "tailwind-merge": "catalog:",
     "tailwindcss": "^4.1.1",
     "typescript": "^5.8.2"
