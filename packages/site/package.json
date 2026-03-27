@@ -47,7 +47,8 @@
     "sharp": "^0.34.0",
     "tailwind-merge": "catalog:",
     "tailwindcss": "^4.1.1",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@iconify-json/logos": "^1.2.4",
