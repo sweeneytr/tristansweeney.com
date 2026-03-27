@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
 import { OpenGraphCard } from "#components/opengraph/card.tsx";
-import { render } from "./default.png";
+import { render, toArrayBuffer } from "./default.png";
 
 const posts = await getCollection("blog");
 
@@ -24,9 +24,12 @@ export const GET: APIRoute = async ({ params, props }) => {
     link: "https://tristansweeney.com",
   });
 
-  return new Response(await render({ html, width: 1200, height: 630 }), {
-    headers: {
-      "content-type": "image/png",
+  return new Response(
+    toArrayBuffer(await render({ html, width: 1200, height: 630 })),
+    {
+      headers: {
+        "content-type": "image/png",
+      },
     },
-  });
+  );
 };

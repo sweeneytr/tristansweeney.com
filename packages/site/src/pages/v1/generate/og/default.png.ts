@@ -55,6 +55,22 @@ namespace render {
   };
 }
 
+export function toArrayBuffer(bufferLike: Buffer<ArrayBufferLike>) {
+  // Check if it is already an ArrayBuffer and meets your specific needs (e.g., resizability)
+  if (bufferLike instanceof ArrayBuffer) {
+    return bufferLike;
+  }
+
+  // If it's a SharedArrayBuffer or a different ArrayBuffer-like object, create a new ArrayBuffer copy.
+  // Using a Uint8Array view is an efficient way to copy the underlying bytes.
+  const uint8View = new Uint8Array(bufferLike);
+  const arrayBuffer = new ArrayBuffer(uint8View.byteLength);
+  const arrayBufferView = new Uint8Array(arrayBuffer);
+  arrayBufferView.set(uint8View);
+
+  return arrayBuffer;
+}
+
 export const render = async ({ html, width, height }: render.Props) => {
   const svg = await satori(html, {
     fonts,
@@ -82,9 +98,12 @@ export const GET: APIRoute = async () => {
       "Bringing together developers, by bringing together technology",
   });
 
-  return new Response(await render({ html, width: 1200, height: 630 }), {
-    headers: {
-      "content-type": "image/png",
+  return new Response(
+    toArrayBuffer(await render({ html, width: 1200, height: 630 })),
+    {
+      headers: {
+        "content-type": "image/png",
+      },
     },
-  });
+  );
 };

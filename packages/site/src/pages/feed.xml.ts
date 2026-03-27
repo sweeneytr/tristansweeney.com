@@ -17,6 +17,5 @@ export async function GET(context: APIContext) {
       link: `/blog/${post.id}/`,
     })),
     customData: "<language>en-us</language>",
-    canonicalUrl: "https://tristansweeney.com",
   });
 }
