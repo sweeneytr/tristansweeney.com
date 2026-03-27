@@ -163,8 +163,8 @@ export const OpenGraphCard = ({
             <img
               src={`${link}/profile.jpg`}
               alt="Profile"
-              width="200"
-              height="200"
+              width={200}
+              height={200}
               style={{
                 border: "3px solid black",
                 borderRadius: "0.5rem",
