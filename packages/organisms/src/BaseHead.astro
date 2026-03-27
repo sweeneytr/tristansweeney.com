@@ -1,6 +1,6 @@
 ---
 import {LocalFont} from "@aelar/fonts";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -52,7 +52,7 @@ const { title, description, ogImage } = Astro.props;
 
   <title>{title} | Tristan Sweeney</title>
 
-  <ViewTransitions />
+  <ClientRouter />
 
   <script>
     // https://stackoverflow.com/questions/260857/changing-website-favicon-dynamically/260876%23260876
