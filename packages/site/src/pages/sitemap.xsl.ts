@@ -1,6 +1,6 @@
 import { LocalFont } from "@aelar/fonts";
 import { BaseFooter, BaseNavigation } from "@aelar/organisms";
-import type { APIContext } from "astro";
+import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import prettier from "prettier";
 import stylesheet from "../styles/global.css?url";
@@ -19,7 +19,7 @@ const fonts = await container.renderToString(LocalFont);
 const header = await container.renderToString(BaseNavigation);
 const footer = await container.renderToString(BaseFooter);
 
-export async function GET(context: APIContext) {
+export const GET: APIRoute = async () => {
   const xsl = `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Originally from https://github.com/pedroborges/xml-sitemap-stylesheet
      updated to use tailwind -->
@@ -326,4 +326,4 @@ export async function GET(context: APIContext) {
 
 </xsl:stylesheet>`;
   return new Response(xsl);
-}
+};

@@ -333,7 +333,7 @@ const data = [
                 >
                   {link.text}
                 </a>
-                {link.summary && (
+                {"summary" in link && (
                   <p class="text-sm text-gray-600">{link.summary}</p>
                 )}
               </li>
