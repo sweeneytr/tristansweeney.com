@@ -74,47 +74,26 @@ import ProLinks from "#components/home/ProLinks.astro";
       <div class="brick md:-3/4 p-4">
         <Card class="bg-fuchsia"><ProLinks /></Card>
       </div>
-
-      <div class="brick p-4 md:w-1/2">
-        <Card class="bg-yellow h-96">
-          <script
-            async
-            is:inline
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8902921770361096"
-            crossorigin="anonymous"></script>
-          <!-- HomepageAd -->
-          <ins
-            class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-8902921770361096"
-            data-ad-slot="7831879240"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-          <script>
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </Card>
-      </div>
     </section>
-    <div class="px-4 pb-4">
-      <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
-      <RecentBlogPosts
-        baseUrl="/projects"
-        plural="projects"
-        collection="projects"
-      />
-    </div>
-    <script>
-      import Masonry from "masonry-layout";
-
-      document.addEventListener("astro:page-load", () => {
-        new Masonry("#about", {
-          itemSelector: ".brick",
-          columnWidth: ".brick-sizer",
-          percentPosition: true,
-          horizontalOrder: true,
-        });
-      });
-    </script>
   </main>
+  <div class="px-4 pb-4">
+    <RecentBlogPosts baseUrl="/blog" plural="blogposts" collection="blog" />
+    <RecentBlogPosts
+      baseUrl="/projects"
+      plural="projects"
+      collection="projects"
+    />
+  </div>
+  <script>
+    import Masonry from "masonry-layout";
+
+    document.addEventListener("astro:page-load", () => {
+      new Masonry("#about", {
+        itemSelector: ".brick",
+        columnWidth: ".brick-sizer",
+        percentPosition: true,
+        horizontalOrder: true,
+      });
+    });
+  </script>
 </Layout>
