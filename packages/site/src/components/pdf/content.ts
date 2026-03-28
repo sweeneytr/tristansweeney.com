@@ -22,9 +22,9 @@ export const content = {
           start: "Jun 2025",
           points: [
             "Enabled AI-driven development by eliminating boilerplate required to develop JIT integrations",
+            "Integrated Just-in-Time access management into RDS Postgres, RDS Aurora, and Jenkins",
             "Solved development velocity bottlenecks by introducing TS best practice, architecture, and tooling",
             "Refactored legacy codebases to enable customer on-prem hosting in FedRAMP high environments",
-            "Integrated Just-in-Time access management into RDS Postgres, RDS Aurora, and Jenkins",
           ],
         },
       ],
