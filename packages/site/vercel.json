@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/v1/generate/resume.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=TristanSweeneyResume.pdf"
+        }
+      ]
+    }
+  ]
+}
