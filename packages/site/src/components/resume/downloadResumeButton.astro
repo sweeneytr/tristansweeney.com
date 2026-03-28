@@ -5,11 +5,7 @@ import { FileDownloadIcon } from "@aelar/atoms";
 const { class: className } = Astro.props;
 ---
 
-<Button
-  href="/v1/generate/resume.pdf"
-  download="TristanSweeneyResume.pdf"
-  class={className}
->
+<Button href="/v1/generate/resume.pdf" class={className}>
   <div class="flex flex-row items-center">
     <div class="text-sm">Download PDF</div>
     <FileDownloadIcon class="h-8 w-8" />
