@@ -1,19 +1,19 @@
-import React from "react";
 import {
   Document,
+  Link,
   Page,
   Text,
   View,
-  Link,
-  type TextProps,
   type LinkProps,
+  type TextProps,
 } from "@react-pdf/renderer";
-import { Email, Home, Phone } from "./icons";
+import React from "react";
 import { content } from "./content";
+import { Email, Home, Phone } from "./icons";
 
 type Props = { children: React.ReactNode };
 
-const ResumePage = ({ children }: Props) => (
+const ResumePage = ({ children, ...rest }: Props & { wrap?: boolean }) => (
   <Page
     size="LETTER"
     style={{
@@ -22,6 +22,7 @@ const ResumePage = ({ children }: Props) => (
       padding: "1in",
       gap: "4",
     }}
+    {...rest}
   >
     {children}
   </Page>
@@ -253,7 +254,7 @@ const SneakyLink = ({ children, ...rest }: LinkProps & Props) => (
 
 export const Resume = () => (
   <Document>
-    <ResumePage>
+    <ResumePage wrap={false}>
       <Header>
         <Text
           style={{
@@ -306,29 +307,7 @@ export const Resume = () => (
           </Company>
         ))}
       </Section>
-
-      <Section>
-        <Section.Header>Education</Section.Header>
-        {content.education.map(({ name, location, degrees }) => (
-          <React.Fragment key={name}>
-            <Company.Header key={name}>
-              <Company.Name>{name}</Company.Name>
-              <Company.Location>{location}</Company.Location>
-            </Company.Header>
-
-            {degrees.map(({ name, start, end }) => (
-              <Role.Header key={name}>
-                <Role.Name>{name}</Role.Name>
-                <Role.Duration>
-                  {start} — {end ?? "Present"}
-                </Role.Duration>
-              </Role.Header>
-            ))}
-          </React.Fragment>
-        ))}
-      </Section>
     </ResumePage>
-
     <ResumePage>
       <Header>
         <Text
@@ -357,6 +336,27 @@ export const Resume = () => (
           ))}
         </Row>
       </Header>
+
+      <Section>
+        <Section.Header>Education</Section.Header>
+        {content.education.map(({ name, location, degrees }) => (
+          <React.Fragment key={name}>
+            <Company.Header key={name}>
+              <Company.Name>{name}</Company.Name>
+              <Company.Location>{location}</Company.Location>
+            </Company.Header>
+
+            {degrees.map(({ name, start, end }) => (
+              <Role.Header key={name}>
+                <Role.Name>{name}</Role.Name>
+                <Role.Duration>
+                  {start} — {end ?? "Present"}
+                </Role.Duration>
+              </Role.Header>
+            ))}
+          </React.Fragment>
+        ))}
+      </Section>
 
       <Section>
         <Section.Header>Expertise</Section.Header>
