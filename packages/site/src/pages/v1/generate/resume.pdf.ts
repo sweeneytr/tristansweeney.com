@@ -13,7 +13,6 @@ export const GET: APIRoute = async ({ site }) => {
   return new Response(await fs.readFile(`${os.tmpdir()}/resume.pdf`), {
     headers: {
       "content-type": "application/pdf",
-      "Content-Disposition": "attachment; filename=TristanSweeneyResume.pdf",
     },
   });
 };
