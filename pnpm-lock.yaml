@@ -148,16 +148,16 @@ importers:
         specifier: ^0.9.8
         version: 0.9.8(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@6.0.2)
       '@astrojs/mdx':
-        specifier: ^5.0.0
+        specifier: 5.0.3
         version: 5.0.3(astro@6.1.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.59.0)(typescript@6.0.2)(yaml@2.8.3))
       '@astrojs/react':
-        specifier: ^5.0.0
+        specifier: 5.0.2
         version: 5.0.2(@types/node@24.12.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(jiti@2.6.1)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(yaml@2.8.3)
       '@astrojs/rss':
-        specifier: ^4.0.15
+        specifier: 4.0.18
         version: 4.0.18
       '@astrojs/sitemap':
-        specifier: ^3.7.0
+        specifier: 3.7.2
         version: 3.7.2
       '@react-pdf/font':
         specifier: 4.0.4
