@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
-	"log"
 	"net/http"
+	"os"
 	"regexp"
+
+	tea "charm.land/bubbletea/v2"
 )
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -58,9 +61,15 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 func main() {
-	http.HandleFunc("/view/", makeHandler(viewHandler))
-	http.HandleFunc("/edit/", makeHandler(editHandler))
-	http.HandleFunc("/save/", makeHandler(saveHandler))
+	mux := http.NewServeMux()
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	mux.HandleFunc("/view/", makeHandler(viewHandler))
+	mux.HandleFunc("/edit/", makeHandler(editHandler))
+	mux.HandleFunc("/save/", makeHandler(saveHandler))
+	p := tea.NewProgram(initialModel(mux))
+
+	if _, err := p.Run(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
