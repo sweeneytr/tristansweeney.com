@@ -1,8 +1,8 @@
 package main
 
 import (
-	"path"
 	"os"
+	"path"
 )
 
 type Page struct {
