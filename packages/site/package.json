@@ -29,7 +29,7 @@
     "@astrojs/react": "5.0.2",
     "@astrojs/rss": "4.0.18",
     "@astrojs/sitemap": "3.7.2",
-    "@react-pdf/font": "4.0.4",
+    "@react-pdf/font": "4.0.6",
     "@react-pdf/layout": "4.4.2",
     "@react-pdf/pdfkit": "4.1.0",
     "@react-pdf/render": "4.3.2",
