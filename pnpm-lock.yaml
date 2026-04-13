@@ -172,8 +172,8 @@ importers:
         specifier: 4.4.1
         version: 4.4.1
       '@react-pdf/renderer':
-        specifier: 4.3.2
-        version: 4.3.2(react@19.2.5)
+        specifier: 4.4.1
+        version: 4.4.1(react@19.2.5)
       '@tailwindcss/vite':
         specifier: ^4.1.1
         version: 4.2.2(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(yaml@2.8.3))
@@ -992,6 +992,9 @@ packages:
   '@react-pdf/layout@4.4.2':
     resolution: {integrity: sha512-gNu2oh8MiGR+NJZYTJ4c4q0nWCESBI6rKFiodVhE7OeVAjtzZzd6l65wsN7HXdWJqOZD3ttD97iE+tf5SOd/Yg==}
 
+  '@react-pdf/layout@4.5.1':
+    resolution: {integrity: sha512-1V8ssgg9FHVsmvuCKmp7TWoUiPGgxAR2cgyvdcao8UQm7emWB7rP1o4CieHH56kgZyXXbwWqQAmmtgvcju+xfA==}
+
   '@react-pdf/pdfkit@4.1.0':
     resolution: {integrity: sha512-Wm/IOAv0h/U5Ra94c/PltFJGcpTUd/fwVMVeFD6X9tTTPCttIwg0teRG1Lqq617J8K4W7jpL/B0HTH0mjp3QpQ==}
 
@@ -1015,8 +1018,8 @@ packages:
   '@react-pdf/render@4.4.1':
     resolution: {integrity: sha512-TBaEw6F+IBI4oVHUF7LL2OJX87unRrk6r7mkEmgjehN9BV5LF53I8CzVtdAchuO1+YhvE4MoMzkNelA+X2luRA==}
 
-  '@react-pdf/renderer@4.3.2':
-    resolution: {integrity: sha512-EhPkj35gO9rXIyyx29W3j3axemvVY5RigMmlK4/6Ku0pXB8z9PEE/sz4ZBOShu2uot6V4xiCR3aG+t9IjJJlBQ==}
+  '@react-pdf/renderer@4.4.1':
+    resolution: {integrity: sha512-mK7xyCdDUagO1kg8jraad3aUzdVAGBru08qyjjp8FMhGsh4BcuPGa0SycQ8Pv8EDEdyEOfmiE+XI1sBybSLwaQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -5117,6 +5120,18 @@ snapshots:
       queue: 6.0.2
       yoga-layout: 3.2.1
 
+  '@react-pdf/layout@4.5.1':
+    dependencies:
+      '@react-pdf/fns': 3.1.3
+      '@react-pdf/image': 3.0.4
+      '@react-pdf/primitives': 4.2.0
+      '@react-pdf/stylesheet': 6.1.4
+      '@react-pdf/textkit': 6.2.0
+      '@react-pdf/types': 2.10.0
+      emoji-regex-xs: 1.0.0
+      queue: 6.0.2
+      yoga-layout: 3.2.1
+
   '@react-pdf/pdfkit@4.1.0':
     dependencies:
       '@babel/runtime': 7.28.6
@@ -5168,17 +5183,17 @@ snapshots:
       parse-svg-path: 0.1.2
       svg-arc-to-cubic-bezier: 3.2.0
 
-  '@react-pdf/renderer@4.3.2(react@19.2.5)':
+  '@react-pdf/renderer@4.4.1(react@19.2.5)':
     dependencies:
       '@babel/runtime': 7.28.6
-      '@react-pdf/fns': 3.1.2
+      '@react-pdf/fns': 3.1.3
       '@react-pdf/font': 4.0.6
-      '@react-pdf/layout': 4.4.2
-      '@react-pdf/pdfkit': 4.1.0
-      '@react-pdf/primitives': 4.1.1
+      '@react-pdf/layout': 4.5.1
+      '@react-pdf/pdfkit': 5.0.0
+      '@react-pdf/primitives': 4.2.0
       '@react-pdf/reconciler': 2.0.0(react@19.2.5)
       '@react-pdf/render': 4.4.1
-      '@react-pdf/types': 2.9.2
+      '@react-pdf/types': 2.10.0
       events: 3.3.0
       object-assign: 4.1.1
       prop-types: 15.8.1
@@ -5226,7 +5241,7 @@ snapshots:
   '@react-pdf/types@2.9.2':
     dependencies:
       '@react-pdf/font': 4.0.6
-      '@react-pdf/primitives': 4.1.1
+      '@react-pdf/primitives': 4.2.0
       '@react-pdf/stylesheet': 6.1.2
 
   '@resvg/resvg-js-android-arm-eabi@2.6.2':
