@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -12,10 +13,12 @@ import (
 type errMsg error
 
 type model struct {
-	serveMux *http.ServeMux
-	spinner  spinner.Model
-	quitting bool
-	err      error
+	server        *http.Server
+	serveMux      *http.ServeMux
+	spinner       spinner.Model
+	serverRunning bool
+	quitting      bool
+	err           error
 }
 
 func initialModel(serveMux *http.ServeMux) model {
@@ -36,6 +39,18 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "esc", "ctrl+c":
 			m.quitting = true
 			return m, tea.Quit
+		case "space":
+			if !m.serverRunning {
+				m.server = &http.Server{Addr: ":8080", Handler: m.serveMux}
+				go func() {
+					m.server.ListenAndServe()
+				}()
+			} else {
+				m.server.Shutdown(context.TODO())
+				m.server = nil
+			}
+			m.serverRunning = !m.serverRunning
+			return m, m.spinner.Tick
 		default:
 			return m, nil
 		}
@@ -55,7 +70,14 @@ func (m model) View() tea.View {
 	if m.err != nil {
 		return tea.NewView(m.err.Error())
 	}
-	str := fmt.Sprintf("\n\n   %s Loading forever...press q to quit\n\n", m.spinner.View())
+	var serverMsg string
+	if m.serverRunning {
+		serverMsg = "online"
+	} else {
+		serverMsg = "offline"
+	}
+
+	str := fmt.Sprintf("\n\n   %s Loading forever...press q to quit\n Server %s press spacebar to start server\n\n", m.spinner.View(), serverMsg)
 	if m.quitting {
 		return tea.NewView(str + "\n")
 	}
