@@ -31,7 +31,7 @@
     "@astrojs/sitemap": "3.7.2",
     "@react-pdf/font": "4.0.6",
     "@react-pdf/layout": "4.4.2",
-    "@react-pdf/pdfkit": "4.1.0",
+    "@react-pdf/pdfkit": "5.0.0",
     "@react-pdf/render": "4.4.1",
     "@react-pdf/renderer": "4.3.2",
     "@tailwindcss/vite": "^4.1.1",
