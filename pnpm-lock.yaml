@@ -166,8 +166,8 @@ importers:
         specifier: 4.4.2
         version: 4.4.2
       '@react-pdf/pdfkit':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.0.0
+        version: 5.0.0
       '@react-pdf/render':
         specifier: 4.4.1
         version: 4.4.1
