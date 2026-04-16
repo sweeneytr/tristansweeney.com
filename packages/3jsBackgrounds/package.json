@@ -8,10 +8,10 @@
   "license": "ISC",
   "dependencies": {
     "react": "^19.2.4",
-    "three": "^0.183.2"
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
-    "@types/three": "^0.183.1"
+    "@types/three": "^0.184.0"
   }
 }
