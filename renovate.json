@@ -5,6 +5,14 @@
     {
       "matchPackageNames": ["@react-pdf/**"],
       "groupName": "React-PDF packages"
+    },
+    {
+      "matchPackageNames": ["vite"],
+      "allowedVersions": "<8"
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<6"
     }
   ],
   "postUpdateOptions": ["pnpmDedupe"]
