@@ -6,5 +6,6 @@
       "matchPackageNames": ["@react-pdf/**"],
       "groupName": "React-PDF packages"
     }
-  ]
+  ],
+  "postUpdateOptions": ["pnpmDedupe"]
 }
