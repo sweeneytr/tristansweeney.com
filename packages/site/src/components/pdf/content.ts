@@ -147,10 +147,10 @@ export const content = {
     },
   ],
   expertise: {
-    Programming: "Python, JavaScript, TypeScript, C, C++, Rust, Assembly, Bash",
+    Programming: "Python, JavaScript, TypeScript, C, C++, Rust, Go, Assembly, Bash",
     Web: "React, ReactPDF, Vite, Remix, React Router, React Admin, Prisma, Figma",
     Mobile: "React Native, Expo, Tamagui, Capacitor",
-    Cloud: "AWS, CDK, Docker, Kubernetes, ArgoCD, Ansible",
+    Cloud: "AWS, CDK, Terraform, Docker, Kubernetes, ArgoCD, Ansible",
     Fundamentals:
       "Git, Linux, CI/CD, Data Structures and Algorithms, Package Distribution",
     Networking:
