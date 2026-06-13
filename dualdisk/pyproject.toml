@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dualdisk"
+version = "0.1.0"
+description = "Import cards into a CubeCobra cube"
+authors = ["Tristan Sweeney <sweeneytri@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32"
+browser-cookie3 = "^0.19"
+pydantic = "^2.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^26.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
