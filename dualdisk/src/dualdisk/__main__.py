@@ -13,20 +13,10 @@ Config file: dualdisk.toml
 import csv
 import json
 import sys
-import tomllib
 from pathlib import Path
 
-from pydantic import BaseModel
-
-import cubecobra
-import scryfall
+from . import config, cubecobra, scryfall, gatherer
 from .model import CardEntry
-
-
-class Config(BaseModel):
-    front_cube_id: str
-    back_cube_id: str
-    cards_file: str
 
 
 def load_cards(path: str) -> list[CardEntry]:
@@ -52,15 +42,14 @@ def expand_for_count(
             if card is None:
                 print(f"Skipping {card_id}: not resolved", file=sys.stderr)
                 continue
+            print(gatherer.image_url(card.multiverse_ids[0]))
             target.extend([card.scryfall_id] * entry.count)
     return fronts, backs
 
-
 def main() -> None:
-    with open("dualdisk.toml", "rb") as f:
-        config = Config.model_validate(tomllib.load(f))
+    cfg = config.load()
 
-    card_list = load_cards(config.cards_file)
+    card_list = load_cards(cfg.cards_file)
 
     print(f"Resolving {len(card_list)} card entries via Scryfall...")
     all_ids = {face for entry in card_list for face in (entry.front, entry.back)}
@@ -72,14 +61,13 @@ def main() -> None:
     session = cubecobra.load_session()
     print("Session loaded")
 
-    print(f"Adding fronts to cube {config.front_cube_id}...")
-    cubecobra.add_cards(session, config.front_cube_id, front_ids)
+    print(f"Adding fronts to cube {cfg.front_cube_id}...")
+    cubecobra.add_cards(session, cfg.front_cube_id, front_ids)
 
-    print(f"Adding backs to cube {config.back_cube_id}...")
-    cubecobra.add_cards(session, config.back_cube_id, back_ids)
+    print(f"Adding backs to cube {cfg.back_cube_id}...")
+    cubecobra.add_cards(session, cfg.back_cube_id, back_ids)
 
     print("Done")
-
 
 if __name__ == "__main__":
     main()

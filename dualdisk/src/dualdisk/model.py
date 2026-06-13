@@ -27,6 +27,7 @@ class CardId(BaseModel):
     def __str__(self) -> str:
         return f"{self.set_code}-{self.collector_number}"
 
+
 class CardEntry(BaseModel):
     count: int
     front: CardId
