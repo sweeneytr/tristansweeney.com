@@ -43,10 +43,11 @@ def _parse_card(c: dict) -> ScryfallCard:
     )
 
 
-def lands_in_set(set_code: str) -> list[ScryfallCard]:
+def lands_in_set(set_code: str, basic_only: bool = False) -> list[ScryfallCard]:
     cards: list[ScryfallCard] = []
     url: str | None = f"{BASE}/cards/search"
-    params: dict | None = {"q": f"t:land s:{set_code.lower()}", "order": "set"}
+    query = f"{'t:basic ' if basic_only else ''}t:land s:{set_code.lower()}"
+    params: dict | None = {"q": query, "order": "set", "unique": "prints"}
 
     while url:
         resp = requests.get(url, params=params, headers={"User-Agent": "cubecobra-import/0.1"})

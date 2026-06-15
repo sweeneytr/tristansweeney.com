@@ -7,6 +7,9 @@ BASE = "https://cubecobra.com"
 BATCH_SIZE = 100
 
 
+_JSON_HEADERS = {"X-Requested-With": "XMLHttpRequest"}
+
+
 def load_session() -> requests.Session:
     session = requests.Session()
     for loader in (browser_cookie3.chrome, browser_cookie3.firefox):
@@ -23,6 +26,40 @@ def load_session() -> requests.Session:
     raise RuntimeError(
         "No cubecobra.com session found — log in at cubecobra.com in Chrome or Firefox first"
     )
+
+
+def clear_cube(session: requests.Session, cube_id: str) -> None:
+    resp = session.post(f"{BASE}/cube/api/cubemetadata/{cube_id}")
+    resp.raise_for_status()
+    data = resp.json()
+    if data.get("success") != "true":
+        raise RuntimeError(f"Metadata fetch failed: {data.get('message')}")
+
+    cube = data["cube"]
+    version = cube["version"]
+    card_count = cube["cardCount"]
+    if card_count == 0:
+        print("  Cube is already empty")
+        return
+
+    removes = [{"index": i} for i in range(card_count)]
+    resp = session.post(
+        f"{BASE}/cube/api/commit",
+        json={
+            "id": cube_id,
+            "changes": {"mainboard": {"removes": removes}},
+            "expectedVersion": version,
+            "title": "Clear cube",
+            "useBlog": False,
+        },
+        headers=_JSON_HEADERS,
+    )
+    if resp.status_code not in (200, 500):
+        resp.raise_for_status()
+    result = resp.json()
+    if not result.get("updateApplied"):
+        raise RuntimeError(f"Clear failed: {result.get('message')}")
+    print(f"  {card_count} cards removed")
 
 
 def add_cards(session: requests.Session, cube_id: str, card_ids: list[str]) -> None:
