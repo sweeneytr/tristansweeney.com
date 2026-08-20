@@ -1,4 +1,5 @@
 import csv
+import enum
 import json
 import sys
 from collections import defaultdict
@@ -203,6 +204,83 @@ def pair_lands(
         writer.writerow(["Count", "Front", "Back"])
         for card1, card2 in pairs:
             writer.writerow([count, card1.card_id, card2.card_id])
+
+
+_CUBECOBRA_BASE = "https://cubecobra.com"
+
+
+class _Rarity(str, enum.Enum):
+    common = "common"
+    uncommon = "uncommon"
+    rare = "rare"
+    mythic = "mythic"
+
+
+@app.command()
+def create_cube(
+    set_code: str = typer.Argument(help="Set code (e.g. MH3)"),
+    name: str | None = typer.Option(None, "--name", "-n", help="Cube name (defaults to set code)"),
+    rarity: _Rarity | None = typer.Option(None, "--rarity", "-r", help="Filter by rarity"),
+    card_type: str | None = typer.Option(None, "--type", "-t", help="Filter by card type (e.g. creature)"),
+) -> None:
+    """Create a new CubeCobra cube from all cards in a set."""
+    if name is None:
+        name = set_code.upper()
+
+    typer.echo(f"Fetching cards for {set_code.upper()}...")
+    cards = scryfall.cards_in_set(
+        set_code,
+        rarity=rarity.value if rarity else None,
+        card_type=card_type,
+    )
+    typer.echo(f"Found {len(cards)} cards")
+
+    typer.echo("Loading session from browser cookies...")
+    session = cubecobra.load_session()
+    typer.echo("Session loaded")
+
+    typer.echo(f"Creating cube {name!r}...")
+    cube_id = cubecobra.create_cube(session, name)
+    typer.echo(f"Cube created: {_CUBECOBRA_BASE}/cube/view/{cube_id}")
+
+    card_ids = [card.scryfall_id for card in cards]
+    typer.echo(f"Adding {len(card_ids)} cards...")
+    cubecobra.add_cards(session, cube_id, card_ids)
+    typer.echo("Done")
+
+
+@app.command()
+def package(
+    set_code: str = typer.Argument(help="Set code (e.g. MH3)"),
+    name: str = typer.Option(..., "--name", "-n", help="Package name"),
+    rarity: _Rarity | None = typer.Option(None, "--rarity", "-r", help="Filter by rarity"),
+    card_type: str | None = typer.Option(None, "--type", "-t", help="Filter by card type (e.g. creature)"),
+) -> None:
+    """Create a CubeCobra package from all cards in a set."""
+    typer.echo(f"Fetching cards for {set_code.upper()}...")
+    cards = scryfall.cards_in_set(
+        set_code,
+        rarity=rarity.value if rarity else None,
+        card_type=card_type,
+    )
+    typer.echo(f"Found {len(cards)} cards")
+
+    if len(cards) < 2:
+        typer.echo("Error: need at least 2 cards for a package", err=True)
+        raise typer.Exit(1)
+    if len(cards) > 100:
+        typer.echo(f"Error: {len(cards)} cards exceeds the 100-card package limit — use --rarity or --type to narrow the selection", err=True)
+        raise typer.Exit(1)
+
+    card_ids = [card.scryfall_id for card in cards]
+
+    typer.echo("Loading session from browser cookies...")
+    session = cubecobra.load_session()
+    typer.echo("Session loaded")
+
+    typer.echo(f"Creating package {name!r}...")
+    package_id = cubecobra.create_package(session, name, card_ids)
+    typer.echo(f"Done — package ID: {package_id}")
 
 
 if __name__ == "__main__":

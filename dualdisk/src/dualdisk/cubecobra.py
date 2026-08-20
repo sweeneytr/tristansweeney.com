@@ -62,6 +62,34 @@ def clear_cube(session: requests.Session, cube_id: str) -> None:
     print(f"  {card_count} cards removed")
 
 
+def create_cube(session: requests.Session, name: str) -> str:
+    resp = session.post(
+        f"{BASE}/cube/add",
+        data={"name": name},
+        allow_redirects=False,
+    )
+    if resp.status_code == 302:
+        location = resp.headers.get("Location", "")
+        cube_id = location.rstrip("/").rsplit("/", 1)[-1]
+        if cube_id:
+            return cube_id
+    resp.raise_for_status()
+    raise RuntimeError(f"Unexpected response from cube creation: {resp.status_code}")
+
+
+def create_package(session: requests.Session, title: str, card_ids: list[str]) -> str:
+    resp = session.post(
+        f"{BASE}/packages/submit",
+        json={"packageName": title, "cards": card_ids},
+        headers=_JSON_HEADERS,
+    )
+    resp.raise_for_status()
+    result = resp.json()
+    if result.get("success") != "true":
+        raise RuntimeError(f"Package creation failed: {result.get('message')}")
+    return result["packageId"]
+
+
 def add_cards(session: requests.Session, cube_id: str, card_ids: list[str]) -> None:
     for i in range(0, len(card_ids), BATCH_SIZE):
         batch = card_ids[i : i + BATCH_SIZE]

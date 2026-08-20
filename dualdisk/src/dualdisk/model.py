@@ -1,3 +1,7 @@
+import csv
+import json
+from pathlib import Path
+
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 
@@ -32,3 +36,29 @@ class CardEntry(BaseModel):
     count: int
     front: CardId
     back: CardId
+
+
+class SetMap(BaseModel):
+    mappings: dict[CardId, CardId] = {}
+
+    def __getitem__(self, key: CardId) -> CardId:
+        return self.mappings[key]
+
+    def __setitem__(self, key: CardId, value: CardId) -> None:
+        self.mappings[key] = value
+
+    def __contains__(self, key: object) -> bool:
+        return key in self.mappings
+
+    @classmethod
+    def from_file(cls, path: str) -> "SetMap":
+        suffix = Path(path).suffix
+        if suffix == ".csv":
+            with open(path, newline="") as f:
+                mappings = {CardId(row["from"]): CardId(row["to"]) for row in csv.DictReader(f)}
+        elif suffix == ".json":
+            with open(path) as f:
+                mappings = {CardId(k): CardId(v) for k, v in json.load(f).items()}
+        else:
+            raise ValueError(f"Unknown file format: {suffix!r}")
+        return cls(mappings=mappings)

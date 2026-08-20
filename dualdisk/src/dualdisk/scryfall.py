@@ -43,6 +43,31 @@ def _parse_card(c: dict) -> ScryfallCard:
     )
 
 
+def cards_in_set(
+    set_code: str,
+    rarity: str | None = None,
+    card_type: str | None = None,
+) -> list[ScryfallCard]:
+    cards: list[ScryfallCard] = []
+    url: str | None = f"{BASE}/cards/search"
+    query = f"s:{set_code.lower()}"
+    if rarity:
+        query += f" r:{rarity[0].lower()}"
+    if card_type:
+        query += f" t:{card_type}"
+    params: dict | None = {"q": query, "order": "set", "unique": "prints"}
+
+    while url:
+        resp = requests.get(url, params=params, headers={"User-Agent": "cubecobra-import/0.1"})
+        resp.raise_for_status()
+        data = resp.json()
+        cards.extend(_parse_card(c) for c in data["data"])
+        url = data.get("next_page")
+        params = None
+
+    return cards
+
+
 def lands_in_set(set_code: str, basic_only: bool = False) -> list[ScryfallCard]:
     cards: list[ScryfallCard] = []
     url: str | None = f"{BASE}/cards/search"
