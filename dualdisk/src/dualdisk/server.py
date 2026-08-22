@@ -36,6 +36,7 @@ def _card_dict(card: scryfall.ScryfallCard) -> dict:
         "front_art_url": card.front_art_url,
         "artist": card.artist,
         "color_identity": card.color_identity,
+        "gatherer_url": card.gatherer_url,
     }
 
 
@@ -104,3 +105,8 @@ def index():
 
 
 app.mount("/static", StaticFiles(directory=_STATIC), name="static")
+
+
+@app.get("/{full_path:path}")
+def spa_fallback(full_path: str):
+    return FileResponse(_STATIC / "index.html")

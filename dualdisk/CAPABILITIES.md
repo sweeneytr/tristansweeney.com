@@ -93,16 +93,31 @@ Starts a local web UI at `http://localhost:8000`. The UI lets you search cards f
 **Options:**
 - `--port / -p` — port to listen on (default: 8000)
 
+The UI is a Vite + React app in `frontend/`. It must be built before `serve` can find it:
+
+```
+cd frontend
+npm install
+npm run build
+```
+
+This outputs to `src/dualdisk/static/`, which the FastAPI server serves directly. For frontend development with hot reload, run `npm run dev` in `frontend/` (proxies `/api` to a `dualdisk serve` instance on port 8000) instead of building.
+
 ---
 
 ## Web UI
 
-Accessible via `dualdisk serve`. Features:
+Accessible via `dualdisk serve`. Two tabs:
 
-- **Set search** — enter a set code and optional rarity/type filters to fetch matching cards from Scryfall
-- **Card art grid** — displays art crops for all matching cards
+**Search**
+- Enter a set code and optional rarity/type filters to fetch matching cards from Scryfall
+- Card art grid displays art crops for all matching cards, with a mana-symbol overlay for color identity
 - **Create Package** — creates a CubeCobra package from the current results
 - **Create Cube** — creates a new CubeCobra cube pre-populated with the current results
+
+**Pair Lands**
+- Enter two set codes to match basic lands by artist, mirroring the `pair-lands` CLI command
+- Renders a quadrant grid per artist match — front set's arts on top, back set's arts below, aligned by color
 
 ---
 

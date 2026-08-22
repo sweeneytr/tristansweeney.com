@@ -1,1 +1,5 @@
 *.pyc
+frontend/node_modules/
+frontend/dist/
+src/dualdisk/static/assets/
+src/dualdisk/static/index.html
