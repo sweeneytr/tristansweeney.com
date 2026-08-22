@@ -10,6 +10,8 @@ requests = "^2.32"
 browser-cookie3 = "^0.19"
 pydantic = "^2.0"
 typer = "^0.26.7"
+fastapi = "^0.115"
+uvicorn = {extras = ["standard"], version = "^0.32"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^26.5.1"

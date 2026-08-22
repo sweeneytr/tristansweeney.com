@@ -2,7 +2,6 @@ import csv
 import enum
 import json
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 import typer
@@ -156,54 +155,20 @@ def pair_lands(
     count: int = typer.Option(10, "--count", help="Count per card in CSV output"),
 ) -> None:
     """Show basic lands from two sets grouped by artist."""
-    cards1 = scryfall.lands_in_set(set1, basic_only=True)
-    cards2 = scryfall.lands_in_set(set2, basic_only=True)
-
-    def by_artist(cards: list[scryfall.ScryfallCard]) -> dict[str, list[scryfall.ScryfallCard]]:
-        result: dict[str, list[scryfall.ScryfallCard]] = defaultdict(list)
-        for card in cards:
-            result[card.artist].append(card)
-        return result
-
-    def color_profile(cards: list[scryfall.ScryfallCard]) -> tuple[str, ...]:
-        return tuple(sorted({c for card in cards for c in card.color_identity}, key=_WUBRG.index))
-
-    def by_profile(idx: dict[str, list[scryfall.ScryfallCard]]) -> dict[tuple[str, ...], list[tuple[str, list[scryfall.ScryfallCard]]]]:
-        result: dict[tuple[str, ...], list[tuple[str, list[scryfall.ScryfallCard]]]] = defaultdict(list)
-        for artist, cards in idx.items():
-            result[color_profile(cards)].append((artist, cards))
-        return result
-
-    idx1 = by_profile(by_artist(cards1))
-    idx2 = by_profile(by_artist(cards2))
-
-    pairs: list[tuple[scryfall.ScryfallCard, scryfall.ScryfallCard]] = []
-
-    for profile in sorted(set(idx1) & set(idx2), key=lambda p: [_WUBRG.index(c) for c in p]):
-        pip_width = len(profile)
-        for (a1, c1), (a2, c2) in zip(sorted(idx1[profile]), sorted(idx2[profile])):
-            by_name1 = {card.name: card for card in c1}
-            by_name2 = {card.name: card for card in c2}
-            matched = sorted(set(by_name1) & set(by_name2), key=lambda n: [_WUBRG.index(c) for c in by_name1[n].color_identity])
-            if not csv_out:
-                typer.echo("")
-                typer.echo(f"  {_artist_link(a1)}  ↔  {_artist_link(a2)}")
-            for name in matched:
-                card1, card2 = by_name1[name], by_name2[name]
-                pairs.append((card1, card2))
-                if not csv_out:
-                    typer.echo(f"    {_card_link(card1)} ↔ {_card_link(card2)}  {_color_name(name, card1.color_identity, pip_width)}")
-        if not csv_out:
-            for (a1, _) in sorted(idx1[profile])[len(idx2[profile]):]:
-                typer.echo(f"  {_artist_link(a1)}  ↔  (unmatched)")
-            for (a2, _) in sorted(idx2[profile])[len(idx1[profile]):]:
-                typer.echo(f"  (unmatched)  ↔  {_artist_link(a2)}")
+    matches = scryfall.pair_basic_lands(set1, set2)
 
     if csv_out:
         writer = csv.writer(sys.stdout)
         writer.writerow(["Count", "Front", "Back"])
-        for card1, card2 in pairs:
-            writer.writerow([count, card1.card_id, card2.card_id])
+        for match in matches:
+            for pair in match.pairs:
+                writer.writerow([count, pair.front.card_id, pair.back.card_id])
+    else:
+        for match in matches:
+            typer.echo(f"\n  {_artist_link(match.artist1)}  ↔  {_artist_link(match.artist2)}")
+            for pair in match.pairs:
+                pip_width = len(pair.front.color_identity)
+                typer.echo(f"    {_card_link(pair.front)} ↔ {_card_link(pair.back)}  {_color_name(pair.front.name, pair.front.color_identity, pip_width)}")
 
 
 _CUBECOBRA_BASE = "https://cubecobra.com"
@@ -281,6 +246,17 @@ def package(
     typer.echo(f"Creating package {name!r}...")
     package_id = cubecobra.create_package(session, name, card_ids)
     typer.echo(f"Done — package ID: {package_id}")
+
+
+@app.command()
+def serve(
+    port: int = typer.Option(8000, "--port", "-p", help="Port to listen on"),
+) -> None:
+    """Start the web UI."""
+    import uvicorn
+    from .server import app as web_app
+    typer.echo(f"Starting DualDisk UI at http://localhost:{port}")
+    uvicorn.run(web_app, host="127.0.0.1", port=port)
 
 
 if __name__ == "__main__":

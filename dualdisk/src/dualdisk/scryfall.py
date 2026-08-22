@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 import requests
 from pydantic import BaseModel
@@ -83,6 +84,61 @@ def lands_in_set(set_code: str, basic_only: bool = False) -> list[ScryfallCard]:
         params = None
 
     return cards
+
+
+_WUBRG = ["W", "U", "B", "R", "G"]
+
+
+def _color_profile(cards: list[ScryfallCard]) -> tuple[str, ...]:
+    return tuple(sorted({c for card in cards for c in card.color_identity}, key=_WUBRG.index))
+
+
+class CardPair(BaseModel):
+    front: ScryfallCard
+    back: ScryfallCard
+
+
+class ArtistMatch(BaseModel):
+    artist1: str
+    artist2: str
+    pairs: list[CardPair]
+
+
+def pair_basic_lands(set1: str, set2: str) -> list[ArtistMatch]:
+    cards1 = lands_in_set(set1, basic_only=True)
+    cards2 = lands_in_set(set2, basic_only=True)
+
+    def by_artist(cards: list[ScryfallCard]) -> dict[str, list[ScryfallCard]]:
+        result: dict[str, list[ScryfallCard]] = defaultdict(list)
+        for card in cards:
+            result[card.artist].append(card)
+        return result
+
+    def by_profile(artist_idx: dict[str, list[ScryfallCard]]) -> dict[tuple[str, ...], list[tuple[str, list[ScryfallCard]]]]:
+        result: dict[tuple[str, ...], list[tuple[str, list[ScryfallCard]]]] = defaultdict(list)
+        for artist, cards in artist_idx.items():
+            result[_color_profile(cards)].append((artist, cards))
+        return result
+
+    idx1 = by_profile(by_artist(cards1))
+    idx2 = by_profile(by_artist(cards2))
+
+    matches: list[ArtistMatch] = []
+    for profile in sorted(set(idx1) & set(idx2), key=lambda p: [_WUBRG.index(c) for c in p]):
+        for (a1, c1), (a2, c2) in zip(sorted(idx1[profile]), sorted(idx2[profile])):
+            by_name1 = {card.name: card for card in c1}
+            by_name2 = {card.name: card for card in c2}
+            matched = sorted(
+                set(by_name1) & set(by_name2),
+                key=lambda n: [_WUBRG.index(c) for c in by_name1[n].color_identity],
+            )
+            if matched:
+                matches.append(ArtistMatch(
+                    artist1=a1,
+                    artist2=a2,
+                    pairs=[CardPair(front=by_name1[n], back=by_name2[n]) for n in matched],
+                ))
+    return matches
 
 
 def resolve(card_ids: set[CardId]) -> dict[str, ScryfallCard]:
