@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { createCube, createPackage, searchCards } from '../api'
 import type { Card } from '../types'
+import { useSet } from '../useSet'
 import { GathererButton } from './GathererButton'
 import { ManaOverlay } from './ManaOverlay'
+import { SetIcon } from './SetIcon'
 
 const RARITIES = ['common', 'uncommon', 'rare', 'mythic']
 
 export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boolean) => void }) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [setCode, setSetCode] = useState(searchParams.get('set') ?? '')
+  const { set: setCode, setSet } = useSet()
   const [rarity, setRarity] = useState('')
   const [cardType, setCardType] = useState('')
   const [actionName, setActionName] = useState('')
@@ -20,8 +22,7 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
     { kind: 'results'; count: number; label: string; set: string } | { kind: 'error' | 'ok'; text: string } | null
   >(null)
 
-  async function runSearch() {
-    const set = setCode.trim()
+  async function runSearchFor(set: string) {
     if (!set) return
     setSearchParams({ set }, { replace: true })
     setLoading(true)
@@ -40,9 +41,17 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
     }
   }
 
+  function runSearch() {
+    runSearchFor(setCode.trim())
+  }
+
   // Deep-linked search: run once on mount using the URL's initial `set` param, intentionally excluded from deps.
   useEffect(() => {
-    if (searchParams.get('set')) runSearch()
+    const urlSet = searchParams.get('set')
+    if (urlSet) {
+      setSet(urlSet)
+      runSearchFor(urlSet)
+    }
   }, [])
 
   async function handleCreatePackage() {
@@ -80,16 +89,6 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
   return (
     <div className="panel">
       <div className="controls">
-        <div className="field set">
-          <label>Set code</label>
-          <input
-            value={setCode}
-            onChange={(e) => setSetCode(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && runSearch()}
-            placeholder="MH3"
-            spellCheck={false}
-          />
-        </div>
         <div className="field">
           <label>Rarity</label>
           <select value={rarity} onChange={(e) => setRarity(e.target.value)}>
@@ -128,7 +127,7 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
           <div key={card.scryfall_id} className="card-tile" title={`${card.name} · ${card.set_code}-${card.collector_number}`}>
             {card.front_art_url ? (
               <>
-                <img src={card.front_art_url} alt={card.name} loading="lazy" />
+                <img className="card-art" src={card.front_art_url} alt={card.name} loading="lazy" />
                 <ManaOverlay colorIdentity={card.color_identity} />
                 <GathererButton url={card.gatherer_url} />
               </>
@@ -136,7 +135,7 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
               <div className="art-placeholder">🃏</div>
             )}
             <div className="card-name">
-              {card.name} <span style={{ opacity: 0.75 }}>{card.set_code}-{card.collector_number}</span>
+              <SetIcon setCode={card.set_code} /> {card.name} <span style={{ opacity: 0.75 }}>{card.set_code}-{card.collector_number}</span>
             </div>
           </div>
         ))}

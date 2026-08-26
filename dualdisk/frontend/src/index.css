@@ -43,6 +43,8 @@ header {
 .brand .subtitle { color: var(--muted); font-size: 12px; }
 
 .tabs { display: flex; align-items: stretch; gap: 2px; margin-left: 8px; }
+
+.nav-set { margin-left: auto; align-self: center; }
 .tab {
   background: none;
   border: none;
@@ -141,7 +143,7 @@ button.secondary:hover { background: rgba(108, 99, 255, 0.12); }
 /* Search card grid */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 4in));
   gap: 8px;
 }
 
@@ -182,15 +184,17 @@ button.secondary:hover { background: rgba(108, 99, 255, 0.12); }
 .gatherer-btn img { width: 14px; height: 14px; display: block; }
 .gatherer-btn:hover { background: var(--accent); }
 
+.set-icon { width: 13px; height: 13px; vertical-align: -2px; filter: invert(1); opacity: 0.85; }
+
 .card-tile:hover { border-color: var(--accent); transform: translateY(-2px); }
-.card-tile img { width: 100%; aspect-ratio: 626/457; object-fit: cover; display: block; background: var(--bg); }
+.card-tile .card-art { width: 100%; aspect-ratio: 626/457; object-fit: cover; display: block; background: var(--bg); }
 .card-tile .card-name { padding: 6px 7px; font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-tile .art-placeholder { aspect-ratio: 626/457; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--border); font-size: 28px; }
 
 /* Pair lands quadrant grid */
 .pair-grid {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -199,6 +203,8 @@ button.secondary:hover { background: rgba(108, 99, 255, 0.12); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  flex: 0 0 auto;
+  max-width: 4in;
 }
 
 .artist-header {
@@ -220,7 +226,7 @@ button.secondary:hover { background: rgba(108, 99, 255, 0.12); }
   position: relative;
   overflow: hidden;
 }
-.quadrant-cell img {
+.quadrant-cell .card-art {
   width: 100%;
   aspect-ratio: 626/457;
   object-fit: cover;

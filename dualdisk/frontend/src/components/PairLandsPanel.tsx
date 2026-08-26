@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { pairLands as fetchPairLands } from '../api'
 import type { ArtistMatch, Card } from '../types'
+import { useSet } from '../useSet'
 import { GathererButton } from './GathererButton'
 import { ManaOverlay } from './ManaOverlay'
+import { SetIcon } from './SetIcon'
 
 const SWAP_CARDS = new Set([
   'LRW-294', 'SHM-294', 'SHM-298', 'SHM-288', 'LRW-289', 'SHM-289', 'LRW-293',
@@ -32,7 +34,7 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
     <div className="quadrant-cell" style={style}>
       {card.front_art_url ? (
         <>
-          <img src={card.front_art_url} alt={card.name} loading="lazy" />
+          <img className="card-art" src={card.front_art_url} alt={card.name} loading="lazy" />
           <ManaOverlay colorIdentity={card.color_identity} />
           <GathererButton url={card.gatherer_url} />
         </>
@@ -40,7 +42,7 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
         <div className="art-placeholder">🃏</div>
       )}
       <div className="card-name">
-        {card.name} <span style={{ opacity: 0.75 }}>{card.set_code}-{card.collector_number}</span>
+        <SetIcon setCode={card.set_code} /> {card.name} <span style={{ opacity: 0.75 }}>{card.set_code}-{card.collector_number}</span>
       </div>
     </div>
   )
@@ -48,7 +50,8 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
 
 export function PairLandsPanel() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [set1, setSet1] = useState(searchParams.get('set1') ?? '')
+  const { set: globalSet } = useSet()
+  const [set1, setSet1] = useState(searchParams.get('set1') ?? globalSet)
   const [set2, setSet2] = useState(searchParams.get('set2') ?? '')
   const [matches, setMatches] = useState<ArtistMatch[]>([])
   const [loading, setLoading] = useState(false)
@@ -123,8 +126,10 @@ export function PairLandsPanel() {
           return (
             <div key={i} className="artist-match">
               <div className="artist-header">
+                <SetIcon setCode={pairs[0].front.set_code} />
                 <span className="name">{artist1}</span>
                 <span className="sep">↔</span>
+                <SetIcon setCode={pairs[0].back.set_code} />
                 <span className="name">{artist2}</span>
               </div>
               <div className="quadrant" style={{ gridTemplateColumns: `repeat(${n},1fr)` }}>
