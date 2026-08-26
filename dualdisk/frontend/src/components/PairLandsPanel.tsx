@@ -50,9 +50,9 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
 
 export function PairLandsPanel() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { set: globalSet } = useSet()
+  const { set: globalSet, set2: globalSet2 } = useSet()
   const [set1, setSet1] = useState(searchParams.get('set1') ?? globalSet)
-  const [set2, setSet2] = useState(searchParams.get('set2') ?? '')
+  const [set2, setSet2] = useState(searchParams.get('set2') ?? globalSet2)
   const [matches, setMatches] = useState<ArtistMatch[]>([])
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<

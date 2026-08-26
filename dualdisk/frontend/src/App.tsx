@@ -2,23 +2,25 @@ import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router'
 import { PairLandsPanel } from './components/PairLandsPanel'
 import { SearchPanel } from './components/SearchPanel'
+import { SetCombobox } from './components/SetCombobox'
 import { ToastItem, type ToastMessage } from './components/Toast'
 import { SetProvider } from './SetContext'
 import { useSet } from './useSet'
 
 let nextToastId = 1
 
-function NavSetField() {
-  const { set, setSet } = useSet()
+function NavSetFields() {
+  const { set, setSet, set2, setSet2 } = useSet()
   return (
-    <div className="field set nav-set">
-      <label>Set</label>
-      <input
-        value={set}
-        onChange={(e) => setSet(e.target.value)}
-        placeholder="MH3"
-        spellCheck={false}
-      />
+    <div className="nav-sets">
+      <div className="field set">
+        <label>Set</label>
+        <SetCombobox value={set} onChange={setSet} placeholder="MH3" />
+      </div>
+      <div className="field set">
+        <label>Back set</label>
+        <SetCombobox value={set2} onChange={setSet2} placeholder="MH2" />
+      </div>
     </div>
   )
 }
@@ -43,7 +45,7 @@ export default function App() {
           <NavLink to="/" end className={({ isActive }) => `tab ${isActive ? 'active' : ''}`}>Search</NavLink>
           <NavLink to="/pair" className={({ isActive }) => `tab ${isActive ? 'active' : ''}`}>Pair Lands</NavLink>
         </nav>
-        <NavSetField />
+        <NavSetFields />
       </header>
 
       <main>

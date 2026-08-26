@@ -44,7 +44,7 @@ header {
 
 .tabs { display: flex; align-items: stretch; gap: 2px; margin-left: 8px; }
 
-.nav-set { margin-left: auto; align-self: center; }
+.nav-sets { display: flex; gap: 12px; margin-left: auto; align-self: center; }
 .tab {
   background: none;
   border: none;
@@ -97,6 +97,38 @@ select option { background: var(--surface); }
 .field.set input { width: 90px; }
 .field.type input { width: 140px; }
 .field.name input { width: 220px; }
+
+.set-combobox { position: relative; display: flex; align-items: center; gap: 6px; }
+.set-combobox.invalid input { border-color: var(--danger); }
+
+.set-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 240px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: 50;
+}
+.set-suggestions li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.set-suggestions li:hover { background: rgba(108, 99, 255, 0.15); }
+.set-suggestions .code { color: var(--muted); font-size: 11px; flex-shrink: 0; }
+.set-suggestions .name { color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 button {
   background: var(--accent);

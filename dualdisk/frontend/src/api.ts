@@ -1,4 +1,4 @@
-import type { ArtistMatch, Card, CreateResult } from './types'
+import type { ArtistMatch, Card, CreateResult, SetInfo } from './types'
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   const resp = await fetch(url, init)
@@ -51,4 +51,11 @@ export function createCube(req: SetFilters & { name: string }): Promise<CreateRe
       card_type: req.cardType || null,
     }),
   })
+}
+
+export async function fetchSets(): Promise<SetInfo[]> {
+  const resp = await fetch('https://api.scryfall.com/sets')
+  if (!resp.ok) throw new Error(resp.statusText)
+  const data = await resp.json()
+  return data.data as SetInfo[]
 }

@@ -24,6 +24,12 @@ export interface CreateResult {
   url: string
 }
 
+export interface SetInfo {
+  code: string
+  name: string
+  icon_svg_uri: string
+}
+
 export interface ApiError {
   detail: string
 }
