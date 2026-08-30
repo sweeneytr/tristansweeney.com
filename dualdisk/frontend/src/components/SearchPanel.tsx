@@ -4,7 +4,6 @@ import { createCube, createPackage, searchCards } from '../api'
 import type { Card } from '../types'
 import { useSet } from '../useSet'
 import { GathererButton } from './GathererButton'
-import { ManaOverlay } from './ManaOverlay'
 import { SetIcon } from './SetIcon'
 
 const RARITIES = ['common', 'uncommon', 'rare', 'mythic']
@@ -128,7 +127,6 @@ export function SearchPanel({ pushToast }: { pushToast: (html: string, ok: boole
             {card.front_art_url ? (
               <>
                 <img className="card-art" src={card.front_art_url} alt={card.name} loading="lazy" />
-                <ManaOverlay colorIdentity={card.color_identity} />
                 <GathererButton url={card.gatherer_url} />
               </>
             ) : (

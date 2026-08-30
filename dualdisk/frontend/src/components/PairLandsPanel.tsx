@@ -4,7 +4,6 @@ import { pairLands as fetchPairLands } from '../api'
 import type { ArtistMatch, Card } from '../types'
 import { useSet } from '../useSet'
 import { GathererButton } from './GathererButton'
-import { ManaOverlay } from './ManaOverlay'
 import { SetIcon } from './SetIcon'
 
 const SWAP_CARDS = new Set([
@@ -35,14 +34,16 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
       {card.front_art_url ? (
         <>
           <img className="card-art" src={card.front_art_url} alt={card.name} loading="lazy" />
-          <ManaOverlay colorIdentity={card.color_identity} />
           <GathererButton url={card.gatherer_url} />
         </>
       ) : (
         <div className="art-placeholder">🃏</div>
       )}
       <div className="card-name">
-        <SetIcon setCode={card.set_code} /> {card.name} <span style={{ opacity: 0.75 }}>{card.set_code}-{card.collector_number}</span>
+        <div className="card-name-main">{card.name}</div>
+        <div className="card-artist">
+          {card.artist} · <SetIcon setCode={card.set_code} /> {card.set_code}-{card.collector_number}
+        </div>
       </div>
     </div>
   )
@@ -77,23 +78,24 @@ export function PairLandsPanel() {
     }
   }
 
-  // Deep-linked pairing: run once on mount using the URL's initial set1/set2 params, intentionally excluded from deps.
+  // Deep link: adopt the URL's set1/set2 params into the nav bar on mount, if present.
+  // Intentionally excluded from deps so this only runs once per mount.
   useEffect(() => {
     const s1 = searchParams.get('set1')
     const s2 = searchParams.get('set2')
     if (s1 && s2) {
       setNavSet(s1)
       setNavSet2(s2)
-      runPair(s1, s2)
     }
   }, [])
 
+  // Auto-pair whenever the nav bar's sets change (including on mount, and when this tab is selected).
+  useEffect(() => {
+    if (navSet && navSet2) runPair(navSet, navSet2)
+  }, [navSet, navSet2])
+
   return (
     <div className="panel">
-      <div className="controls">
-        <button onClick={() => runPair(navSet, navSet2)} disabled={loading}>Pair</button>
-      </div>
-
       <div className="status-bar">
         {loading && <><div className="spinner" /> Fetching lands…</>}
         {!loading && status?.kind === 'error' && <span className="error">{status.text}</span>}
@@ -105,17 +107,10 @@ export function PairLandsPanel() {
       </div>
 
       <div className="pair-grid">
-        {matches.map(({ artist1, artist2, pairs }, i) => {
+        {matches.map(({ pairs }, i) => {
           const n = pairs.length
           return (
             <div key={i} className="artist-match">
-              <div className="artist-header">
-                <SetIcon setCode={pairs[0].front.set_code} />
-                <span className="name">{artist1}</span>
-                <span className="sep">↔</span>
-                <SetIcon setCode={pairs[0].back.set_code} />
-                <span className="name">{artist2}</span>
-              </div>
               <div className="quadrant" style={{ gridTemplateColumns: `repeat(${n},1fr)` }}>
                 {pairs.map(({ front }, j) => (
                   <ArtCell key={`f${j}`} card={front} borderRight={j < n - 1} borderBottom />
