@@ -50,16 +50,14 @@ function ArtCell({ card, borderRight, borderBottom }: { card: Card; borderRight:
 
 export function PairLandsPanel() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { set: globalSet, set2: globalSet2 } = useSet()
-  const [set1, setSet1] = useState(searchParams.get('set1') ?? globalSet)
-  const [set2, setSet2] = useState(searchParams.get('set2') ?? globalSet2)
+  const { set: navSet, setSet: setNavSet, set2: navSet2, setSet2: setNavSet2 } = useSet()
   const [matches, setMatches] = useState<ArtistMatch[]>([])
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<
     { kind: 'results'; artistCount: number; pairCount: number; set1: string; set2: string } | { kind: 'error'; text: string } | null
   >(null)
 
-  async function runPair() {
+  async function runPair(set1: string, set2: string) {
     const s1 = set1.trim()
     const s2 = set2.trim()
     if (!s1 || !s2) return
@@ -81,33 +79,19 @@ export function PairLandsPanel() {
 
   // Deep-linked pairing: run once on mount using the URL's initial set1/set2 params, intentionally excluded from deps.
   useEffect(() => {
-    if (searchParams.get('set1') && searchParams.get('set2')) runPair()
+    const s1 = searchParams.get('set1')
+    const s2 = searchParams.get('set2')
+    if (s1 && s2) {
+      setNavSet(s1)
+      setNavSet2(s2)
+      runPair(s1, s2)
+    }
   }, [])
 
   return (
     <div className="panel">
       <div className="controls">
-        <div className="field set">
-          <label>Front set</label>
-          <input
-            value={set1}
-            onChange={(e) => setSet1(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && runPair()}
-            placeholder="LRW"
-            spellCheck={false}
-          />
-        </div>
-        <div className="field set">
-          <label>Back set</label>
-          <input
-            value={set2}
-            onChange={(e) => setSet2(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && runPair()}
-            placeholder="MH2"
-            spellCheck={false}
-          />
-        </div>
-        <button onClick={runPair} disabled={loading}>Pair</button>
+        <button onClick={() => runPair(navSet, navSet2)} disabled={loading}>Pair</button>
       </div>
 
       <div className="status-bar">
