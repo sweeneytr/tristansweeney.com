@@ -40,14 +40,16 @@ G.__collectionMisses=new Set(['shm|10']);
 const calls=[]; const of=G.fetch;
 G.fetch=function(url,init){ calls.push((init&&init.method||'GET')+' '+String(url).replace(/\?.*/,'')); return of.apply(this,arguments); };
 
+G.__responses['https://api.proxxied.com/api/cards/images/seed-urls']={status:200,ct:'application/json',body:'{"accepted":4}'};
+const GETU7=`${SB}/rest/v1/projects?select=id,project_data,owner_user_id,updated_at,card_count&id=eq.${PROJECT}&owner_user_id=eq.${OWNER}`;
+const patches=G.installWriteStub(SB,PROJECT,OWNER,GETU7,'T0');
 console.log('=== A: Scryfall misses SHM-10, passthrough recovers it ===');
 G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request',{detail:{pairs:[
   {front:{name:null,set:'lrw',number:'10'},back:{name:null,set:'shm',number:'10'}},
-  {front:{name:null,set:'lrw',number:'11'},back:{name:null,set:'shm',number:'11'}}],dryRun:true}}));
+  {front:{name:null,set:'lrw',number:'11'},back:{name:null,set:'shm',number:'11'}}]}}));
 let i=0; const go=()=>(++i>600?mid():Promise.resolve().then(go));
 function mid(){
-  const dl=G.__downloads.filter(d=>d.name.includes('dryrun'));
-  const cards=dl.length?JSON.parse(dl[dl.length-1].text).cards:[];
+  const cards=G.addedCards(patches,'u');
   console.log('  built '+cards.length+' cards; names: '+JSON.stringify(cards.map(c=>c.name)));
   console.log('  passthrough calls: '+JSON.stringify(calls.filter(c=>c.includes('/api/scryfall/'))));
   console.log('');
@@ -56,7 +58,7 @@ function mid(){
   delete G.__responses['https://api.proxxied.com/api/scryfall/cards/shm/11?lang=en'];
   G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request',{detail:{pairs:[
     {front:{name:null,set:'lrw',number:'10'},back:{name:null,set:'shm',number:'10'}},
-    {front:{name:null,set:'lrw',number:'11'},back:{name:null,set:'shm',number:'11'}}],dryRun:true}}));
+    {front:{name:null,set:'lrw',number:'11'},back:{name:null,set:'shm',number:'11'}}]}}));
   let j=0; const go2=()=>(++j>600?fin():Promise.resolve().then(go2));
   Promise.resolve().then(go2);
 }

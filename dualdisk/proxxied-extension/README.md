@@ -190,7 +190,7 @@ project the recorder has seen, and it says which.
 
 Both the carried and the dropped fields are printed, so nothing is guessed
 behind your back. With fewer than two existing pairs the constant analysis has
-no signal and says so — check the dry run in that case.
+no signal and says so — check the result file in that case.
 
 If the project has no existing scryfall pair at all, it falls back to the old
 hand-reconstructed schema and warns.
@@ -229,11 +229,10 @@ Ajani|Apothecary|LRW-1|SHM-1        both overridden
 An override that disagrees with the printing is applied and logged, so a typo
 is visible rather than silent.
 
-**Dry run** builds the card objects, downloads them for review, and writes
-nothing. Do this first. **Import for real** downloads a backup of the current
-`project_data`, `PATCH`es, reads the project back to confirm the new cards are
-really there, downloads that confirmation as `proxxied-result-*.json`, and then
-**reloads the page automatically**.
+**Import** downloads a backup of the current `project_data`, `PATCH`es, reads
+the project back to confirm the new cards are really there, downloads that
+confirmation as `proxxied-result-*.json`, and then **reloads the page
+automatically**.
 
 The read-back exists because the reload destroys the evidence: the in-page log
 goes with it, and the recorder restarts empty, so without a written artifact
@@ -308,8 +307,8 @@ import running stays clean.
   rather than something to inherit from a template.
 - The constant analysis is only as good as the corpus. Importing into a brand
   new account with a single hand-made pair leaves it with nothing to compare,
-  and the dry run will show more dropped fields than usual — that is the
-  intended conservative failure, not a bug.
+  and more fields than usual will be dropped — that is the intended
+  conservative failure, not a bug.
 - The importer's field mapping (`FIELD_SOURCES` in `main-world.js`) covers the
   fields seen so far. A card kind that carries fields no existing card in the
   project has — or whose unknown fields vary per card — will show up in the

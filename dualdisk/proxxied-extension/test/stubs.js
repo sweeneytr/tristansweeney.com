@@ -139,3 +139,41 @@ G.XMLHttpRequest = class { open() {} send() {} setRequestHeader() {} addEventLis
 G.WebSocket = class { constructor() {} send() {} addEventListener() {} };
 G.window = G;
 
+
+// Wires up the write half of a project fixture: records each PATCH body,
+// applies it to the read fixture so the importer's verification re-read sees
+// the new cards, and answers the CAS-guarded PATCH url. Returns the array the
+// PATCH bodies land in. Tests assert on what was really written, since there
+// is no dry-run path to inspect.
+globalThis.installWriteStub = function (SB, PROJECT, OWNER, getUrl, updatedAt) {
+  const patches = [];
+  const casUrl =
+    SB + '/rest/v1/projects?id=eq.' + PROJECT + '&owner_user_id=eq.' + OWNER +
+    '&updated_at=eq.' + encodeURIComponent(updatedAt) + '&select=id,updated_at';
+  globalThis.__responses[casUrl] = {
+    status: 200, ct: 'application/json',
+    body: JSON.stringify([{ id: PROJECT, updated_at: 'T-next' }]),
+  };
+  const orig = globalThis.fetch;
+  globalThis.fetch = function (url, init) {
+    if (init && init.method === 'PATCH') {
+      const sent = JSON.parse(init.body);
+      patches.push(sent);
+      if (sent.project_data) {
+        globalThis.__responses[getUrl] = {
+          status: 200, ct: 'application/json',
+          body: JSON.stringify([{ id: PROJECT, owner_user_id: OWNER, project_data: sent.project_data,
+                                  updated_at: 'T-next', card_count: sent.card_count }]),
+        };
+      }
+    }
+    return orig.apply(this, arguments);
+  };
+  return patches;
+};
+
+// The cards a run added, identified by the stubbed uuid generator's prefix.
+globalThis.addedCards = function (patches, prefix) {
+  if (!patches.length) return [];
+  return patches[patches.length - 1].project_data.cards.filter((c) => String(c.uuid).indexOf(prefix) === 0);
+};

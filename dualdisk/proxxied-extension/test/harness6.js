@@ -61,7 +61,7 @@ G.fetch=function(url,init){
 G.__responses[`${SB}/rest/v1/projects?id=eq.${PROJECT}&owner_user_id=eq.${OWNER}&updated_at=eq.T0&select=id,updated_at`]=
   {status:200,ct:'application/json',body:JSON.stringify([{id:PROJECT,updated_at:'T1'}])};
 
-G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request',{detail:{pairs,dryRun:false}}));
+G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request',{detail:{pairs}}));
 let i=0; const go=()=>(++i>4000?fin():Promise.resolve().then(go));
 function fin(){
   const total=Object.values(counts).reduce((a,b)=>a+b,0);

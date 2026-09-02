@@ -53,10 +53,8 @@ document.addEventListener('proxxied-recorder-tick', (ev) => {
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'IMPORT_PAIRS') {
-    log(`${msg.dryRun ? 'Dry run for' : 'Importing'} ${msg.pairs.length} pair(s)...`);
-    document.dispatchEvent(
-      new CustomEvent('proxxied-import-request', { detail: { pairs: msg.pairs, dryRun: !!msg.dryRun } })
-    );
+    log(`Importing ${msg.pairs.length} pairs...`);
+    document.dispatchEvent(new CustomEvent('proxxied-import-request', { detail: { pairs: msg.pairs } }));
   } else if (msg.type === 'RECORDER') {
     document.dispatchEvent(
       new CustomEvent('proxxied-recorder-command', { detail: { command: msg.command, arg: msg.arg } })

@@ -98,7 +98,7 @@ revealEl.addEventListener('change', () => {
   sendRecorder('reveal', revealEl.checked);
 });
 
-async function runImport(dryRun) {
+async function runImport() {
   statusEl.textContent = '';
   const pairs = parsePairs(pairsEl.value);
   const errors = pairs.filter((p) => p.error);
@@ -112,12 +112,11 @@ async function runImport(dryRun) {
   }
   const tab = await activeProxxiedTab();
   if (!tab) return;
-  log(`${dryRun ? 'Dry run for' : 'Importing'} ${pairs.length} pair(s)...`);
-  chrome.tabs.sendMessage(tab.id, { type: 'IMPORT_PAIRS', pairs, dryRun });
+  log(`Importing ${pairs.length} pairs...`);
+  chrome.tabs.sendMessage(tab.id, { type: 'IMPORT_PAIRS', pairs });
 }
 
-document.getElementById('run').addEventListener('click', () => runImport(false));
-document.getElementById('dryrun').addEventListener('click', () => runImport(true));
+document.getElementById('run').addEventListener('click', () => runImport());
 
 (async () => {
   const tab = await chrome.tabs.query({ active: true, currentWindow: true }).then((t) => t[0]);

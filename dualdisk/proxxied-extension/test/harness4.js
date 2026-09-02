@@ -59,13 +59,15 @@ for (let k = 0; k < 27; k++) {
 }
 G.__proxxiedRecorder.projectData.set('lrwshm', { v:2, st:{}, cards: corpus });
 
+const GETU4 = `${SB}/rest/v1/projects?select=id,project_data,owner_user_id,updated_at,card_count&id=eq.${PROJECT}&owner_user_id=eq.${OWNER}`;
+G.__responses['https://api.proxxied.com/api/cards/images/seed-urls'] = { status:200, ct:'application/json', body:'{"accepted":2}' };
+const patches = G.installWriteStub(SB, PROJECT, OWNER, GETU4, 'T0');
 G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', { detail:{
-  pairs:[{ front:{name:null,set:'lrw',number:'291'}, back:{name:null,set:'shm',number:'291'} }], dryRun:true } }));
+  pairs:[{ front:{name:null,set:'lrw',number:'291'}, back:{name:null,set:'shm',number:'291'} }] } }));
 
 let i=0; const go=()=>(++i>300?fin():Promise.resolve().then(go));
 function fin(){
-  const dl=G.__downloads[G.__downloads.length-1];
-  const c=JSON.parse(dl.text).cards[0];
+  const c=G.addedCards(patches,'new-')[0];
   console.log('\n=== built FRONT ===');
   console.log(JSON.stringify(c,null,1));
   const sm=c.scryfall_meta||{};

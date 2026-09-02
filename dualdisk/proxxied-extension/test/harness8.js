@@ -42,15 +42,17 @@ for(const [set,num] of [['lrw','50'],['shm','50']])
   G.__responses[`https://api.proxxied.com/api/scryfall/cards/${set}/${num}?lang=en`]={status:200,ct:'application/json',body:JSON.stringify(sf('C'+set,set,num))};
 G.__proxxiedRecorder.ids={ownerUserId:OWNER,projectId:PROJECT,supabaseOrigin:SB,apikey:'k'};
 
+G.__responses['https://api.proxxied.com/api/cards/images/seed-urls']={status:200,ct:'application/json',body:'{"accepted":2}'};
+const patches=G.installWriteStub(SB,PROJECT,OWNER,GETU,'T0');
 G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request',{detail:{pairs:[
-  {front:{name:null,set:'lrw',number:'50'},back:{name:null,set:'shm',number:'50'}}],dryRun:true}}));
+  {front:{name:null,set:'lrw',number:'50'},back:{name:null,set:'shm',number:'50'}}]}}));
 let i=0; const go=()=>(++i>500?fin():Promise.resolve().then(go));
 function fin(){
-  const dl=G.__downloads.filter(d=>d.name.includes('dryrun'));
-  const j=JSON.parse(dl[dl.length-1].text);
-  console.log('\n=== templateInfo ==='); console.log(JSON.stringify(j.templateInfo,null,1));
-  const f=j.cards[0];
-  console.log('\nchose rich project:', j.templateInfo.fromProjectId==='rich-project');
+  const res=G.__downloads.filter(d=>d.name.includes('result-'));
+  const info=JSON.parse(res[res.length-1].text).templateInfo;
+  console.log('\n=== templateInfo ==='); console.log(JSON.stringify(info,null,1));
+  const f=G.addedCards(patches,'u')[0];
+  console.log('\nchose rich project:', info.fromProjectId==='rich-project');
   console.log('built card HAS scryfall_meta:', 'scryfall_meta' in f, JSON.stringify(f.scryfall_meta||null));
   $.NSString.stringWithString(G.out.join('\n')).writeToFileAtomicallyEncodingError(OUT_DIR + '/result8.txt',true,$.NSUTF8StringEncoding,null);
 }

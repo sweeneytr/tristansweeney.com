@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Proxxied Pair Importer",
-  "version": "3.9.0",
+  "version": "4.0.0",
   "description": "Records and documents proxxied.com's API from a real browser tab, and imports dualdisk front/back MTG land pairs into a project.",
   "permissions": [
     "activeTab",

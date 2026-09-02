@@ -454,7 +454,6 @@
 
   document.addEventListener('proxxied-import-request', async (ev) => {
     const pairs = ev.detail.pairs;
-    const dryRun = !!ev.detail.dryRun;
 
     try {
       if (!recorder) throw new Error('recorder.js did not load - reload the extension and the page');
@@ -559,16 +558,14 @@
             `${template.frontConstants.consts.size} front, ${template.backConstants.consts.size} back`
         );
         if (template.frontConstants.sampleCount < 2) {
-          emit('⚠ Only one existing pair to copy from - check the dry run before importing.');
+          emit('⚠ Only one existing pair to copy from - check the result file afterwards.');
         }
       } else {
         emit('⚠ No existing pair to copy - using the built-in card layout.');
       }
 
-      if (!dryRun) {
-        emit(`Backing up ${cards.length} existing cards to your Downloads folder.`);
-        downloadJson(`proxxied-backup-${projectId}-${Date.now()}.json`, projectData);
-      }
+      emit(`Backing up ${cards.length} existing cards to your Downloads folder.`);
+      downloadJson(`proxxied-backup-${projectId}-${Date.now()}.json`, projectData);
 
       let nextOrder = cards.reduce((max, c) => Math.max(max, c.order || 0), 0) + 10;
       const added = [];
@@ -662,21 +659,10 @@
       // Phase 3 - seed every image in a handful of calls rather than one per
       // pair. The endpoint accepts an array; the app only ever sends one
       // because it only ever adds one card at a time.
-      if (!dryRun) {
-        const urls = [];
-        for (const pr of printings) urls.push(pngOf(pr.front), pngOf(pr.back));
-        await seedImages(urls);
-      }
+      const urls = [];
+      for (const pr of printings) urls.push(pngOf(pr.front), pngOf(pr.back));
+      await seedImages(urls);
 
-      if (dryRun) {
-        emit(`Dry run: built ${added.length} cards, wrote nothing. Downloaded them for review.`);
-        downloadJson(`proxxied-dryrun-${Date.now()}.json`, {
-          templateInfo,
-          template: template ? { front: template.front, back: template.back } : null,
-          cards: added,
-        });
-        return;
-      }
 
       const updatedProjectData = Object.assign({}, projectData, { cards });
 

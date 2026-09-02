@@ -64,22 +64,19 @@ G.__responses['https://api.proxxied.com/api/scryfall/cards/shm/291?lang=en'] =
 // Seed the recorder with the ids the importer needs, the way real traffic would.
 G.__proxxiedRecorder.ids = { ownerUserId: OWNER, projectId: PROJECT, supabaseOrigin: SB, apikey: APIKEY };
 
+const GETU2 = `${SB}/rest/v1/projects?select=id,project_data,owner_user_id,updated_at,card_count&id=eq.${PROJECT}&owner_user_id=eq.${OWNER}`;
+G.__responses['https://api.proxxied.com/api/cards/images/seed-urls'] = { status: 200, ct: 'application/json', body: '{"accepted":2}' };
+const patches = G.installWriteStub(SB, PROJECT, OWNER, GETU2, '2026-01-01T00:00:00Z');
 G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', {
-  detail: { pairs: [{ front: { name: null, set: 'lrw', number: '291' }, back: { name: null, set: 'shm', number: '291' } }], dryRun: true },
+  detail: { pairs: [{ front: { name: null, set: 'lrw', number: '291' }, back: { name: null, set: 'shm', number: '291' } }] },
 }));
 
 let n = 0;
 const spin = () => (++n > 400 ? finish() : Promise.resolve().then(spin));
 function finish() {
-  const dl = G.__downloads[G.__downloads.length - 1];
-  if (dl) {
-    console.log('== downloaded: ' + dl.name + ' ==');
-    const parsed = JSON.parse(dl.text);
-    console.log('template front: ' + (parsed.template && parsed.template.front.name));
-    console.log(JSON.stringify(parsed.cards, null, 2));
-  } else {
-    console.log('NO DOWNLOAD');
-  }
+  const cards = G.addedCards(patches, 'new-uuid');
+  console.log('== cards written ==');
+  console.log(JSON.stringify(cards, null, 2));
   $.NSString.stringWithString(globalThis.out.join('\n')).writeToFileAtomicallyEncodingError(OUT_DIR + '/result2.txt', true, $.NSUTF8StringEncoding, null);
 }
 Promise.resolve().then(spin);

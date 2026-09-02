@@ -92,7 +92,7 @@ function spin(n, fn) { let i = 0; const go = () => (++i > n ? fn() : Promise.res
 
 console.log('=== SCENARIO A: real write, CAS satisfied ===');
 setPatch(JSON.stringify([{ id: PROJECT, updated_at: '2026-09-02T03:00:00.000000+00:00' }]));
-G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', { detail: { pairs: PAIRS, dryRun: false } }));
+G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', { detail: { pairs: PAIRS } }));
 spin(300, () => {
   const pc = patchCalls[0];
   console.log('  PATCH url: ' + (pc ? pc.url.replace(SB, '') : 'NONE'));
@@ -117,7 +117,7 @@ spin(300, () => {
   console.log('=== SCENARIO B: PATCH matches 0 rows (stale CAS / no auth) ===');
   patchCalls.length = 0;
   setPatch('[]');
-  G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', { detail: { pairs: PAIRS, dryRun: false } }));
+  G.document.dispatchEvent(new G.CustomEvent('proxxied-import-request', { detail: { pairs: PAIRS } }));
   spin(300, () => {
     $.NSString.stringWithString(globalThis.out.join('\n')).writeToFileAtomicallyEncodingError(OUT_DIR + '/result3.txt', true, $.NSUTF8StringEncoding, null);
   });
