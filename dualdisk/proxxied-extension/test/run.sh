@@ -42,7 +42,7 @@ grep -q "Ballynock Cohort" "$R/result2.txt" 2>/dev/null; pass_if "importer: per-
   && grep -q "isFlipped:                false" "$R/result4.txt"; }; pass_if "no template contamination" $?
 grep -q "^real file: 300 lines, 0 errors" "$R/result5.txt" 2>/dev/null; pass_if "pair parser (2-4 fields)" $?
 grep -q '"present":240' "$R/result6.txt" 2>/dev/null; pass_if "120-pair batch end to end" $?
-{ grep -q "recovered SHM-10" "$R/result7.txt" \
+{ grep -q "Recovered SHM-10" "$R/result7.txt" \
   && grep -q "line 2: could not resolve" "$R/result7.txt"; }; pass_if "bulk lookup + passthrough fallback" $?
 { grep -q "chose rich project: true" "$R/result8.txt" \
   && grep -q "scryfall_meta: true" "$R/result8.txt"; }; pass_if "richest-template selection" $?

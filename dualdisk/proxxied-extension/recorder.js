@@ -190,8 +190,13 @@
     }
   }
 
+  // emit() reaches the popup and the on-page overlay; debug() only the console.
   function emit(line) {
     document.dispatchEvent(new CustomEvent('proxxied-import-progress', { detail: { line } }));
+  }
+
+  function debug(line) {
+    console.log('[proxxied-recorder]', line);
   }
 
   // ------------------------------------------------------------- entry record
@@ -268,7 +273,7 @@
           changes: diff,
         });
         state.projectData.set(projectId, after);
-        emit(`[diff] ${entry.method} project_data -> ${diff.length} change(s); see the report`);
+        debug(`${entry.method} project_data -> ${diff.length} change(s)`);
       }
     } catch (e) {
       /* observation must never break the page */
@@ -819,15 +824,13 @@
       keys,
     };
     emit(
-      `[scan] ${result.scripts.length} script(s): ${state.bundleScan.tables.length} table(s), ` +
-        `${state.bundleScan.rpcs.length} rpc(s), ${state.bundleScan.apiPaths.length} /api path(s), ` +
-        `${state.bundleScan.buckets.length} bucket(s)`
+      `Scanned ${result.scripts.length} scripts: ${state.bundleScan.tables.length} tables, ` +
+        `${state.bundleScan.rpcs.length} RPCs, ${state.bundleScan.apiPaths.length} API paths.`
     );
     if (obfuscated) {
       emit(
-        `[scan] ⚠ bundle is obfuscated (${result.decoderCalls} string-table calls) - literal results are ` +
-          `fragments and cannot be trusted. Use the traffic-derived surface instead ` +
-          `(${state.bundleScan.traffic.tables.length} table(s), ${state.bundleScan.traffic.rpcs.length} rpc(s) so far).`
+        `⚠ The app's code is obfuscated, so those results are unreliable. Using what the traffic showed ` +
+          `instead: ${state.bundleScan.traffic.tables.length} tables, ${state.bundleScan.traffic.rpcs.length} RPCs.`
       );
     }
     return state.bundleScan;
@@ -854,8 +857,8 @@
         unavailable: `HTTP ${resp.status} ${text.slice(0, 200)}`,
         trafficFallback: surface,
       };
-      emit(`[openapi] unavailable (HTTP ${resp.status}): ${text.slice(0, 120)}`);
-      emit(`[openapi] falling back to traffic: ${surface.tables.length} table(s), ${surface.rpcs.length} rpc(s)`);
+      emit(`Schema unavailable (HTTP ${resp.status}) - this key can't read it.`);
+      emit(`Using what the traffic showed: ${surface.tables.length} tables, ${surface.rpcs.length} RPCs.`);
       return state.openapi;
     }
     const spec = JSON.parse(text);
@@ -872,7 +875,7 @@
     const rpcs = Object.keys(spec.paths || {}).filter((p) => p.startsWith('/rpc/'));
 
     state.openapi = { probedAt: new Date().toISOString(), host: spec.host, tables, rpcs };
-    emit(`[openapi] ${Object.keys(tables).length} table(s), ${rpcs.length} rpc endpoint(s)`);
+    emit(`Schema: ${Object.keys(tables).length} tables, ${rpcs.length} RPC endpoints.`);
     return state.openapi;
   }
 
@@ -1208,27 +1211,27 @@
           break;
         case 'reveal':
           state.revealSecrets = !!arg;
-          emit(`[recorder] secret values will be ${arg ? 'INCLUDED IN' : 'redacted from'} exports from now on`);
+          emit(`Secret values will now be ${arg ? 'INCLUDED IN' : 'redacted from'} exports.`);
           break;
         case 'scan':
-          emit('[scan] fetching and scanning the app JS bundles...');
+          emit('Scanning the app\'s code...');
           await scanBundles();
           break;
         case 'openapi':
-          emit('[openapi] requesting the PostgREST schema...');
+          emit('Requesting the database schema...');
           await probeOpenApi();
           break;
         case 'auth':
           inspectAuth();
-          emit(`[auth] ${state.authNotes.sessions.length} supabase session key(s), ${state.authNotes.cookieNames.length} cookie(s)`);
+          emit(`Found ${state.authNotes.sessions.length} session(s) and ${state.authNotes.cookieNames.length} cookie(s).`);
           break;
         case 'export-json':
           download(`proxxied-capture-${Date.now()}.json`, JSON.stringify(buildJson(), null, 2));
-          emit(`[export] wrote capture JSON (${state.entries.length} entries)`);
+          emit(`Downloaded the capture (${state.entries.length} requests).`);
           break;
         case 'export-md':
           download(`proxxied.api-${Date.now()}.md`, buildMarkdown(), 'text/markdown');
-          emit('[export] wrote the markdown API report');
+          emit('Downloaded the API report.');
           break;
         case 'clear':
           state.entries.length = 0;
@@ -1236,13 +1239,13 @@
           wsFrames.length = 0;
           state.seq = 0;
           state.bodyChars = 0;
-          emit('[recorder] cleared captured traffic');
+          emit('Cleared the recording.');
           break;
         default:
-          emit(`[recorder] unknown command: ${command}`);
+          debug(`unknown command: ${command}`);
       }
     } catch (e) {
-      emit(`✗ ${command} failed: ${e && e.message}`);
+      emit(`✗ ${e && e.message}`);
     }
     document.dispatchEvent(new CustomEvent('proxxied-recorder-tick', { detail: stats() }));
   });

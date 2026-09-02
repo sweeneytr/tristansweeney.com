@@ -9,8 +9,15 @@
 
   const recorder = window.__proxxiedRecorder;
 
+  // Two channels: emit() reaches the popup and the on-page overlay, debug()
+  // only the console. Anything that is an internal detail - URLs, raw bodies,
+  // token fragments, uuids - belongs in debug().
   function emit(line) {
     document.dispatchEvent(new CustomEvent('proxxied-import-progress', { detail: { line } }));
+  }
+
+  function debug(line) {
+    console.log('[proxxied-importer]', line);
   }
 
   function downloadJson(filename, data) {
@@ -79,7 +86,7 @@
     const byKey = new Map();
     const notFound = [];
 
-    emit(`looking up ${ids.length} distinct printing(s) in ${Math.ceil(ids.length / COLLECTION_CHUNK)} bulk call(s)...`);
+    emit(`Looking up ${ids.length} printings...`);
     for (let i = 0; i < ids.length; i += COLLECTION_CHUNK) {
       const chunk = ids.slice(i, i + COLLECTION_CHUNK);
       const r = await fetch('https://api.scryfall.com/cards/collection', {
@@ -93,7 +100,7 @@
       const body = await r.json();
       for (const card of body.data || []) byKey.set(printingKey(card.set, card.collector_number), card);
       for (const nf of body.not_found || []) notFound.push(nf);
-      emit(`  ...${Math.min(i + COLLECTION_CHUNK, ids.length)}/${ids.length} printings`);
+      debug(`  ...${Math.min(i + COLLECTION_CHUNK, ids.length)}/${ids.length} printings`);
       if (i + COLLECTION_CHUNK < ids.length) await sleep(100); // Scryfall asks for ~100ms between requests
     }
 
@@ -102,9 +109,9 @@
       try {
         const card = await fetchScryfallCard(nf.set, nf.collector_number);
         byKey.set(printingKey(nf.set, nf.collector_number), card);
-        emit(`  recovered ${nf.set.toUpperCase()}-${nf.collector_number} via proxxied's passthrough`);
+        emit(`Recovered ${nf.set.toUpperCase()}-${nf.collector_number} from proxxied.`);
       } catch (e) {
-        emit(`  ⚠ ${nf.set.toUpperCase()}-${nf.collector_number} not found by either source`);
+        emit(`⚠ ${nf.set.toUpperCase()}-${nf.collector_number} not found.`);
       }
     }
     return byKey;
@@ -132,9 +139,9 @@
         });
         const body = await r.json().catch(() => null);
         if (r.ok) ok += chunk.length;
-        emit(`  seeded ${chunk.length} image url(s): HTTP ${r.status} ${body ? JSON.stringify(body) : ''}`);
+        debug(`  seeded ${chunk.length} image url(s): HTTP ${r.status} ${body ? JSON.stringify(body) : ''}`);
       } catch (e) {
-        emit(`  ⚠ image seeding failed for ${chunk.length} url(s) (images may load slowly at first): ${e.message}`);
+        emit(`⚠ Could not pre-cache ${chunk.length} image(s); they may load slowly at first.`);
       }
     }
     return ok;
@@ -453,7 +460,7 @@
       if (!recorder) throw new Error('recorder.js did not load - reload the extension and the page');
 
       if (!recorder.ids) {
-        emit('waiting to observe a project API call (open/edit anything in the project first)...');
+        emit('Waiting for the project to load - click any card if nothing happens.');
         const start = Date.now();
         while (!recorder.ids && Date.now() - start < 15000) {
           await new Promise((r) => setTimeout(r, 300));
@@ -466,7 +473,7 @@
       }
 
       const { ownerUserId, projectId, supabaseOrigin, apikey } = recorder.ids;
-      emit(`using project ${projectId}, owner ${ownerUserId}, apikey ...${apikey.slice(-8)}`);
+      debug(`using project ${projectId}, owner ${ownerUserId}, apikey ...${apikey.slice(-8)}`);
 
       // PostgREST distinguishes accept-profile (reads) from content-profile (writes) -
       // using the wrong one for a GET was an earlier bug. x-client-info mimics the real
@@ -486,7 +493,7 @@
         );
       }
       const auth = { authorization: `Bearer ${accessToken}` };
-      emit(`authenticating as the app does (Bearer ...${accessToken.slice(-8)})`);
+      debug(`authenticating as the app does (Bearer ...${accessToken.slice(-8)})`);
 
       const readHeaders = Object.assign({ apikey, accept: 'application/json', 'accept-profile': 'public' }, auth, clientInfo);
       const writeHeaders = Object.assign(
@@ -496,10 +503,10 @@
       );
 
       const getUrl = `${supabaseOrigin}/rest/v1/projects?select=id,project_data,owner_user_id,updated_at,card_count&id=eq.${projectId}&owner_user_id=eq.${ownerUserId}`;
-      emit(`  GET ${getUrl}`);
+      debug(`  GET ${getUrl}`);
       const getResp = await fetch(getUrl, { headers: readHeaders });
       const rawBody = await getResp.text();
-      emit(`  response: HTTP ${getResp.status} ${rawBody.slice(0, 300)}`);
+      debug(`  response: HTTP ${getResp.status} ${rawBody.slice(0, 300)}`);
       if (!getResp.ok) throw new Error(`failed to read project: HTTP ${getResp.status}`);
       const rows = JSON.parse(rawBody);
 
@@ -508,7 +515,7 @@
         const idOnlyUrl = `${supabaseOrigin}/rest/v1/projects?select=id,owner_user_id&id=eq.${projectId}`;
         const idOnlyResp = await fetch(idOnlyUrl, { headers: readHeaders });
         const idOnlyBody = await idOnlyResp.text();
-        emit(`  diagnostic (id filter only): HTTP ${idOnlyResp.status} ${idOnlyBody.slice(0, 300)}`);
+        debug(`  diagnostic (id filter only): HTTP ${idOnlyResp.status} ${idOnlyBody.slice(0, 300)}`);
         throw new Error(
           'project not found for the observed ids - an empty result here usually means the request was not ' +
             'authenticated (RLS returns 200 with [] rather than 401), so check that the session is still valid'
@@ -536,30 +543,30 @@
           }
         : null;
       if (found.from) {
-        emit(`no usable pair in this project - borrowing a template from project ${found.from} ` +
-          `(richest of ${found.candidates.length} candidate(s))`);
+        emit('No pair in this project to copy - using one from another project.');
+        debug(`borrowing template from project ${found.from} (richest of ${found.candidates.length} candidates)`);
       }
       if (found.missingVsOthers && found.missingVsOthers.length) {
-        emit(`  ⚠ chosen template lacks field(s) other candidates have: ${found.missingVsOthers.join(', ')}`);
+        emit(`⚠ Template is missing ${found.missingVsOthers.length} field(s) another project's cards have.`);
       }
       if (template) {
-        emit(
-          `template: cloning the shape of "${template.front.name}" (${Object.keys(template.front).length} front fields, ` +
-            `${Object.keys(template.back).length} back fields) - a card the app itself wrote`
+        debug(
+          `template: "${template.front.name}" (${Object.keys(template.front).length} front fields, ` +
+            `${Object.keys(template.back).length} back fields)`
         );
-        emit(
-          `  constant-field analysis over ${template.frontConstants.sampleCount} pair(s) from every observed project: ` +
-            `${template.frontConstants.consts.size} constant front field(s), ${template.backConstants.consts.size} back`
+        debug(
+          `constants over ${template.frontConstants.sampleCount} pair(s): ` +
+            `${template.frontConstants.consts.size} front, ${template.backConstants.consts.size} back`
         );
         if (template.frontConstants.sampleCount < 2) {
-          emit('  ⚠ only one existing pair, so constant vs. card-specific cannot be told apart - check the dry run');
+          emit('⚠ Only one existing pair to copy from - check the dry run before importing.');
         }
       } else {
-        emit('⚠ no existing linked scryfall pair to use as a template; falling back to the reconstructed schema');
+        emit('⚠ No existing pair to copy - using the built-in card layout.');
       }
 
       if (!dryRun) {
-        emit(`current project has ${cards.length} card entries - downloading a backup before writing anything`);
+        emit(`Backing up ${cards.length} existing cards to your Downloads folder.`);
         downloadJson(`proxxied-backup-${projectId}-${Date.now()}.json`, projectData);
       }
 
@@ -581,7 +588,7 @@
         }
         return { front: faceOf(f, false), back: faceOf(b, false) };
       });
-      emit(`  resolved all ${pairs.length} pair(s)`);
+      emit(`Found all ${pairs.length} pairs.`);
 
       // Phase 2 - build the card objects. Pure computation, kept sequential so
       // uuids, order numbers and the log stay in input order.
@@ -596,12 +603,12 @@
         const backName = pair.back.name || backData.name;
         const label = frontName === backName ? frontName : `${frontName} // ${backName}`;
         const verbose = verboseBatch(pairs);
-        if (verbose) emit(`\n=== ${label} (${fId} / ${bId}) ===`);
+        if (verbose) emit(`${label}  (${fId} / ${bId})`);
         for (const [side, given, real] of [
           ['front', pair.front.name, frontData.name],
           ['back', pair.back.name, backData.name],
         ]) {
-          if (given && given !== real) emit(`  note: ${side} name overridden - "${given}" (printing is "${real}")`);
+          if (given && given !== real) emit(`Using "${given}" for the ${side}; the printing is called "${real}".`);
         }
 
         const frontUuid = crypto.randomUUID();
@@ -632,8 +639,9 @@
           );
           // Identical for every pair, so report it once rather than N times.
           if (i === 0) {
-            if (carried.length) emit(`  carried from template: ${carried.join(', ')}`);
-            if (dropped.length) emit(`  ⚠ dropped (template-specific, no source): ${dropped.join(', ')}`);
+            if (carried.length) debug(`carried from template: ${carried.join(', ')}`);
+            if (dropped.length) emit(`⚠ dropped ${dropped.length} template-specific field(s) - see console`);
+            if (dropped.length) debug(`dropped (template-specific, no source): ${dropped.join(', ')}`);
           }
         } else {
           frontCard = fallbackFront(pair, frontData, order, frontUuid, backUuid);
@@ -647,9 +655,9 @@
 
         cards.push(frontCard, backCard);
         added.push(frontCard, backCard);
-        if (verbose) emit(`  built front (${frontUuid.slice(0, 8)}) + back (${backUuid.slice(0, 8)}) at order ${order}`);
+        debug(`built ${frontUuid.slice(0, 8)} + ${backUuid.slice(0, 8)} at order ${order}`);
       }
-      if (!verboseBatch(pairs)) emit(`built ${added.length} card object(s)`);
+      if (!verboseBatch(pairs)) emit(`Built ${added.length} cards.`);
 
       // Phase 3 - seed every image in a handful of calls rather than one per
       // pair. The endpoint accepts an array; the app only ever sends one
@@ -661,7 +669,7 @@
       }
 
       if (dryRun) {
-        emit(`\n[dry run] built ${added.length} card object(s); nothing was written. Downloading them for review.`);
+        emit(`Dry run: built ${added.length} cards, wrote nothing. Downloaded them for review.`);
         downloadJson(`proxxied-dryrun-${Date.now()}.json`, {
           templateInfo,
           template: template ? { front: template.front, back: template.back } : null,
@@ -684,7 +692,7 @@
       const patchUrl =
         `${supabaseOrigin}/rest/v1/projects?id=eq.${projectId}&owner_user_id=eq.${ownerUserId}${cas}` +
         `&select=id,updated_at`;
-      emit(`  PATCH with card_count ${row.card_count} -> ${cardCount}, updated_at guard ${row.updated_at || '(none)'}`);
+      debug(`  PATCH with card_count ${row.card_count} -> ${cardCount}, updated_at guard ${row.updated_at || '(none)'}`);
 
       const patchResp = await fetch(patchUrl, {
         method: 'PATCH',
@@ -713,7 +721,7 @@
         );
       }
 
-      emit(`\n✓ saved ${pairs.length} pair(s) directly via the API (updated_at now ${updatedRows[0].updated_at}).`);
+      emit(`✓ Saved ${pairs.length} pairs.`);
 
       // Read it back before reloading. The PATCH returning a row proves the
       // update was applied; only a fresh read proves it is still there, and
@@ -728,9 +736,9 @@
         const present = wanted.filter((u) => seen.has(u));
         verified = { total: vCards.length, expected: wanted.length, present: present.length };
         if (present.length === wanted.length) {
-          emit(`  verified: all ${wanted.length} new card(s) present, project now has ${vCards.length}`);
+          emit(`✓ Verified: all ${wanted.length} cards saved. Project now has ${vCards.length}.`);
         } else {
-          emit(`  ⚠ verification failed: only ${present.length}/${wanted.length} new card(s) came back on re-read`);
+          emit(`⚠ Only ${present.length} of ${wanted.length} cards came back when re-checked.`);
         }
         // Keep the proof, since the reload takes the in-page log with it.
         downloadJson(`proxxied-result-${projectId}-${Date.now()}.json`, {
@@ -743,7 +751,7 @@
           cardsAfter: vCards,
         });
       } catch (e) {
-        emit(`  ⚠ could not verify the write: ${e.message}`);
+        emit(`⚠ Could not verify the save: ${e.message}`);
       }
 
       // The write is not safe yet. The open tab still holds the pre-import
@@ -753,10 +761,10 @@
       // import: the two imported cards were simply gone.
       //
       // Reloading is what makes the write stick, so do it rather than asking.
-      emit('  reloading the page in 2s - the open tab would otherwise overwrite this write within seconds');
+      emit('Reloading the page - without it this tab would undo the import.');
       setTimeout(() => location.reload(), 2000);
     } catch (e) {
-      emit(`✗ failed: ${e.message}`);
+      emit(`✗ ${e.message}`);
     }
   });
 })();

@@ -285,6 +285,17 @@ payload for "added a pair" is unknown — inventing one is exactly the
 single-example guessing that produced the original broken schema. To settle it,
 add a pair through the UI with the recorder running and read what it posts.
 
+## Output
+
+The popup and the on-page overlay carry progress and outcomes in plain
+language — what is being looked up, what was built, what was saved, and any
+warning that needs acting on. Everything diagnostic (request URLs, raw response
+bodies, token fragments, uuids, template internals) goes to the **browser
+console** instead, under `[proxxied-importer]` / `[proxxied-recorder]`.
+
+The overlay only appears once there is something to report, so a page with no
+import running stays clean.
+
 ## Known-fragile parts
 
 - Backs come in four kinds (`scryfall`, `mpc`, `cardback`, `upload-library`);
