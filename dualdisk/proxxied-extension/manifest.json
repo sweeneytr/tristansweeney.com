@@ -1,17 +1,40 @@
 {
   "manifest_version": 3,
   "name": "Proxxied Pair Importer",
-  "version": "1.0.0",
-  "description": "Imports dualdisk front/back MTG land pairs into a proxxied.com project.",
-  "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["https://proxxied.com/*"],
+  "version": "3.8.0",
+  "description": "Records and documents proxxied.com's API from a real browser tab, and imports dualdisk front/back MTG land pairs into a project.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://proxxied.com/*",
+    "https://api.proxxied.com/*",
+    "https://*.supabase.co/*",
+    "https://api.scryfall.com/*"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-      "matches": ["https://proxxied.com/*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://proxxied.com/*"
+      ],
+      "js": [
+        "recorder.js",
+        "main-world.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://proxxied.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ]

@@ -1,0 +1,300 @@
+Ajani Goldmane|Apothecary Initiate|LRW-1|SHM-1
+Arbiter of Knollridge|Armored Ascension|LRW-2|SHM-2
+Austere Command|Ballynock Cohort|LRW-3|SHM-3
+Avian Changeling|Barrenton Medic|LRW-4|SHM-4
+Battle Mastery|Boon Reflection|LRW-5|SHM-5
+Brigid, Hero of Kinsbaile|Goldenglow Moth|LRW-6|SHM-6
+Burrenton Forge-Tender|Greater Auramancy|LRW-7|SHM-7
+Cenn's Heir|Inquisitor's Snare|LRW-8|SHM-8
+Changeling Hero|Kithkin Rabble|LRW-9|SHM-9
+Cloudgoat Ranger|Kithkin Shielddare|LRW-10|SHM-10
+Crib Swap|Last Breath|LRW-11|SHM-11
+Dawnfluke|Mass Calcify|LRW-12|SHM-12
+Entangling Trap|Mine Excavation|LRW-13|SHM-13
+Favor of the Mighty|Mistmeadow Skulk|LRW-14|SHM-14
+Galepowder Mage|Niveous Wisps|LRW-15|SHM-15
+Goldmeadow Dodger|Order of Whiteclay|LRW-16|SHM-16
+Goldmeadow Harrier|Pale Wayfarer|LRW-17|SHM-17
+Goldmeadow Stalwart|Prison Term|LRW-18|SHM-18
+Harpoon Sniper|Resplendent Mentor|LRW-19|SHM-19
+Hillcomber Giant|Rune-Cervin Rider|LRW-20|SHM-20
+Hoofprints of the Stag|Runed Halo|LRW-21|SHM-21
+Judge of Currents|Safehold Sentry|LRW-22|SHM-22
+Kinsbaile Balloonist|Spectral Procession|LRW-23|SHM-23
+Kinsbaile Skirmisher|Strip Bare|LRW-24|SHM-24
+Kithkin Greatheart|Twilight Shepherd|LRW-25|SHM-25
+Kithkin Harbinger|Windbrisk Raptor|LRW-26|SHM-26
+Kithkin Healer|Woeleecher|LRW-27|SHM-27
+Knight of Meadowgrain|Advice from the Fae|LRW-28|SHM-28
+Lairwatch Giant|Biting Tether|LRW-29|SHM-29
+Militia's Pride|Briarberry Cohort|LRW-30|SHM-30
+Mirror Entity|Cerulean Wisps|LRW-31|SHM-31
+Neck Snap|Consign to Dream|LRW-32|SHM-32
+Oaken Brawler|Counterbore|LRW-33|SHM-33
+Oblivion Ring|Cursecatcher|LRW-34|SHM-34
+Plover Knights|Deepchannel Mentor|LRW-35|SHM-35
+Pollen Lullaby|Drowner Initiate|LRW-36|SHM-36
+Purity|Faerie Swarm|LRW-37|SHM-37
+Sentry Oak|Flow of Ideas|LRW-38|SHM-38
+Shields of Velis Vel|Ghastly Discovery|LRW-39|SHM-39
+Soaring Hope|Isleback Spawn|LRW-40|SHM-40
+Springjack Knight|Kinscaer Harpoonist|LRW-41|SHM-41
+Summon the School|Knacksaw Clique|LRW-42|SHM-42
+Surge of Thoughtweft|Leech Bonder|LRW-43|SHM-43
+Thoughtweft Trio|Merrow Wavebreakers|LRW-44|SHM-44
+Triclopean Sight|Parapet Watchers|LRW-45|SHM-45
+Veteran of the Depths|Prismwake Merrow|LRW-46|SHM-46
+Wellgabber Apothecary|Puca's Mischief|LRW-47|SHM-47
+Wispmare|Put Away|LRW-48|SHM-48
+Wizened Cenn|River Kelpie|LRW-49|SHM-49
+Aethersnipe|Savor the Moment|LRW-50|SHM-50
+Amoeboid Changeling|Sinking Feeling|LRW-51|SHM-51
+Aquitect's Will|Spell Syphon|LRW-52|SHM-52
+Benthicore|Thought Reflection|LRW-53|SHM-53
+Broken Ambitions|Whimwader|LRW-54|SHM-54
+Captivating Glance|Aphotic Wisps|LRW-55|SHM-55
+Cryptic Command|Ashenmoor Cohort|LRW-56|SHM-56
+Deeptread Merrow|Beseech the Queen|LRW-57|SHM-57
+Drowner of Secrets|Blowfly Infestation|LRW-58|SHM-58
+Ego Erasure|Cinderbones|LRW-59|SHM-59
+Ethereal Whiskergill|Cinderhaze Wretch|LRW-60|SHM-60
+Faerie Harbinger|Corrosive Mentor|LRW-61|SHM-61
+Faerie Trickery|Corrupt|LRW-62|SHM-62
+Fallowsage|Crowd of Cinders|LRW-63|SHM-63
+Familiar's Ruse|Disturbing Plot|LRW-64|SHM-64
+Fathom Trawl|Dusk Urchins|LRW-65|SHM-65
+Forced Fruition|Faerie Macabre|LRW-66|SHM-66
+Glen Elendra Pranksters|Gloomlance|LRW-67|SHM-67
+Glimmerdust Nap|Hollowborn Barghest|LRW-68|SHM-68
+Guile|Hollowsage|LRW-69|SHM-69
+Inkfathom Divers|Incremental Blight|LRW-70|SHM-70
+Jace Beleren|Loch Korrigan|LRW-71|SHM-71
+Merrow Commerce|Midnight Banshee|LRW-72|SHM-72
+Merrow Harbinger|Plague of Vermin|LRW-73|SHM-73
+Merrow Reejerey|Polluted Bonds|LRW-74|SHM-74
+Mistbind Clique|Puppeteer Clique|LRW-75|SHM-75
+Mulldrifter|Rite of Consumption|LRW-76|SHM-76
+Paperfin Rascal|Sickle Ripper|LRW-77|SHM-77
+Pestermite|Smolder Initiate|LRW-78|SHM-78
+Ponder|Splitting Headache|LRW-79|SHM-79
+Protective Bubble|Torture|LRW-80|SHM-80
+Ringskipper|Wound Reflection|LRW-81|SHM-81
+Scattering Stroke|Blistering Dieflyn|LRW-82|SHM-82
+Scion of Oona|Bloodmark Mentor|LRW-83|SHM-83
+Sentinels of Glen Elendra|Bloodshed Fever|LRW-84|SHM-84
+Shapesharer|Boggart Arsonists|LRW-85|SHM-85
+Silvergill Adept|Burn Trail|LRW-86|SHM-86
+Silvergill Douser|Cragganwick Cremator|LRW-87|SHM-87
+Sower of Temptation|Crimson Wisps|LRW-88|SHM-88
+Spellstutter Sprite|Deep-Slumber Titan|LRW-89|SHM-89
+Stonybrook Angler|Elemental Mastery|LRW-90|SHM-90
+Streambed Aquitects|Ember Gale|LRW-91|SHM-91
+Surgespanner|Flame Javelin|LRW-92|SHM-92
+Tideshaper Mystic|Furystoke Giant|LRW-93|SHM-93
+Turtleshell Changeling|Horde of Boggarts|LRW-94|SHM-94
+Wanderwine Prophets|Inescapable Brute|LRW-95|SHM-95
+Whirlpool Whelm|Intimidator Initiate|LRW-96|SHM-96
+Wings of Velis Vel|Jaws of Stone|LRW-97|SHM-97
+Zephyr Net|Knollspine Dragon|LRW-98|SHM-98
+Black Poplar Shaman|Knollspine Invocation|LRW-99|SHM-99
+Bog Hoodlums|Mudbrawler Cohort|LRW-100|SHM-100
+Boggart Birth Rite|Power of Fire|LRW-101|SHM-101
+Boggart Harbinger|Puncture Bolt|LRW-102|SHM-102
+Boggart Loggers|Pyre Charger|LRW-103|SHM-103
+Boggart Mob|Rage Reflection|LRW-104|SHM-104
+Cairn Wanderer|Rustrazor Butcher|LRW-105|SHM-105
+Colfenor's Plans|Slinking Giant|LRW-106|SHM-106
+Dread|Smash to Smithereens|LRW-107|SHM-107
+Dreamspoiler Witches|Wild Swing|LRW-108|SHM-108
+Exiled Boggart|Crabapple Cohort|LRW-109|SHM-109
+Eyeblight's Ending|Devoted Druid|LRW-110|SHM-110
+Facevaulter|Dramatic Entrance|LRW-111|SHM-111
+Faerie Tauntings|Drove of Elves|LRW-112|SHM-112
+Final Revels|Farhaven Elf|LRW-113|SHM-113
+Fodder Launch|Flourishing Defenses|LRW-114|SHM-114
+Footbottom Feast|Foxfire Oak|LRW-115|SHM-115
+Ghostly Changeling|Gleeful Sabotage|LRW-116|SHM-116
+Hoarder's Greed|Gloomwidow|LRW-117|SHM-117
+Hornet Harasser|Gloomwidow's Feast|LRW-118|SHM-118
+Hunter of Eyeblights|Howl of the Night Pack|LRW-119|SHM-119
+Knucklebone Witch|Hungry Spriggan|LRW-120|SHM-120
+Liliana Vess|Juvenile Gloomwidow|LRW-121|SHM-121
+Lys Alana Scarblade|Mana Reflection|LRW-122|SHM-122
+Mad Auntie|Mossbridge Troll|LRW-123|SHM-123
+Makeshift Mannequin|Nurturer Initiate|LRW-124|SHM-124
+Marsh Flitter|Presence of Gond|LRW-125|SHM-125
+Moonglove Winnower|Prismatic Omen|LRW-126|SHM-126
+Mournwhelk|Raking Canopy|LRW-127|SHM-127
+Nameless Inversion|Roughshod Mentor|LRW-128|SHM-128
+Nath's Buffoon|Spawnwrithe|LRW-129|SHM-129
+Nectar Faerie|Toil to Renown|LRW-130|SHM-130
+Nettlevine Blight|Tower Above|LRW-131|SHM-131
+Nightshade Stinger|Viridescent Wisps|LRW-132|SHM-132
+Oona's Prowler|Wildslayer Elves|LRW-133|SHM-133
+Peppersmoke|Witherscale Wurm|LRW-134|SHM-134
+Profane Command|Woodfall Primus|LRW-135|SHM-135
+Prowess of the Fair|Aethertow|LRW-136|SHM-136
+Quill-Slinger Boggart|Augury Adept|LRW-137|SHM-137
+Scarred Vinebreeder|Barrenton Cragtreads|LRW-138|SHM-138
+Shriekmaw|Curse of Chains|LRW-139|SHM-139
+Skeletal Changeling|Enchanted Evening|LRW-140|SHM-140
+Spiderwig Boggart|Glamer Spinners|LRW-141|SHM-141
+Squeaking Pie Sneak|Godhead of Awe|LRW-142|SHM-142
+Thieving Sprite|Mirrorweave|LRW-143|SHM-143
+Thorntooth Witch|Mistmeadow Witch|LRW-144|SHM-144
+Thoughtseize|Plumeveil|LRW-145|SHM-145
+Warren Pilferers|Puresight Merrow|LRW-146|SHM-146
+Weed Strangle|Repel Intruders|LRW-147|SHM-147
+Adder-Staff Boggart|Silkbind Faerie|LRW-148|SHM-148
+Ashling the Pilgrim|Somnomancer|LRW-149|SHM-149
+Ashling's Prerogative|Steel of the Godhead|LRW-150|SHM-150
+Axegrinder Giant|Swans of Bryn Argoll|LRW-151|SHM-151
+Blades of Velis Vel|Thistledown Duo|LRW-152|SHM-152
+Blind-Spot Giant|Thistledown Liege|LRW-153|SHM-153
+Boggart Forager|Thoughtweft Gambit|LRW-154|SHM-154
+Boggart Shenanigans|Turn to Mist|LRW-155|SHM-155
+Boggart Sprite-Chaser|Worldpurge|LRW-156|SHM-156
+Caterwauling Boggart|Zealous Guardian|LRW-157|SHM-157
+Ceaseless Searblades|Cemetery Puca|LRW-158|SHM-158
+Chandra Nalaar|Dire Undercurrents|LRW-159|SHM-159
+Changeling Berserker|Dream Salvage|LRW-160|SHM-160
+Consuming Bonfire|Fate Transfer|LRW-161|SHM-161
+Crush Underfoot|Ghastlord of Fugue|LRW-162|SHM-162
+Faultgrinder|Glen Elendra Liege|LRW-163|SHM-163
+Fire-Belly Changeling|Gravelgill Axeshark|LRW-164|SHM-164
+Flamekin Bladewhirl|Gravelgill Duo|LRW-165|SHM-165
+Flamekin Brawler|Helm of the Ghastlord|LRW-166|SHM-166
+Flamekin Harbinger|Inkfathom Infiltrator|LRW-167|SHM-167
+Flamekin Spitfire|Inkfathom Witch|LRW-168|SHM-168
+Giant Harbinger|Memory Plunder|LRW-169|SHM-169
+Giant's Ire|Memory Sluice|LRW-170|SHM-170
+Glarewielder|Merrow Grimeblotter|LRW-171|SHM-171
+Goatnapper|Oona, Queen of the Fae|LRW-172|SHM-172
+Hamletback Goliath|Oona's Gatewarden|LRW-173|SHM-173
+Hearthcage Giant|River's Grasp|LRW-174|SHM-174
+Heat Shimmer|Scarscale Ritual|LRW-175|SHM-175
+Hostility|Sygg, River Cutthroat|LRW-176|SHM-176
+Hurly-Burly|Torpor Dust|LRW-177|SHM-177
+Incandescent Soulstoke|Wanderbrine Rootcutters|LRW-178|SHM-178
+Incendiary Command|Wasp Lancer|LRW-179|SHM-179
+Ingot Chewer|Ashenmoor Gouger|LRW-180|SHM-180
+Inner-Flame Acolyte|Ashenmoor Liege|LRW-181|SHM-181
+Inner-Flame Igniter|Cultbrand Cinder|LRW-182|SHM-182
+Lash Out|Demigod of Revenge|LRW-183|SHM-183
+Lowland Oaf|Din of the Fireherd|LRW-184|SHM-184
+Mudbutton Torchrunner|Emberstrike Duo|LRW-185|SHM-185
+Needle Drop|Everlasting Torment|LRW-186|SHM-186
+Nova Chaser|Fists of the Demigod|LRW-187|SHM-187
+Rebellion of the Flamekin|Fulminator Mage|LRW-188|SHM-188
+Smokebraider|Grief Tyrant|LRW-189|SHM-189
+Soulbright Flamekin|Kulrath Knight|LRW-190|SHM-190
+Stinkdrinker Daredevil|Manaforge Cinder|LRW-191|SHM-191
+Sunrise Sovereign|Murderous Redcap|LRW-192|SHM-192
+Tar Pitcher|Poison the Well|LRW-193|SHM-193
+Tarfire|Scar|LRW-194|SHM-194
+Thundercloud Shaman|Sootstoke Kindler|LRW-195|SHM-195
+Wild Ricochet|Sootwalkers|LRW-196|SHM-196
+Battlewand Oak|Spiteflame Witch|LRW-197|SHM-197
+Bog-Strider Ash|Spiteful Visions|LRW-198|SHM-198
+Briarhorn|Torrent of Souls|LRW-199|SHM-199
+Changeling Titan|Traitor's Roar|LRW-200|SHM-200
+Cloudcrown Oak|Tyrannize|LRW-201|SHM-201
+Cloudthresher|Boartusk Liege|LRW-202|SHM-202
+Dauntless Dourbark|Boggart Ram-Gang|LRW-203|SHM-203
+Elvish Branchbender|Deus of Calamity|LRW-204|SHM-204
+Elvish Eulogist|Firespout|LRW-205|SHM-205
+Elvish Handservant|Fossil Find|LRW-206|SHM-206
+Elvish Harbinger|Giantbaiting|LRW-207|SHM-207
+Elvish Promenade|Guttural Response|LRW-208|SHM-208
+Epic Proportions|Impromptu Raid|LRW-209|SHM-209
+Eyes of the Wisent|Loamdragger Giant|LRW-210|SHM-210
+Fertile Ground|Manamorphose|LRW-211|SHM-211
+Fistful of Force|Morselhoarder|LRW-212|SHM-212
+Garruk Wildspeaker|Mudbrawler Raiders|LRW-213|SHM-213
+Gilt-Leaf Ambush|Rosheen Meanderer|LRW-214|SHM-214
+Gilt-Leaf Seer|Runes of the Deus|LRW-215|SHM-215
+Guardian of Cloverdell|Scuzzback Marauders|LRW-216|SHM-216
+Heal the Scars|Scuzzback Scrapper|LRW-217|SHM-217
+Hunt Down|Tattermunge Duo|LRW-218|SHM-218
+Immaculate Magistrate|Tattermunge Maniac|LRW-219|SHM-219
+Imperious Perfect|Tattermunge Witch|LRW-220|SHM-220
+Incremental Growth|Valleymaker|LRW-221|SHM-221
+Jagged-Scar Archers|Vexing Shusher|LRW-222|SHM-222
+Kithkin Daggerdare|Wort, the Raidmother|LRW-223|SHM-223
+Kithkin Mourncaller|Barkshell Blessing|LRW-224|SHM-224
+Lace with Moonglove|Dawnglow Infusion|LRW-225|SHM-225
+Lammastide Weave|Elvish Hexhunter|LRW-226|SHM-226
+Leaf Gilder|Fracturing Gust|LRW-227|SHM-227
+Lignify|Heartmender|LRW-228|SHM-228
+Lys Alana Huntmaster|Kitchen Finks|LRW-229|SHM-229
+Masked Admirers|Medicine Runner|LRW-230|SHM-230
+Nath's Elite|Mercy Killing|LRW-231|SHM-231
+Oakgnarl Warrior|Old Ghastbark|LRW-232|SHM-232
+Primal Command|Oracle of Nectars|LRW-233|SHM-233
+Rootgrapple|Oversoul of Dusk|LRW-234|SHM-234
+Seedguide Ash|Raven's Run Dragoon|LRW-235|SHM-235
+Spring Cleaning|Reknit|LRW-236|SHM-236
+Sylvan Echoes|Rhys the Redeemed|LRW-237|SHM-237
+Timber Protector|Safehold Duo|LRW-238|SHM-238
+Treefolk Harbinger|Safehold Elite|LRW-239|SHM-239
+Vigor|Safewright Quest|LRW-240|SHM-240
+Warren-Scourge Elf|Seedcradle Witch|LRW-241|SHM-241
+Woodland Changeling|Shield of the Oversoul|LRW-242|SHM-242
+Woodland Guidance|Wheel of Sun and Moon|LRW-243|SHM-243
+Wren's Run Packmaster|Wilt-Leaf Cavaliers|LRW-244|SHM-244
+Wren's Run Vanquisher|Wilt-Leaf Liege|LRW-245|SHM-245
+Brion Stoutarm|Blazethorn Scarecrow|LRW-246|SHM-246
+Doran, the Siege Tower|Blight Sickle|LRW-247|SHM-247
+Gaddock Teeg|Cauldron of Souls|LRW-248|SHM-248
+Horde of Notions|Chainbreaker|LRW-249|SHM-249
+Nath of the Gilt-Leaf|Elsewhere Flask|LRW-250|SHM-250
+Sygg, River Guide|Gnarled Effigy|LRW-251|SHM-251
+Wort, Boggart Auntie|Grim Poppet|LRW-252|SHM-252
+Wydwen, the Biting Gale|Heap Doll|LRW-253|SHM-253
+Colfenor's Urn|Illuminated Folio|LRW-254|SHM-254
+Deathrender|Lockjaw Snapper|LRW-255|SHM-255
+Dolmen Gate|Lurebound Scarecrow|LRW-256|SHM-256
+Herbal Poultice|Painter's Servant|LRW-257|SHM-257
+Moonglove Extract|Pili-Pala|LRW-258|SHM-258
+Rings of Brighthearth|Rattleblaze Scarecrow|LRW-259|SHM-259
+Runed Stalactite|Reaper King|LRW-260|SHM-260
+Springleaf Drum|Revelsong Horn|LRW-261|SHM-261
+Thorn of Amethyst|Scrapbasket|LRW-262|SHM-262
+Thousand-Year Elixir|Scuttlemutt|LRW-263|SHM-263
+Twinning Glass|Tatterkite|LRW-264|SHM-264
+Wanderer's Twig|Thornwatch Scarecrow|LRW-265|SHM-265
+Ancient Amphitheater|Trip Noose|LRW-266|SHM-266
+Auntie's Hovel|Umbral Mantle|LRW-267|SHM-267
+Gilt-Leaf Palace|Watchwing Scarecrow|LRW-268|SHM-268
+Howltooth Hollow|Wicker Warcrawler|LRW-269|SHM-269
+Mosswort Bridge|Wingrattle Scarecrow|LRW-270|SHM-270
+Secluded Glen|Fire-Lit Thicket|LRW-271|SHM-271
+Shelldock Isle|Graven Cairns|LRW-272|SHM-272
+Shimmering Grotto|Leechridden Swamp|LRW-273|SHM-273
+Spinerock Knoll|Madblind Mountain|LRW-274|SHM-274
+Vivid Crag|Mistveil Plains|LRW-275|SHM-275
+Vivid Creek|Moonring Island|LRW-276|SHM-276
+Vivid Grove|Mystic Gate|LRW-277|SHM-277
+Vivid Marsh|Reflecting Pool|LRW-278|SHM-278
+Vivid Meadow|Sapseep Forest|LRW-279|SHM-279
+Wanderwine Hub|Sunken Ruins|LRW-280|SHM-280
+Windbrisk Heights|Wooded Bastion|LRW-281|SHM-281
+Plains|Plains|LRW-282|SHM-282
+Plains|Plains|LRW-283|SHM-283
+Plains|Plains|LRW-284|SHM-284
+Plains|Plains|LRW-285|SHM-285
+Island|Island|LRW-286|SHM-286
+Island|Island|LRW-287|SHM-287
+Island|Island|LRW-288|SHM-288
+Island|Island|LRW-289|SHM-289
+Swamp|Swamp|LRW-290|SHM-290
+Swamp|Swamp|LRW-291|SHM-291
+Swamp|Swamp|LRW-292|SHM-292
+Swamp|Swamp|LRW-293|SHM-293
+Mountain|Mountain|LRW-294|SHM-294
+Mountain|Mountain|LRW-295|SHM-295
+Mountain|Mountain|LRW-296|SHM-296
+Mountain|Mountain|LRW-297|SHM-297
+Forest|Forest|LRW-298|SHM-298
+Forest|Forest|LRW-299|SHM-299
+Forest|Forest|LRW-300|SHM-300

@@ -3,17 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <style>
-    body { width: 380px; font: 13px system-ui, sans-serif; padding: 10px; }
-    textarea { width: 100%; height: 140px; box-sizing: border-box; font: 12px monospace; }
-    button { width: 100%; padding: 8px; margin-top: 8px; cursor: pointer; }
-    #status { margin-top: 8px; white-space: pre-wrap; font: 11px monospace; max-height: 160px; overflow-y: auto; }
-    .hint { color: #666; font-size: 11px; margin-bottom: 4px; }
+    body { width: 420px; font: 13px system-ui, sans-serif; padding: 10px; margin: 0; }
+    textarea { width: 100%; height: 110px; box-sizing: border-box; font: 12px monospace; }
+    button { padding: 7px 9px; cursor: pointer; font: 12px system-ui, sans-serif; }
+    .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .row button { flex: 1 1 auto; }
+    .wide { width: 100%; margin-top: 8px; padding: 8px; }
+    #status { margin-top: 8px; white-space: pre-wrap; font: 11px monospace; max-height: 180px; overflow-y: auto;
+              background: #111; color: #0f0; padding: 6px; border-radius: 4px; }
+    .hint { color: #666; font-size: 11px; margin: 6px 0 4px; }
+    h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #444;
+         margin: 14px 0 2px; border-bottom: 1px solid #ddd; padding-bottom: 3px; }
+    h3:first-child { margin-top: 0; }
+    #stats { font: 11px monospace; background: #f2f4f7; padding: 6px; border-radius: 4px; color: #333; }
+    label.chk { display: block; font-size: 11px; color: #666; margin-top: 6px; }
+    .warn { color: #a30; }
   </style>
 </head>
 <body>
-  <div class="hint">One pair per line: <code>Name|FRONT_SET-NUM|BACK_SET-NUM</code><br>e.g. <code>Swamp|LRW-290|SHM-290</code></div>
-  <textarea id="pairs" placeholder="Swamp|LRW-290|SHM-290"></textarea>
-  <button id="run">Import into proxxied.com</button>
+  <h3>Discovery</h3>
+  <div id="stats">loading…</div>
+  <div class="row">
+    <button id="scan" title="Fetch and grep the app's own JS bundles">Scan bundles</button>
+    <button id="openapi" title="Ask PostgREST for its OpenAPI schema">PostgREST schema</button>
+    <button id="auth" title="Inspect localStorage/cookies for the session">Auth</button>
+  </div>
+  <div class="row">
+    <button id="export-md">Export API report (.md)</button>
+    <button id="export-json">Export capture (.json)</button>
+  </div>
+  <div class="row">
+    <button id="clear">Clear capture</button>
+  </div>
+  <label class="chk"><input type="checkbox" id="reveal" /> <span class="warn">Include secret values in exports</span> (JWTs, cookies — off by default)</label>
+
+  <h3>Import pairs</h3>
+  <div class="hint">One pair per line. The last two fields are the printings; names are optional and come from Scryfall.<br>
+    <code>LRW-290|SHM-290</code> — both names looked up<br>
+    <code>Front|LRW-1|SHM-1</code> — front name overridden<br>
+    <code>Front|Back|LRW-1|SHM-1</code> — both overridden</div>
+  <textarea id="pairs" placeholder="LRW-290|SHM-290"></textarea>
+  <div class="row">
+    <button id="dryrun" title="Build the card objects and download them without writing">Dry run</button>
+    <button id="run">Import for real</button>
+  </div>
+
   <div id="status"></div>
   <script src="popup.js"></script>
 </body>
