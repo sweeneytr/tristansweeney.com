@@ -172,6 +172,9 @@ importers:
       '@aelar/fonts':
         specifier: workspace:^
         version: link:../fonts
+      '@aelar/mirrorweave':
+        specifier: workspace:^
+        version: link:../mirrorweave
       '@aelar/organisms':
         specifier: workspace:^
         version: link:../organisms

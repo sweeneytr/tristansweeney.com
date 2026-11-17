@@ -23,6 +23,7 @@
     "@aelar/atoms": "workspace:^",
     "@aelar/flowapp": "workspace:^",
     "@aelar/fonts": "workspace:^",
+    "@aelar/mirrorweave": "workspace:^",
     "@aelar/organisms": "workspace:^",
     "@astrojs/check": "^0.9.9",
     "@astrojs/mdx": "5.0.4",
