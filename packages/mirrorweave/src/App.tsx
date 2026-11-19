@@ -9,6 +9,7 @@ import { PairCard } from './components/PairCard'
 import { CopyButton } from './components/CopyButton'
 import { ClearPrintedButton, PrintedSectionBox, usePrinted } from './components/PrintedBox'
 import { SetIcon } from './components/SetIcon'
+import { ThemeToggle } from './components/ThemeToggle'
 import {
   getSnapshot as collapsedSnapshot,
   setAllCollapsed,
@@ -125,6 +126,7 @@ function Board() {
         {allShut ? 'Expand all' : 'Collapse all'}
       </button>
       <CopyButton lines={allLines} label={`Copy all ${slots}`} />
+      <ThemeToggle />
     </div>
     <div className="shell" ref={shell}>
       <Rail view={view as View} groups={groups} />

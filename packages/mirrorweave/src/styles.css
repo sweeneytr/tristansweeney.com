@@ -23,6 +23,16 @@
     --pip-ring:rgba(230,233,221,.22);
   }
 }
+:root[data-theme="dark"] {
+    --ground:#13160E; --surface:#1B1F16; --sunk:#0E110A;
+    --ink:#E6E9DD; --ink-soft:#9BA391; --ink-faint:#6F7767;
+    --rule:#2C3225; --rule-soft:#242A1E;
+    --day:#D7A544; --day-wash:rgba(215,165,68,.10);
+    --night:#A091DE; --night-wash:rgba(160,145,222,.11);
+    --up:#D9865C; --down:#7FBF93;
+    --rar-u:#5A6673; --rar-u-ink:#E8EDF2; --rar-r:#8A6E28; --rar-r-ink:#FBEFD2;
+    --pip-ring:rgba(230,233,221,.22);
+}
 * { box-sizing:border-box; }
 [hidden] { display:none !important; }
 body {
@@ -45,6 +55,7 @@ a { color:inherit; }
 .topbar .search { flex:1 1 12rem; min-width:0; }
 .topbar .tally { white-space:nowrap; }
 .topbar .copybtn { flex:none; }
+.topbar .themebtn { flex:none; min-width:4.6rem; }
 @media (max-width:760px) { .topbar .tally { display:none; } }
 
 .shell { max-width:1180px; margin:0 auto; }
