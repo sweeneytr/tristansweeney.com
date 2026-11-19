@@ -8,6 +8,8 @@
   --rar-u:#B4BEC8; --rar-u-ink:#252B33; --rar-r:#C9A24A; --rar-r-ink:#2B2210;
   --pip-ring:rgba(27,32,22,.20);
   --topbar-h:3.1rem;
+  /* hero heading colours: orange + indigo, identical in light and dark */
+  --hero-mirror:#FF7A2E; /* neon orange */ --hero-weave:#9B6BFF; /* neon violet */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -72,6 +74,19 @@ a { color:inherit; }
 h1 { font-size:clamp(2.2rem,6vw,4rem); line-height:1.02; letter-spacing:-.02em; }
 h1 .lit, .wordmark .lit { color:var(--day); font-weight:900; }
 h1 .dark, .wordmark .dark { color:var(--night); font-style:italic; }
+/* hero: "weave" steps down-right and overlaps the foot of "Mirror", sitting on top of it */
+.mast h1 { display:flex; flex-direction:column; align-items:flex-start; font-size:clamp(3rem,10vw,6.5rem); line-height:.9; padding-bottom:.1em; }
+.mast h1 .lit, .mast h1 .dark { display:block; }
+.mast h1 { font-family:Alegreya,Georgia,serif; letter-spacing:-.01em; }
+.mast h1 .lit { font-weight:700; }
+.mast h1 .dark { font-weight:400; }
+.mast h1 .lit { color:var(--hero-mirror);
+  text-shadow:0 0 .04em #fff2e0, 0 0 .1em #ffa25c, 0 0 .25em #ff6a1a, 0 0 .5em #e8470a; }
+.mast h1 .dark { color:var(--hero-weave);
+  text-shadow:0 0 .04em #fff, 0 0 .12em #B58CFF, 0 0 .3em #8A4DFF, 0 0 .6em #6A2CFF; }
+.mast h1 .dark {
+  position:relative; z-index:1; margin:-.4em 0 0 1.2em; transform:rotate(-8deg); transform-origin:left center;
+}
 .standfirst { font-size:1.08rem; color:var(--ink-soft); max-width:62ch; margin:1.25rem 0 0; }
 .search {
   flex:1 1 18rem; font-family:inherit; font-size:.86rem; padding:.55rem .75rem;
