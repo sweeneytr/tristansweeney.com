@@ -1,30 +1,684 @@
 ---
 import Layout from "#layouts/Minimal.astro";
-import { Mirrorweave } from "@aelar/mirrorweave";
+import { SET_ICONS } from "../../../../mirrorweave/src/assets/sets/index.ts";
+import pairs from "../../../../mirrorweave/src/data/pairs.json";
+
+// Server-rendered default (also the no-JS fallback); the client script swaps in a random pair.
+const featured = pairs.find((p) => p.day.name === "Goldmeadow Dodger") ?? pairs[0];
+const slim = (f: (typeof pairs)[number]["day"]) => ({
+  name: f.name, cost: f.cost, type: f.type, pt: f.pt, set: f.set, oracle: f.oracle, id: f.id, artist: f.artist, rarity: f.rarity,
+});
+const showcase = pairs.map((p) => ({ day: slim(p.day), night: slim(p.night) }));
+const usedSets = [...new Set(pairs.flatMap((p) => [p.day.set, p.night.set]))].map((c) => c.toLowerCase());
+const showcaseIcons = Object.fromEntries(usedSets.filter((c) => SET_ICONS[c]).map((c) => [c, SET_ICONS[c]]));
+const json = (v: unknown) => JSON.stringify(v).replace(/</g, "\\u003c");
+
+// Deterministic PRNG so the rain is stable across builds.
+let seed = 0x5eed;
+const rnd = () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+const art = (id: string) =>
+  `https://cards.scryfall.io/art_crop/front/${id[0]}/${id[1]}/${id}.jpg`;
+const setIcon = (code: string) => SET_ICONS[code.toLowerCase()];
+const COLS = 10;
+const rain = Array.from({ length: COLS }, (_, i) => ({
+  left: ((i + 0.5) / COLS) * 100,
+  // depth for the parallax effect: 0.85 (far) .. 1.39 (near), deterministic so the PRNG stream is untouched
+  z: 0.85 + (((i * 7) % COLS) / COLS) * 0.6,
+  dur: 34 + rnd() * 34,
+  delay: -rnd() * 60,
+  cards: Array.from({ length: 9 }, () => {
+    const p = pairs[Math.floor(rnd() * pairs.length)];
+    return { day: p.day.name, night: p.night.name, dayArt: art(p.day.id), nightArt: art(p.night.id), fd: 10 + rnd() * 16, fdelay: -rnd() * 26 };
+  }),
+}));
+
+// Sparkles scattered across the whole hero, jittered on a grid so they spread evenly.
+const SPARK_COLS = 12, SPARK_ROWS = 8;
+const sparkles = Array.from({ length: SPARK_COLS * SPARK_ROWS }, (_, n) => {
+  const c = n % SPARK_COLS, r = Math.floor(n / SPARK_COLS);
+  return {
+    x: ((c + 0.15 + rnd() * 0.7) / SPARK_COLS) * 100,
+    y: ((r + 0.15 + rnd() * 0.7) / SPARK_ROWS) * 100,
+    size: 0.45 + rnd() ** 2 * 1.4,
+    dur: 2.5 + rnd() * 4,
+    delay: -rnd() * 6,
+  };
+});
+
+// Shooting stars: identical geometry in both colour layers, so a streak changes colour as it crosses the seam.
+const shoots = [
+  { x: 96, y: 4, dur: 11, delay: -2 },
+  { x: 78, y: 22, dur: 14, delay: -9 },
+  { x: 100, y: 46, dur: 17, delay: -5 },
+  { x: 64, y: 2, dur: 13, delay: -12 },
+];
+
+/** Same Scryfall symbol SVGs the app uses: {W/U} -> WU.svg */
+const symbolUrl = (code: string) =>
+  `https://svgs.scryfall.io/card-symbols/${code.toUpperCase().replace(/\//g, "")}.svg`;
+const pips = (cost: string) =>
+  [...cost.matchAll(/\{([^}]+)\}/g)].map((m) => m[1]);
+/** Split rules text into plain runs and inline mana symbols. */
+const oracleChunks = (text: string) =>
+  text.split(/(\{[^}]+\})/g).filter(Boolean).map((c) =>
+    /^\{[^}]+\}$/.test(c) ? { sym: c.slice(1, -1) } : { text: c },
+  );
 ---
 
 <Layout
   title="Mirrorweave"
   pageTitle="Mirrorweave | Tristan Sweeney"
-  description="Lorwyn 360 cube cards paired with Shadowmoor and Eventide counterparts, to print as double-faced cards"
+  description="Every card in the Lorwyn 360 cube paired with its Shadowmoor or Eventide reflection, to print as one double-faced card."
 >
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,400;1,700&family=Alegreya:ital,wght@0,700;1,400;1,700&family=Alegreya:ital,wght@0,700;1,400;1,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,400;1,700&family=EB+Garamond:wght@500&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
   />
-  <script is:inline>
+
+  <main class="mw">
+    <section class="hero">
+      <div class="half day" aria-hidden="true"></div>
+      <div class="half night" aria-hidden="true"></div>
+
+      <div class="rain" aria-hidden="true">
+        {rain.map((c) => (
+          <div class="col" style={`left:${c.left}%;--z:${c.z.toFixed(2)};--dur:${c.dur}s;--delay:${c.delay}s`}>
+            {[0, 1].map(() => (
+              <div class="strip">
+                {c.cards.map((k) => (
+                  <span class="tile" style={`--fd:${k.fd}s;--fdelay:${k.fdelay}s`}>
+                    <span class="tf tf-day">
+                      <img src={k.dayArt} alt="" loading="eager" decoding="async" fetchpriority="low" />
+                      <span class="cap">{k.day}</span>
+                    </span>
+                    <span class="tf tf-night">
+                      <img src={k.nightArt} alt="" loading="eager" decoding="async" fetchpriority="low" />
+                      <span class="cap">{k.night}</span>
+                    </span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {["day", "night"].map((side) => (
+        <div class={`sparkles on-${side}`} aria-hidden="true">
+          {sparkles.map((p) => (
+            <i style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%;--s:${p.size.toFixed(2)}rem;--dur:${p.dur.toFixed(2)}s;--delay:${p.delay.toFixed(2)}s`}></i>
+          ))}
+          {shoots.map((t) => (
+            <b class="shoot" style={`left:${t.x}%;top:${t.y}%;--dur:${t.dur}s;--delay:${t.delay}s`}></b>
+          ))}
+        </div>
+      ))}
+
+      <svg class="seam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="seamV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a3a" /><stop offset="1" stop-color="#b08cff" /></linearGradient>
+          <linearGradient id="seamH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff8a3a" /><stop offset="1" stop-color="#b08cff" /></linearGradient>
+        </defs>
+        <g class="seam-d">
+          <line class="halo" x1="56" y1="0" x2="44" y2="100" stroke="url(#seamV)" />
+          <line class="core" x1="56" y1="0" x2="44" y2="100" stroke="url(#seamV)" />
+        </g>
+        <g class="seam-m">
+          <line class="halo" x1="0" y1="60" x2="100" y2="52" stroke="url(#seamH)" />
+          <line class="core" x1="0" y1="60" x2="100" y2="52" stroke="url(#seamH)" />
+        </g>
+      </svg>
+
+      <div class="copy">
+        <h1><span class="lit">Mirror</span><span class="dark">weave</span></h1>
+        <div class="sets" aria-label="Lorwyn, Morningtide, Shadowmoor, Eventide">
+          <div class="pill">
+            {["lrw", "mor", "shm", "eve"].map((c, i) => setIcon(c) && (
+              <svg class={`setglyph ${i < 2 ? "is-day" : "is-night"}`} viewBox={setIcon(c).viewBox} role="img" aria-label={setIcon(c).name}>
+                <title>{setIcon(c).name}</title>
+                {setIcon(c).paths.map((d) => <path d={d} />)}
+              </svg>
+            ))}
+          </div>
+        </div>
+        <p class="lede">
+          Every card in the cube, paired with the Shadowmoor or Eventide card that fills
+          the same slot — to be printed as one double-faced card. Flip it over and
+          the same slot is darker.
+        </p>
+        <a class="go" href="/mirrorweave/browse">Browse the pairs <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="stage">
+      <button class="flip pending" type="button" aria-label={`Flip ${featured.day.name} to ${featured.night.name}`}>
+        <span class="card">
+          {[["front", featured.day], ["back", featured.night]].map(([side, f]) => (
+            <span class={`face ${side}`}>
+              <span class="top">
+                <span class="nm">{(f as any).name}</span>
+                <span class="cost">
+                  {pips((f as any).cost).map((p) => <img class="pip" src={symbolUrl(p)} alt="" width="17" height="17" />)}
+                </span>
+              </span>
+              <img class="art" src={art((f as any).id)} alt="" />
+              <span class="type">
+                <span>{(f as any).type}</span>
+                {setIcon((f as any).set) && (
+                  <svg class={`seticon r-${(f as any).rarity}`} viewBox={setIcon((f as any).set).viewBox} role="img" aria-label={setIcon((f as any).set).name}>
+                    <title>{setIcon((f as any).set).name}</title>
+                    {setIcon((f as any).set).paths.map((d) => <path d={d} />)}
+                  </svg>
+                )}
+              </span>
+              <span class="rules">
+                {oracleChunks((f as any).oracle).map((c) =>
+                  "sym" in c ? <img class="pip pip-o" src={symbolUrl(c.sym!)} alt={`{${c.sym}}`} width="13" height="13" /> : c.text,
+                )}
+              </span>
+              <span class="foot"><span class="credit">
+                <svg class="brush" viewBox="0 0 32 32" role="img" aria-label="Illustrated by"><title>Illustrated by</title><path d="M24.247 12.196v0c1.074 0.043 0.611 0.006 1.389 0.085 2.336 0.284 3.296 0.995 6.103 0.107 0.071-0.015 0.157-0.049 0.222 0.020 0.077 0.082 0.021 0.282 0 0.352-0.139 0.464-0.434 0.878-0.709 1.269 0.364-0.13 0.186-0.060 0.534-0.208 0.051-0.021 0.134-0.048 0.158 0.028 0.055 0.176-0.169 0.482-0.252 0.592-0.552 0.723-1.361 1.265-2.252 1.468-3.061 1.662-4.907 1.899-7.55 2.063-0.273-0.168-0.499-0.391-0.722-0.618-0.332-0.090-0.679-0.041-1.015-0.001l-17.063 2.346c-0.095 0.026-0.006 0.002-0.273 0.051-1.43 0.221-2.686-0.232-2.806-1.011s0.941-1.589 2.371-1.81l0.002-0-0.002-0.013 13.581-1.982c0.638-0.51 1.938-0.679 2.72-0.804 0.714-0.116 1.431-0.211 2.147-0.309l0.011-0.082c0.006-0.103-0.003-0.061 0.017-0.129 0.061-0.21 0.061-0.268 0.184-0.449 0.608-0.896 2.239-0.919 3.207-0.964zM20.197 14.573c-0.761 0.051-1.386 0.137-2.135 0.286-0.089 0.018-0.635 0.102-0.727 0.242-0.101 0.331 0.239 0.553 0.376 0.621s2.455-0.236 2.572-0.431c0.122-0.203 0.156-0.637 0.019-0.691-0.049-0.009-0.012-0.025-0.105-0.026zM24.408 12.987v0c-1.1 0.044-2.253 0.182-2.639 1.067-0.089 0.204-0.102 0.437 0.263 0.506 1.050 0.198 1.784-0.402 2.84-0.515 1.194-0.129 2.399-0.145 3.581-0.405-1.028-0.279-2.067-0.554-3.134-0.632-0.303-0.022-0.608-0.014-0.912-0.020z"/></svg>
+                {(f as any).artist}
+              </span><span>{(f as any).pt}</span></span>
+            </span>
+          ))}
+        </span>
+        <span class="hint"><span class="touch">tap to flip</span><span class="mouse">click to flip</span></span>
+      </button>
+      <div class="idle">
+        <span class="idle-track" hidden aria-hidden="true"><span class="seg seg-day"><i></i></span><span class="seg seg-night"><i></i></span></span>
+        <div class="idle-controls">
+          <button class="idle-toggle" type="button" hidden aria-pressed="false" aria-label="Pause autoplay" title="Pause autoplay">
+            <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zm8 0h4v16h-4z" fill="currentColor"/></svg>
+            <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v16l13-8-13-8z" fill="currentColor"/></svg>
+          </button>
+          <button class="shuffle" type="button" hidden aria-label="Fast forward" title="Skip to the next step: flip, then a new card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4v16l10-8-10-8zm10 0v16l10-8-10-8z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="application/json" id="showcase-pairs" set:html={json(showcase)} />
+  <script type="application/json" id="showcase-icons" set:html={json(showcaseIcons)} />
+  <noscript><style>.flip.pending { visibility: visible !important; }</style></noscript>
+  <script>
+    import { imageUrls, startOffline } from "../../../../mirrorweave/src/lib/offline.ts";
+    type Face = { rarity: string; name: string; cost: string; type: string; pt: string; set: string; oracle: string; id: string; artist: string };
+    type Icon = { name: string; viewBox: string; paths: string[] };
+    const btn = document.querySelector<HTMLButtonElement>(".flip");
+    btn?.addEventListener("click", () => btn.classList.toggle("is-night"));
+
     try {
-      var t = localStorage.getItem("mirrorweave-theme");
-      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-    } catch (e) {}
+      const read = <T,>(id: string): T => JSON.parse(document.getElementById(id)!.textContent!);
+      const pairs = read<{ day: Face; night: Face }[]>("showcase-pairs");
+      const icons = read<Record<string, Icon>>("showcase-icons");
+      const brush = btn!.querySelector(".brush")!.outerHTML;
+      const esc = (t: string) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+      const sym = (c: string) => `https://svgs.scryfall.io/card-symbols/${c.toUpperCase().replace(/\//g, "")}.svg`;
+      const art = (id: string) => `https://cards.scryfall.io/art_crop/front/${id[0]}/${id[1]}/${id}.jpg`;
+      const pip = (c: string, cls: string, px: number) => `<img class="${cls}" src="${sym(c)}" alt="${cls.includes("pip-o") ? esc(`{${c}}`) : ""}" width="${px}" height="${px}">`;
+      const face = (f: Face) => {
+        const ic = icons[f.set.toLowerCase()];
+        const iconSvg = ic ? `<svg class="seticon r-${f.rarity}" viewBox="${ic.viewBox}" role="img" aria-label="${esc(ic.name)}"><title>${esc(ic.name)}</title>${ic.paths.map((d) => `<path d="${d}"/>`).join("")}</svg>` : "";
+        const cost = [...f.cost.matchAll(/\{([^}]+)\}/g)].map((m) => pip(m[1], "pip", 17)).join("");
+        const rules = f.oracle.split(/(\{[^}]+\})/g).filter(Boolean)
+          .map((c) => (/^\{[^}]+\}$/.test(c) ? pip(c.slice(1, -1), "pip pip-o", 13) : esc(c))).join("");
+        return `<span class="top"><span class="nm">${esc(f.name)}</span><span class="cost">${cost}</span></span>`
+          + `<img class="art" src="${art(f.id)}" alt="">`
+          + `<span class="type"><span>${esc(f.type)}</span>${iconSvg}</span>`
+          + `<span class="rules">${rules}</span>`
+          + `<span class="foot"><span class="credit">${brush}${esc(f.artist)}</span><span>${esc(f.pt)}</span></span>`;
+      };
+      // Astro's scoped CSS keys off a data-astro-cid-* attribute; copy it onto the injected nodes.
+      const cid = [...btn!.attributes].find((x) => x.name.startsWith("data-astro-cid"))?.name;
+      let current = -1;
+      const show = (i: number) => {
+        current = i;
+        const pick = pairs[i];
+        for (const [sel, f] of [[".face.front", pick.day], [".face.back", pick.night]] as const) {
+          const el = btn!.querySelector(sel)!;
+          el.innerHTML = face(f);
+          if (cid) el.querySelectorAll("*").forEach((n) => n.setAttribute(cid, ""));
+        }
+        btn!.setAttribute("aria-label", `Flip ${pick.day.name} to ${pick.night.name}`);
+      };
+      const another = () => {
+        let i = Math.floor(Math.random() * pairs.length);
+        if (i === current) i = (i + 1) % pairs.length;
+        return i;
+      };
+      // Decide the next pair ahead of time and load its images now, so a shuffle slides in a finished card.
+      let upcoming = -1;
+      const preload = (i: number) => {
+        for (const f of [pairs[i].day, pairs[i].night]) {
+          new Image().src = art(f.id);
+          for (const m of `${f.cost} ${f.oracle}`.matchAll(/\{([^}]+)\}/g)) new Image().src = sym(m[1]);
+        }
+      };
+      const takeNext = () => {
+        const i = upcoming >= 0 && upcoming !== current ? upcoming : another();
+        show(i);
+        upcoming = another();
+        preload(upcoming);
+      };
+      takeNext();
+      const shuffle = document.querySelector<HTMLButtonElement>(".shuffle")!;
+      shuffle.hidden = false;
+      // The fast-forward button (effects script) fires this when the next step is "a new card".
+      shuffle.addEventListener("mw:newcard", () => {
+        const swap = () => {
+          btn!.classList.remove("is-night"); // always land on the day face
+          takeNext();
+        };
+        // the effects script can animate around the swap (slide out / slide in); it returns false to swap immediately
+        const slide = (window as unknown as { mwSlide?: (swap: () => void) => boolean }).mwSlide;
+        if (!slide || !slide(swap)) swap();
+      });
+      // Offline: register the worker and quietly cache every image the app can use (art + mana symbols).
+      void startOffline({ sw: "/mirrorweave-sw.js", scope: "/mirrorweave", urls: imageUrls(pairs.flatMap((p) => [p.day, p.night])) });
+    } catch (e) {
+      console.warn("showcase: keeping default card", e);
+    }
+    btn?.classList.remove("pending");
   </script>
-  <script is:inline>
-    try {
-      var t = localStorage.getItem("mirrorweave-theme");
-      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-    } catch (e) {}
+
+  <script>
+    // Splash effects: tilt + glare, rain parallax, reactive sparkles, shuffle slide and idle autoplay.
+    const hero = document.querySelector<HTMLElement>(".hero")!;
+    const stage = hero.querySelector<HTMLElement>(".stage")!;
+    const flip = stage.querySelector<HTMLElement>(".flip")!;
+    const card = flip.querySelector<HTMLElement>(".card")!;
+    const fine = matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // --- tilt + glare ---
+    function resetTilt() {
+      for (const p of ["--rx", "--ry", "--gx", "--gy", "--glare"]) flip.style.removeProperty(p);
+    }
+    // The whole hero is the active area: tilt/glare follow the pointer relative to the card's centre.
+    // Tilt reaches its maximum 1.5 card-widths/heights away; the glare may sit off the card's edge.
+    const TILT_REACH = 1.5;
+    hero.addEventListener("pointermove", (e) => {
+      if (!fine) return;
+      const c = card.getBoundingClientRect();
+      const nx = (e.clientX - (c.left + c.width / 2)) / (c.width * TILT_REACH);
+      const ny = (e.clientY - (c.top + c.height / 2)) / (c.height * TILT_REACH);
+      const x = Math.min(1, Math.max(-1, nx)), y = Math.min(1, Math.max(-1, ny));
+      flip.style.setProperty("--rx", `${(-y * 8).toFixed(2)}deg`);
+      flip.style.setProperty("--ry", `${(x * 9).toFixed(2)}deg`);
+      flip.style.setProperty("--gx", `${((0.5 + x * 0.75) * 100).toFixed(1)}%`);
+      flip.style.setProperty("--gy", `${((0.5 + y * 0.75) * 100).toFixed(1)}%`);
+      flip.style.setProperty("--glare", "1");
+    });
+    hero.addEventListener("pointerleave", resetTilt);
+
+    // --- rain parallax + reactive sparkles (both follow the pointer over the hero) ---
+    const dayStars = [...hero.querySelectorAll<HTMLElement>(".sparkles.on-day i")];
+    const nightStars = [...hero.querySelectorAll<HTMLElement>(".sparkles.on-night i")];
+    const spots = dayStars.map((el) => [parseFloat(el.style.left), parseFloat(el.style.top)]);
+    const lit = new Set<number>();
+    const clearStar = (i: number) => {
+      for (const el of [dayStars[i], nightStars[i]]) { el?.style.removeProperty("--dx"); el?.style.removeProperty("--dy"); el?.style.removeProperty("--b"); }
+      lit.delete(i);
+    };
+    function resetReact() { [...lit].forEach(clearStar); }
+    function resetParallax() { hero.style.removeProperty("--px"); }
+    hero.addEventListener("pointermove", (e) => {
+      if (!fine) return;
+      const r = hero.getBoundingClientRect();
+      const mx = e.clientX - r.left, my = e.clientY - r.top;
+      hero.style.setProperty("--px", (((mx / r.width) - 0.5) * 2).toFixed(3));
+      const R = 150;
+      spots.forEach(([lx, ly], i) => {
+        const dx = (lx / 100) * r.width - mx, dy = (ly / 100) * r.height - my;
+        const d = Math.hypot(dx, dy);
+        if (d >= R) { if (lit.has(i)) clearStar(i); return; }
+        const t = 1 - d / R, k = (t * 34) / (d || 1);
+        for (const el of [dayStars[i], nightStars[i]]) {
+          el.style.setProperty("--dx", `${(dx * k).toFixed(1)}px`);
+          el.style.setProperty("--dy", `${(dy * k).toFixed(1)}px`);
+          el.style.setProperty("--b", t.toFixed(2));
+        }
+        lit.add(i);
+      });
+    });
+    hero.addEventListener("pointerleave", () => { resetReact(); resetParallax(); });
+
+    // --- shuffle: the current card slides off the bottom, then the new one slides in from the top ---
+    let sliding = false;
+    (window as unknown as { mwSlide: (swap: () => void) => boolean }).mwSlide = (swap) => {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+      if (sliding) return true; // already mid-slide: swallow the extra click
+      sliding = true;
+      stage.classList.add("sliding"); // while the card is travelling it passes over the controls and hint
+      const h = hero.getBoundingClientRect(), c = card.getBoundingClientRect();
+      const base = getComputedStyle(card).transform; // includes the -3deg tilt and, if flipped, the rotateY
+      const down = h.bottom - c.top + 48;
+      card.animate(
+        [{ transform: base }, { transform: `translateY(${down}px) ${base}` }],
+        { duration: 380, easing: "cubic-bezier(.5,0,.9,.5)", fill: "forwards" },
+      ).onfinish = () => {
+        card.style.transition = "none"; // the day-face reset must not play a visible flip while off-screen
+        swap();
+        void card.offsetWidth;
+        card.style.transition = "";
+        const up = c.bottom - h.top + 48;
+        card.getAnimations().forEach((a) => a.cancel());
+        card.animate(
+          [{ transform: `translateY(${-up}px) rotate(-3deg)` }, { transform: "translateY(0) rotate(-3deg)" }],
+          { duration: 520, easing: "cubic-bezier(.2,.7,.2,1)" },
+        ).onfinish = () => { sliding = false; stage.classList.remove("sliding"); };
+      };
+      return true;
+    };
+
+    // --- autoplay: one 6s cycle. Flip to the night face after 3s; 3s later a new pair pops in (day face), and repeat.
+    // It only stops when you pause it with the button; moving or clicking around does not interrupt it.
+    // The fast-forward button skips ahead to the next step immediately. ---
+    type Phase = "flip" | "new card";
+    const STEP_MS = 3000;
+    const shuffleBtn = document.querySelector<HTMLButtonElement>(".shuffle")!;
+    const idleEl = document.querySelector<HTMLElement>(".idle")!;
+    const pauseBtn = idleEl.querySelector<HTMLButtonElement>(".idle-toggle")!;
+    const idleTrack = idleEl.querySelector<HTMLElement>(".idle-track")!;
+    const [dayFill, nightFill] = [...idleEl.querySelectorAll<HTMLElement>("i")];
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let idleTimer: number | undefined;
+    let idleAnim: Animation | undefined;
+    let phase: Phase = "flip";
+    let paused = false;
+
+    // indicator: two half bars (day, then night), each filling over STEP_MS; `elapsed` is how far into the phase we are
+    function render(next: Phase, elapsed: number) {
+      idleAnim?.cancel();
+      phase = next;
+      idleTrack.hidden = false;
+      pauseBtn.hidden = false;
+      // "flip" is the first half (day bar fills); "new card" is the second (day bar already full, night bar fills)
+      dayFill.style.transform = next === "flip" ? "scaleX(0)" : "scaleX(1)";
+      nightFill.style.transform = "scaleX(0)";
+      idleAnim = (next === "flip" ? dayFill : nightFill).animate(
+        [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+        { duration: STEP_MS, easing: "linear", fill: "forwards" },
+      );
+      idleAnim.currentTime = elapsed;
+      if (paused) idleAnim.pause();
+    }
+    function schedule(next?: Phase, elapsed = 0) {
+      clearTimeout(idleTimer);
+      if (reduced) { idleAnim?.cancel(); idleTrack.hidden = true; pauseBtn.hidden = true; return; } // no autoplay: bars and pause button stay hidden, fast forward still works
+      render(next ?? (flip.classList.contains("is-night") ? "new card" : "flip"), elapsed);
+      if (!paused) idleTimer = window.setTimeout(fire, STEP_MS - elapsed);
+    }
+    // The next step of the cycle: flip to the night face, or (if already flipped) pop in a new pair on its day face.
+    // Returns the phase that follows, or undefined if nothing could run (card data not ready).
+    function advance(): Phase | undefined {
+      if (shuffleBtn.hidden) return undefined;
+      if (flip.classList.contains("is-night")) { shuffleBtn.dispatchEvent(new Event("mw:newcard")); return "flip"; }
+      flip.classList.add("is-night");
+      return "new card";
+    }
+    // End of a segment. The action follows the segment (not the card's current face), so flipping by hand never
+    // desyncs the bars: segment 1 ends with the card on its night face, segment 2 ends with a new pair on its day face.
+    function fire() {
+      if (document.hidden || shuffleBtn.hidden) { schedule(phase); return; } // can't act: restart this segment
+      if (phase === "flip") {
+        flip.classList.add("is-night");
+        schedule("new card");
+      } else {
+        shuffleBtn.dispatchEvent(new Event("mw:newcard"));
+        schedule("flip");
+      }
+    }
+    pauseBtn.addEventListener("click", () => {
+      paused = !paused;
+      pauseBtn.setAttribute("aria-pressed", String(paused));
+      const label = paused ? "Resume autoplay" : "Pause autoplay";
+      pauseBtn.setAttribute("aria-label", label);
+      pauseBtn.title = label;
+      if (paused) {
+        clearTimeout(idleTimer);
+        idleAnim?.pause();
+      } else {
+        schedule(phase, Number(idleAnim?.currentTime ?? 0)); // carry on from where the bars stopped
+      }
+    });
+    // Flipping by hand: in the first half, turning the card to its night face counts as the "next" step, so the second
+    // half begins. Otherwise only the segment that's currently filling restarts; the other segment stays as it is.
+    flip.addEventListener("click", () => schedule(phase === "flip" && flip.classList.contains("is-night") ? "new card" : phase));
+    // Fast forward: jump straight to the next step now, then carry on from there (still paused if it was paused).
+    shuffleBtn.addEventListener("click", () => schedule(advance()));
+
+    schedule();
   </script>
-  <Mirrorweave client:only="react" basename="/mirrorweave" offline={{ sw: "/mirrorweave-sw.js", scope: "/mirrorweave" }} />
+
+  <style>
+    :global(body) { background: #14101f; margin: 0; }
+    .mw {
+      --day: #d7a544; --day-deep: #96650f; --cream: #f4ead2;
+      --night: #a091de; --night-deep: #4b3f76; --ink: #14101f; --ember: #d9553a;
+      font-family: Karla, "Helvetica Neue", Arial, sans-serif;
+      color: var(--cream); background: var(--ink); min-height: 100vh;
+    }
+    .hero {
+      position: relative; isolation: isolate; overflow: hidden;
+      min-height: min(100vh, 52rem);
+      display: grid; align-items: center; gap: 2rem;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      padding: clamp(2rem, 6vw, 5rem) max(1rem, 5vw);
+    }
+    .half { position: absolute; inset: 0; z-index: -2; }
+    .day { background: linear-gradient(160deg, #e9c46b, #b5822a 70%); clip-path: polygon(0 0, 56% 0, 44% 100%, 0 100%); }
+    .night { background: radial-gradient(circle at 80% 30%, #4b3f76, #1a1530 70%); clip-path: polygon(56% 0, 100% 0, 100% 100%, 44% 100%); }
+    .rain {
+      position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+              mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+    }
+    .col { position: absolute; top: 0; width: 5rem; margin-left: -2.5rem; height: 100%; opacity: .24; }
+    .strip { display: flex; flex-direction: column; gap: .7rem; padding-bottom: .7rem; }
+    .col { animation: fall var(--dur) linear var(--delay) infinite; will-change: transform; height: auto; }
+    @keyframes fall { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+    .tile {
+      position: relative; display: block; width: 5rem; height: 6.4rem; perspective: 600px;
+      transform-style: preserve-3d; animation: tileflip var(--fd) ease-in-out var(--fdelay) infinite;
+    }
+    @keyframes tileflip {
+      0%, 62% { transform: rotateY(0); } 68%, 90% { transform: rotateY(180deg); } 96%, 100% { transform: rotateY(360deg); }
+    }
+    .tf {
+      position: absolute; inset: 0; backface-visibility: hidden; padding: .3rem; border-radius: .35rem;
+      display: flex; flex-direction: column; gap: .25rem; overflow: hidden; border: 1px solid rgba(0,0,0,.5);
+    }
+    .tf img { flex: 1; min-height: 0; width: 100%; object-fit: cover; border-radius: .2rem; display: block; }
+    .cap { font: 700 .62rem/1.15 Alegreya, Georgia, serif; height: 1.3rem; overflow: hidden; }
+    .tf-day { background: #f1e3bd; color: #2a2010; }
+    .tf-night { background: #2a2250; color: #cfc6f5; transform: rotateY(180deg); border-color: rgba(207,198,245,.4); }
+    .copy { max-width: 36rem; color: var(--ink); }
+    /* divider: a rule either side, day sets then night sets in the middle */
+    .sparkles { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+    /* opposing colours: violet stars on the gold half, gold stars on the violet half.
+       Each layer is clipped to its half, so a star on the seam is split between the two. */
+    .sparkles.on-day { clip-path: polygon(0 0, 56% 0, 44% 100%, 0 100%); color: #5a46a0; filter: drop-shadow(0 0 .25rem rgba(90, 70, 160, .8)); }
+    .sparkles.on-night { clip-path: polygon(56% 0, 100% 0, 100% 100%, 44% 100%); color: #ffd36b; filter: drop-shadow(0 0 .3rem rgba(255, 190, 70, .9)); }
+    .sparkles i {
+      position: absolute; width: var(--s); height: var(--s); transform: translate(-50%, -50%);
+      background: currentColor;
+      clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+      animation: twinkle var(--dur) ease-in-out var(--delay) infinite;
+    }
+    @keyframes twinkle { 0%, 100% { opacity: .15; transform: translate(-50%, -50%) scale(.6); } 50% { opacity: .9; transform: translate(-50%, -50%) scale(1); } }
+    .flip.pending { visibility: hidden; }
+    /* a dark capsule holds the icons: neon reads on dark, not on gold */
+    .sets { display: flex; justify-content: center; max-width: 26rem; margin: 0 0 1.6rem; }
+    .pill {
+      display: flex; align-items: center; gap: 1.1rem; flex: none; padding: .7rem 1.5rem; border-radius: 999px;
+      background: var(--ink); box-shadow: 0 0 0 1px rgba(160, 145, 222, .35), 3px 3px 0 var(--ember);
+    }
+    .setglyph { height: 1.9rem; width: auto; flex: none; overflow: visible; }
+    .setglyph.is-day { fill: #ff8a3a; filter: drop-shadow(0 0 .25rem rgba(255, 106, 26, .8)); }
+    .setglyph.is-night { fill: #b08cff; filter: drop-shadow(0 0 .25rem rgba(138, 77, 255, .8)); }
+    .setglyph.is-day + .is-night { margin-left: .9rem; }
+    /* same treatment as the app's heading: orange + indigo, "weave" overlaid on "Mirror".
+       The ink outline keeps it legible against the gold half of the hero. */
+    h1 {
+      font-family: Alegreya, Georgia, serif; font-weight: 700; line-height: .86; letter-spacing: -.02em;
+      font-size: clamp(4rem, 13vw, 10rem); margin: 0 0 1.4rem;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .lit { display: block; color: #ff7a2e;
+      text-shadow: 0 0 .04em #fff2e0, 0 0 .1em #ffa25c, 0 0 .25em #ff6a1a, 0 0 .5em #e8470a; }
+    .dark {
+      display: block; color: #9b6bff; font-weight: 400; font-style: italic;
+      text-shadow: 0 0 .04em #fff, 0 0 .12em #b58cff, 0 0 .3em #8a4dff, 0 0 .6em #6a2cff;
+      position: relative; z-index: 1; margin: -.4em 0 0 1.2em; transform: rotate(-8deg); transform-origin: left center;
+    }
+    .lede { max-width: 26rem; font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.5; margin: 0 0 2rem; font-weight: 500; }
+    .go {
+      display: inline-block; background: var(--ink); color: var(--cream); text-decoration: none; font-weight: 700;
+      padding: .95rem 1.5rem; border-radius: .4rem; box-shadow: 5px 5px 0 var(--ember);
+      transition: transform .12s, box-shadow .12s;
+    }
+    .go:hover, .go:focus-visible { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ember); }
+    .go:focus-visible, .flip:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
+
+    .stage { justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    /* stacking: the card (sliding off/on during a shuffle) passes over the hint and the shuffle button, never under them */
+    .flip { position: relative; z-index: 2; background: none; border: 0; padding: 0; cursor: pointer; perspective: 1400px; color: inherit; font: inherit; }
+    /* At rest the hint and controls sit ABOVE the card (so its big drop shadow doesn't dim them); while a card is
+       sliding off/on (.sliding on the stage) they drop back underneath so it passes over them. */
+    .idle { position: relative; z-index: 3; }
+    .stage.sliding .idle { z-index: 1; }
+    .stage.sliding .hint { z-index: 1; }
+    /* idle-autoplay indicator: what happens next + a bar that fills until it does */
+    .idle { display: flex; flex-direction: column; align-items: center; gap: .35rem; font: 500 .65rem "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); }
+    .idle-controls { display: flex; align-items: center; gap: .6rem; }
+    .idle[hidden], .idle-track[hidden], .idle-toggle[hidden], .shuffle[hidden] { display: none; }
+    /* round transport buttons: pause/play, then fast forward */
+    /* plain icons in the same gold + glow as the stars on the violet half (no ring) */
+    .idle-toggle, .shuffle {
+      display: grid; place-items: center; width: 2.4rem; height: 2.4rem; padding: 0; cursor: pointer;
+      font: inherit; font-size: .95rem; letter-spacing: 0; color: #ffd36b; background: none; border: 0; border-radius: .4rem;
+      text-shadow: 0 0 .3rem rgba(255, 190, 70, .9);
+      transition: color .15s, transform .15s;
+    }
+    .idle-toggle:hover, .idle-toggle:focus-visible, .shuffle:hover, .shuffle:focus-visible { color: #ffe9a8; transform: scale(1.12); outline: none; }
+    .idle-toggle:focus-visible, .shuffle:focus-visible { outline: 2px solid #ffd36b; outline-offset: 2px; }
+    .idle-toggle svg, .shuffle svg { width: 1.5rem; height: 1.5rem; filter: drop-shadow(0 0 .3rem rgba(255, 190, 70, .9)); }
+    /* show the pause icon while running, the play icon while paused */
+    .idle-toggle[aria-pressed="false"] .ic-play, .idle-toggle[aria-pressed="true"] .ic-pause { display: none; }
+    .idle-track { display: flex; gap: 3px; width: 6.5rem; }
+    .idle-track .seg { flex: 1; height: 3px; border-radius: 3px; background: rgba(244, 234, 210, .22); overflow: hidden; }
+    /* both halves the same gold as the stars and controls */
+    .idle-track i { display: block; height: 100%; transform-origin: left; transform: scaleX(0); background: #ffd36b; box-shadow: 0 0 .3rem rgba(255, 190, 70, .9); }
+    .card { display: block; position: relative; z-index: 2; width: min(19rem, 72vw); aspect-ratio: 5 / 7; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3,.7,.2,1); transform: rotate(-3deg); }
+    .flip.is-night .card { transform: rotate(-3deg) rotateY(180deg); }
+    .face {
+      position: absolute; inset: 0; backface-visibility: hidden; display: flex; flex-direction: column; gap: .5rem;
+      padding: .9rem; border-radius: 1rem; text-align: left; border: 6px solid #0d0a14; box-shadow: 0 18px 40px rgba(0,0,0,.45);
+    }
+    .front { background: #f1e3bd; color: #2a2010; }
+    .back { background: #2a2250; color: #e8e3fb; transform: rotateY(180deg); }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+    .nm { font: 700 1.1rem/1.1 Alegreya, Georgia, serif; }
+    .cost { display: flex; gap: .1rem; } /* a real card's cost symbols nearly touch: gap is ~6-9% of a symbol's diameter */
+    .pip { width: 1.05rem; height: 1.05rem; border-radius: 50%; display: block; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
+    .pip-o { width: .8rem; height: .8rem; display: inline-block; vertical-align: -.12rem; margin: 0 .05rem; }
+    .art { flex: 1; min-height: 0; width: 100%; object-fit: cover; border-radius: .35rem; display: block; }
+    .type { display: flex; justify-content: space-between; align-items: center; gap: .5rem; font: 700 .85rem Alegreya, Georgia, serif; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; padding: .2rem 0; }
+    .rules { font: 500 .95rem/1.3 "EB Garamond", Georgia, serif; min-height: 3.6em; }
+    .foot { display: flex; justify-content: space-between; gap: .5rem; font: 700 .8rem Alegreya, Georgia, serif; opacity: .8; }
+    .seticon { height: 1.05rem; width: auto; fill: currentColor; flex: none; overflow: visible; /* the outline stroke extends past the viewBox */ }
+    /* set symbol takes the card's rarity colour, outlined so silver/gold stay legible on cream */
+    .seticon.r-common { fill: #1a1718; }
+    .seticon.r-uncommon { fill: #b9c9d3; }
+    .seticon.r-rare { fill: #e0b440; }
+    .seticon.r-mythic { fill: #ec5a1f; }
+    .seticon[class*="r-"]:not(.r-common) { stroke: #1a1718; stroke-width: 90; stroke-linejoin: round; paint-order: stroke fill; }
+    /* night face: a white outline, since the dark keyline disappears into the violet card */
+    .back .seticon { stroke: #fff; stroke-width: 90; stroke-linejoin: round; paint-order: stroke fill; }
+    /* artist-brush glyph: Mana font by Andrew Gioia (MIT), https://github.com/andrewgioia/mana */
+    .credit { display: flex; align-items: center; gap: .3rem; min-width: 0; }
+    .brush { width: 1.15rem; height: 1.15rem; fill: currentColor; flex: none; }
+    /* "click" with a mouse, "tap" on touch screens (pure CSS, so no flash) */
+    .hint .mouse { display: none; }
+    @media (hover: hover) and (pointer: fine) { .hint .touch { display: none; } .hint .mouse { display: inline; } }
+    /* tilted to match the card (-3deg); the card's bottom-centre swings ~.7rem right of its un-rotated position, so shift to follow it */
+    .hint { display: block; position: relative; z-index: 3; margin-top: .45rem; transform: translateX(.7rem) rotate(-3deg); font: 700 .82rem "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: #ffd36b; text-shadow: 0 0 .3rem rgba(255, 190, 70, .9); }
+
+    /* ---------- splash effects ---------- */
+    /* foil sheen: a coloured band sweeps across both faces every few seconds. The band is a 3x-wide gradient
+       slid with transform (compositor-only, no repaint); start/end sit well past the card edges so the slanted
+       band clears the corners completely. */
+    .face { overflow: hidden; }
+    .face::after {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 300%; pointer-events: none;
+      background: linear-gradient(115deg, transparent 40%, rgba(255, 138, 58, .4) 44%, rgba(255, 224, 140, .5) 50%, rgba(255, 190, 70, .4) 56%, transparent 60%);
+      transform: translateX(-80%); will-change: transform; animation: foil 6.5s ease-in-out infinite;
+    }
+    /* day face: orange -> gold; night face: violet -> lilac */
+    .back::after {
+      background: linear-gradient(115deg, transparent 40%, rgba(138, 77, 255, .45) 44%, rgba(196, 170, 255, .55) 50%, rgba(160, 120, 255, .45) 56%, transparent 60%);
+    }
+    @keyframes foil { 0% { transform: translateX(-80%); } 55%, 100% { transform: translateX(13%); } }
+    /* tilt + glare: --rx/--ry/--gx/--gy are set from the pointer; the back face sees x mirrored */
+    .flip { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .15s ease-out; }
+    .face::before {
+      content: ""; position: absolute; inset: 0; border-radius: calc(1rem - 6px); pointer-events: none;
+      background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 255, 255, .42), transparent 55%);
+      opacity: var(--glare, 0); transition: opacity .2s;
+    }
+    .back::before { background: radial-gradient(circle at calc(100% - var(--gx, 50%)) var(--gy, 30%), rgba(255, 255, 255, .3), transparent 55%); }
+    /* shooting stars live inside the sparkle layers, so they pick up the opposing colours */
+    .shoot { position: absolute; width: 9rem; height: 2px; border-radius: 2px; rotate: -35deg; opacity: 0;
+      background: linear-gradient(90deg, currentColor, transparent); animation: shoot var(--dur) ease-in var(--delay) infinite; }
+    @keyframes shoot { 0%, 86% { opacity: 0; translate: 0 0; } 88% { opacity: 1; } 100% { opacity: 0; translate: -45rem 31.5rem; } }
+    /* neon flicker: mostly steady, a quick stutter once per cycle */
+    .dark { animation: flicker 8s linear infinite; }
+    @keyframes flicker {
+      0%, 17%, 24%, 58%, 62%, 100% { opacity: 1; }
+      18% { opacity: .35; } 19% { opacity: 1; } 20% { opacity: .5; } 21% { opacity: .9; } 22% { opacity: .3; } 23% { opacity: 1; }
+      59% { opacity: .6; } 60% { opacity: 1; } 61% { opacity: .75; }
+    }
+    /* seam glow along the diagonal split */
+    .seam { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    .seam { animation: seampulse 4.5s ease-in-out infinite; }
+    .seam line { vector-effect: non-scaling-stroke; fill: none; stroke-linecap: round; }
+    .seam .halo { stroke-width: 9px; opacity: .55; filter: blur(5px); }
+    .seam .core { stroke-width: 2px; }
+    .seam-m { display: none; }
+    @keyframes seampulse { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
+    /* rain parallax: depth (--z) scales, speeds, dims and drifts each column with the pointer (--px) */
+    .col { transform-origin: 50% 0; }
+    .col {
+      scale: var(--z); animation-duration: calc(var(--dur) / var(--z)); opacity: calc(.1 + (var(--z) - .85) * .3);
+      translate: calc(var(--px, 0) * var(--z) * -18px) 0; transition: translate .4s ease-out;
+    }
+    /* reactive sparkles: nearby stars swell and scatter (--b/--dx/--dy set from the pointer) */
+    .sparkles i { translate: var(--dx, 0) var(--dy, 0); scale: calc(1 + var(--b, 0) * 1.4); transition: translate .25s ease-out, scale .25s ease-out; }
+
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .day { clip-path: polygon(0 0, 100% 0, 100% 52%, 0 60%); }
+      .night { clip-path: polygon(0 60%, 100% 52%, 100% 100%, 0 100%); }
+      .sparkles.on-day { clip-path: polygon(0 0, 100% 0, 100% 52%, 0 60%); }
+      .sparkles.on-night { clip-path: polygon(0 60%, 100% 52%, 100% 100%, 0 100%); }
+      .seam-d { display: none; } .seam-m { display: block; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .go { transition: none; }
+      .col, .tile, .sparkles i, .shoot, .face::after, .dark, .seam { animation: none; }
+      .sparkles i { opacity: .6; }
+    }
+  </style>
 </Layout>

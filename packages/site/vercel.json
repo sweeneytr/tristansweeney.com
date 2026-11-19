@@ -21,8 +21,8 @@
   ],
   "rewrites": [
     {
-      "source": "/mirrorweave/:path+",
-      "destination": "/mirrorweave/"
+      "source": "/mirrorweave/browse/:path+",
+      "destination": "/mirrorweave/browse/"
     }
   ]
 }

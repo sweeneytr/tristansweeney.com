@@ -11,6 +11,22 @@ import react from "@astrojs/react";
 
 const prodUrl = "https://tristansweeney.com";
 
+// Mirror vercel.json's SPA rewrite so deep links reload in dev/preview too.
+const mirrorweaveSpa = {
+  name: "mirrorweave-spa-fallback",
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => {
+      if (req.url && /^\/mirrorweave\/browse\/.+/.test(req.url.split("?")[0])) {
+        req.url = "/mirrorweave/browse/" + (req.url.includes("?") ? "?" + req.url.split("?")[1] : "");
+      }
+      next();
+    });
+  },
+  configurePreviewServer(server) {
+    this.configureServer(server);
+  },
+};
+
 // https://astro.build/config
 export default defineConfig({
   // used to generate images
@@ -34,7 +50,7 @@ export default defineConfig({
     },
   }), mdx(), react()],
   vite: {
-    plugins: [arraybuffer({ include: "**/*.ttf" }), tailwind()],
+    plugins: [mirrorweaveSpa, arraybuffer({ include: "**/*.ttf" }), tailwind()],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
