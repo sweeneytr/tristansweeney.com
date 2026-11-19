@@ -12,7 +12,7 @@ import { Mirrorweave } from "@aelar/mirrorweave";
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,400;1,700&family=Alegreya:ital,wght@0,700;1,400;1,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;1,400;1,700&family=Alegreya:ital,wght@0,700;1,400;1,700&family=Alegreya:ital,wght@0,700;1,400;1,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
   />
   <script is:inline>
     try {
@@ -20,5 +20,11 @@ import { Mirrorweave } from "@aelar/mirrorweave";
       if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
     } catch (e) {}
   </script>
-  <Mirrorweave client:only="react" basename="/mirrorweave" />
+  <script is:inline>
+    try {
+      var t = localStorage.getItem("mirrorweave-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <Mirrorweave client:only="react" basename="/mirrorweave" offline={{ sw: "/mirrorweave-sw.js", scope: "/mirrorweave" }} />
 </Layout>
