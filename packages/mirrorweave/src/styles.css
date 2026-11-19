@@ -51,7 +51,7 @@ a { color:inherit; }
   background:var(--ground); border-bottom:1px solid var(--rule);
 }
 .wordmark { font-family:Fraunces,Georgia,serif; font-size:1.05rem; line-height:1;
-  letter-spacing:-.01em; flex:none; white-space:nowrap; margin-right:.3rem; }
+  letter-spacing:-.01em; flex:none; white-space:nowrap; margin-right:.3rem; text-decoration:none; }
 .topbar .search { flex:1 1 12rem; min-width:0; }
 .topbar .tally { white-space:nowrap; }
 .topbar .copybtn { flex:none; }

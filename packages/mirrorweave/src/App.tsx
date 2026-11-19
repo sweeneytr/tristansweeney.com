@@ -9,6 +9,7 @@ import { PairCard } from './components/PairCard'
 import { CopyButton } from './components/CopyButton'
 import { ClearPrintedButton, PrintedSectionBox, usePrinted } from './components/PrintedBox'
 import { SetIcon } from './components/SetIcon'
+import { useHome } from './lib/home'
 import { ThemeToggle } from './components/ThemeToggle'
 import {
   getSnapshot as collapsedSnapshot,
@@ -96,6 +97,7 @@ function Board() {
   const allLines = useMemo(() => importLines(filtered), [filtered])
   const slots = filtered.reduce((n, p) => n + p.qty, 0)
   const printed = usePrinted()
+  const home = useHome()
   const donePairs = PAIRS.filter((p) => printed[p.day.name]).length
   const collapsed = useSyncExternalStore(subscribeCollapsed, collapsedSnapshot, collapsedSnapshot)
   const allIds = groups.map((g) => g.id)
@@ -104,9 +106,15 @@ function Board() {
   return (
     <>
     <div className="topbar">
-      <span className="wordmark">
-        <span className="lit">Mirror</span><span className="dark">weave</span>
-      </span>
+      {home ? (
+        <a className="wordmark" href={home} title="Back to the Mirrorweave splash page">
+          <span className="lit">Mirror</span><span className="dark">weave</span>
+        </a>
+      ) : (
+        <span className="wordmark">
+          <span className="lit">Mirror</span><span className="dark">weave</span>
+        </span>
+      )}
       <input
         className="search"
         type="search"
