@@ -11,6 +11,7 @@ export interface Face {
   rarity: Rarity
   oracle: string
   id: string
+  artist: string
 }
 
 export interface Pair {

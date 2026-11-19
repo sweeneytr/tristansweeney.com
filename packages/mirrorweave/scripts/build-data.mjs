@@ -69,6 +69,7 @@ const pairs = rows.map(r => {
     rarity: r[p + 'rarity'],
     oracle: r[p + 'oracle'],
     id: r[p + 'scryfall_id'],
+    artist: r[p + 'artist'],
   })
   return {
     qty: Number(r.qty), lane: r.lane, cycle, cycleName,
